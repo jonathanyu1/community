@@ -1,0 +1,3 @@
+header: 
+- fix bug with header null display name
+- retrieve username and profile pic to display

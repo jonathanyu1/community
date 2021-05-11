@@ -6,13 +6,30 @@ import Home from './Components/Home';
 import SignUp from './Components/Pages/SignUp';
 import SignIn from './Components/Pages/SignIn';
 // import firebase, {fs, auth} from './Firebase/firebase.js';
-import {auth} from './Firebase/firebase.js';
+import {auth, fs} from './Firebase/firebase.js';
 
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [profilePicUrl, setProfilePicUrl] = useState('');
 
     const signOut = () => {
         auth().signOut();   
+    }
+
+    const getUserName = () => {
+        return fs.collection('users').doc(`${auth().currentUser.uid}`).get().then((doc)=>{
+            if (doc.exists){
+                return doc.data().displayName;
+            } else {
+                return null;
+            }
+        });
+        ;
+    }
+
+    const getProfilePicUrl = () => {
+        console.log(auth().currentUser);
+        return auth().currentUser.photoURL || 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
     }
 
     const authStateObserver = (user) => {
@@ -23,6 +40,17 @@ const App = () => {
             console.log(auth().currentUser.displayName);
             console.log(user.email);
             console.log(user.uid);
+            let tempUrl = getProfilePicUrl();
+            console.log(tempUrl);
+            if (user.displayName){
+                console.log(user.displayName);
+            } else {
+                getUserName()
+                .then((tempName)=>{
+                    console.log(tempName);
+                });
+            }
+            
             // Get the signed-in user's profile pic and name.
             // Set the user's profile pic and name.
             // Show user's profile and sign-out button.
@@ -32,7 +60,7 @@ const App = () => {
             // Hide user's profile and sign-out button.
             // Show sign-in button.
         }
-      }
+    }
 
 
     useState(()=>{
@@ -66,7 +94,10 @@ const App = () => {
                             />
                         )}
                     /> */}
-                    <Route exact path='/signin' component={SignIn}/>
+                    {/* <Route exact path='/signin' component={SignIn}/> */}
+                    <Route exact path='/signin'>
+                        {isSignedIn ? <Redirect to ='/'/> : <SignIn/>}
+                    </Route>
                 </Switch>
             </div>
       </BrowserRouter>

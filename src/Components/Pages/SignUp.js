@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import { fs } from '../../Firebase/firebase';
 import {signup} from '../Helpers/auth';
 
 const SignUp = () => {
@@ -8,15 +9,36 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
 
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setErrorMsg('');
+    //     signup(email, password)
+    //     .then((userCredential)=>{
+    //         console.log(userCredential);
+    //         console.log(userCredential.user);
+    //         return userCredential.user.updateProfile({
+    //             displayName: username
+    //         });
+    //     })
+    //     .catch ((error)=>{
+    //             console.log('Error with sign up:',error);
+    //             console.log(error.message);
+    //             setErrorMsg(error.message);
+    //     });
+    // }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
         signup(email, password)
         .then((userCredential)=>{
-            console.log(userCredential);
-            console.log(userCredential.user);
-            return userCredential.user.updateProfile({
+            userCredential.user.updateProfile({
                 displayName: username
+            });
+            return fs.collection('users').doc(`${userCredential.user.uid}`).set({
+                uid: userCredential.user.uid,
+                displayName: username,
+                email: email
             });
         })
         .catch ((error)=>{
@@ -25,18 +47,6 @@ const SignUp = () => {
                 setErrorMsg(error.message);
         });
     }
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     setErrorMsg('');
-    //     try{
-    //         signup(email, password);
-    //     } catch (error){
-    //         console.log('Error with sign up:',error);
-    //         console.log(error.message);
-    //         setErrorMsg(error.message);
-    //     }
-    // }
 
     const handleChange = (e) => {
         switch (e.target.name){

@@ -23,8 +23,8 @@ const Nav = (props) => {
                             <Link to='/signup' >
                                 <li>Sign Up</li>
                             </Link>
-                            <Link to='/login'>
-                                <li>Login</li>
+                            <Link to='/signin'>
+                                <li>Sign In</li>
                             </Link>
                         </React.Fragment>
                     }
