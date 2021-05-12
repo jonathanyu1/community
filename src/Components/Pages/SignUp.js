@@ -9,44 +9,52 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     setErrorMsg('');
-    //     signup(email, password)
-    //     .then((userCredential)=>{
-    //         console.log(userCredential);
-    //         console.log(userCredential.user);
-    //         return userCredential.user.updateProfile({
-    //             displayName: username
-    //         });
-    //     })
-    //     .catch ((error)=>{
-    //             console.log('Error with sign up:',error);
-    //             console.log(error.message);
-    //             setErrorMsg(error.message);
-    //     });
-    // }
+    const checkAvailableName = () => {
+        let tempAvail = true;
+        let docRef = fs.collection('users');
+        let avail = docRef.get().then((ref)=>{
+            ref.forEach((doc)=>{
+                if (doc.data().displayName.toLowerCase()===username.toLowerCase()){
+                    tempAvail = false;
+                }
+            });
+            return tempAvail;
+        }).catch((error)=>{
+            console.log('Error checking name:', error);
+            return false;
+        });
+        return avail;
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
-        signup(email, password)
-        .then((userCredential)=>{
-            userCredential.user.updateProfile({
-                displayName: username
-            });
-            return fs.collection('users').doc(`${userCredential.user.uid}`).set({
-                uid: userCredential.user.uid,
-                displayName: username,
-                email: email
-            });
-        })
-        .catch ((error)=>{
-                console.log('Error with sign up:',error);
-                console.log(error.message);
-                setErrorMsg(error.message);
+        checkAvailableName().then((result)=>{
+            console.log(result);
+            if (result){
+                signup(email, password)
+                .then((userCredential)=>{
+                    userCredential.user.updateProfile({
+                        displayName: username
+                    });
+                    return fs.collection('users').doc(`${userCredential.user.uid}`).set({
+                        uid: userCredential.user.uid,
+                        displayName: username,
+                        email: email
+                    });
+                })
+                .catch ((error)=>{
+                        console.log('Error with sign up:',error);
+                        console.log(error.message);
+                        setErrorMsg(error.message);
+                });
+            } else {
+                setErrorMsg('That username is not available, please choose another one.');
+            }
         });
+        
     }
+        
 
     const handleChange = (e) => {
         switch (e.target.name){

@@ -3,7 +3,7 @@
 }
 
 :root{
-
+    --navUnderlineColor: rgba(19, 19, 19, 0.1);
 }
 
 html, body, #root{
@@ -14,4 +14,57 @@ html, body, #root{
     border: 0;
     /* background-color: var(--main-background-color); */
     /* font-family: var(--font); */
+}
+
+/* Nav */ 
+
+#navContainer{
+    border-bottom: 2px solid var( --navUnderlineColor);    
+    padding: 0 5%;
+    width: 100%;
+}
+
+#navContainer a{
+    text-decoration: none;
+    color: black;
+}
+
+nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 10vh;
+    /* color: var(--navColor); */
+}
+
+#navHeader{
+    font-size: 40px;
+    font-weight: 700;
+}
+    
+.navTabs{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    font-size: 30px;
+}
+
+.navTabs a{
+    padding-left: 20px;
+}
+
+.navTabs span{
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+.navProfileInfo{
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 900px){
+    .navTabs{
+        width: 100%;
+    }
 }

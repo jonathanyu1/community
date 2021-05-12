@@ -11,12 +11,13 @@ import {auth, fs} from './Firebase/firebase.js';
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profilePicUrl, setProfilePicUrl] = useState('');
+    const [displayName, setDisplayName] = useState('');
 
     const signOut = () => {
         auth().signOut();   
     }
 
-    const getUserName = () => {
+    const getDisplayName = () => {
         return fs.collection('users').doc(`${auth().currentUser.uid}`).get().then((doc)=>{
             if (doc.exists){
                 return doc.data().displayName;
@@ -41,13 +42,16 @@ const App = () => {
             console.log(user.email);
             console.log(user.uid);
             let tempUrl = getProfilePicUrl();
+            setProfilePicUrl(tempUrl);
             console.log(tempUrl);
             if (user.displayName){
                 console.log(user.displayName);
+                setDisplayName(user.displayName);
             } else {
-                getUserName()
+                getDisplayName()
                 .then((tempName)=>{
                     console.log(tempName);
+                    setDisplayName(tempName);
                 });
             }
             
@@ -70,7 +74,12 @@ const App = () => {
     return (
         <BrowserRouter>
             <div id='appContainer'>
-            <Nav isSignedIn={isSignedIn} signOut={signOut}/>
+            <Nav 
+                isSignedIn={isSignedIn} 
+                signOut={signOut}
+                displayName={displayName}
+                profilePicUrl={profilePicUrl}
+            />
                 <Switch>
                     {/* <Route exact path='/' component={Home}/> */}
                     <Route 

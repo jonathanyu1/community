@@ -1,3 +1,10 @@
+signup:
+-prevent duplicate display name
+
 header: 
 - fix bug with header null display name
 - retrieve username and profile pic to display
+
+Pages: 
+-setup user page (profile pic, username, bio posts)
+-setup user settings page (set profile pic, set bio)
