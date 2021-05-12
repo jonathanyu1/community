@@ -14,6 +14,20 @@ const Nav = (props) => {
                 <ul className='navTabs'>
                     {props.isSignedIn ? 
                         <React.Fragment>
+                            <Link to='/create-community' >
+                                <li>
+                                    <span className="material-icons-outlined">
+                                        create_new_folder
+                                    </span>
+                                </li>
+                            </Link>
+                            <Link to='/create-post' >
+                                <li>
+                                    <span className="material-icons-outlined">
+                                        edit
+                                    </span>
+                                </li>
+                            </Link>
                             {/* <Link to={`/user/${props.displayName}`}>
                                 <li>
                                     <img src={props.profilePicUrl} alt='profilepic'/>

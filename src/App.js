@@ -5,6 +5,10 @@ import Nav from './Components/Nav';
 import Home from './Components/Home';
 import SignUp from './Components/Pages/SignUp';
 import SignIn from './Components/Pages/SignIn';
+import Settings from './Components/Pages/Settings';
+import UserPage from './Components/Pages/UserPage';
+import CreatePost from './Components/Pages/CreatePost';
+import CreateCommunity from './Components/Pages/CreateCommunity';
 // import firebase, {fs, auth} from './Firebase/firebase.js';
 import {auth, fs} from './Firebase/firebase.js';
 
@@ -66,6 +70,12 @@ const App = () => {
         }
     }
 
+    const getUserById = (id) =>{
+        // change this to return user from fs later
+        console.log(id);
+        return id;
+    }
+
 
     useState(()=>{
         auth().onAuthStateChanged(authStateObserver);
@@ -74,12 +84,12 @@ const App = () => {
     return (
         <BrowserRouter>
             <div id='appContainer'>
-            <Nav 
-                isSignedIn={isSignedIn} 
-                signOut={signOut}
-                displayName={displayName}
-                profilePicUrl={profilePicUrl}
-            />
+                <Nav 
+                    isSignedIn={isSignedIn} 
+                    signOut={signOut}
+                    displayName={displayName}
+                    profilePicUrl={profilePicUrl}
+                />
                 <Switch>
                     {/* <Route exact path='/' component={Home}/> */}
                     <Route 
@@ -105,8 +115,26 @@ const App = () => {
                     /> */}
                     {/* <Route exact path='/signin' component={SignIn}/> */}
                     <Route exact path='/signin'>
-                        {isSignedIn ? <Redirect to ='/'/> : <SignIn/>}
+                        {isSignedIn ? <Redirect to='/'/> : <SignIn/>}
                     </Route>
+                    <Route exact path='/settings'>
+                        {isSignedIn ? <Settings/> : <Redirect to='/signin'/>}
+                    </Route>
+                    <Route exact path='/create-post'>
+                        {isSignedIn ? <CreatePost/> : <Redirect to='/signin'/>}
+                    </Route>
+                    <Route exact path='/create-community'>
+                        {isSignedIn ? <CreateCommunity/> : <Redirect to='/signin'/>}
+                    </Route>
+                    <Route
+                        path='/user/:id'
+                        render={routeProps=>(
+                            <UserPage 
+                                {...routeProps}
+                                user={(getUserById(routeProps.match.params.id))}
+                            />
+                    )}
+                />
                 </Switch>
             </div>
       </BrowserRouter>
