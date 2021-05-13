@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import NotFound from './NotFound';
+import PostCard from '../PostCard';
 import { fs } from '../../Firebase/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 const CommunityPage = (props) => {
-    const [commExists, setcommExists] = useState(true);
-
+    const [commExists, setCommExists] = useState(true);
+    const [posts, setPosts] = useState([]);
 
     const handleLoadCommunityPage = async () => {
         try{
-            await loadCommunityPagePosts();
-            // let tempPosts = await loadCommunityPagePosts();
-            // console.log(tempPosts);
+            let result = await loadCommunityPagePosts();
+            console.log(result);
+            if (result && result.length) {
+                console.log('posts exist');
+                setPosts(result);
+            }
         } catch (error){
             console.log('Error loading community page:', error);
         }
@@ -19,36 +24,30 @@ const CommunityPage = (props) => {
     const loadCommunityPagePosts = () => {
         let tempArray = [];
         let docRef = fs.collection('communities').doc(props.match.params.comm);
-        // fs.collection('communities').doc(props.match.params.comm)
-        docRef.get().then(doc=>{
+        let result = docRef.get().then(doc=>{
             if (doc.exists){
                 console.log(doc.id);
-                docRef.collection('posts').get()
+                let tempResult=docRef.collection('posts').get()
                 .then(sub=>{
                     if (sub.docs.length>0){
                         console.log('subcollection posts exists');
+                        sub.docs.forEach((doc)=>{
+                            console.log(doc.data());
+                            tempArray.push(doc.data());
+                        });
                     } else {
                         console.log('subcollection posts does not exist');
                     }
+                    return tempArray;
                 });
+                return tempResult;
             } else {
                 console.log('community does not exist');
-                setcommExists(false);
+                setCommExists(false);
+                return null;
             }
-        })
-        // let docRef = fs.collection('communities');
-        // let tempCommunityNames = docRef.get().then((ref)=>{
-        //     ref.forEach((doc)=>{
-        //         console.log(doc.id);
-        //         tempArray.push(doc.id);
-        //     });
-        //     return tempArray;
-        // }).catch((error)=>{
-        //     console.log('Error getting community names:',error);
-        // });
-        // // setIsLoading(false);
-        // return tempCommunityNames;
-        
+        });
+        return result;
     }
 
     useEffect(()=>{
@@ -60,7 +59,18 @@ const CommunityPage = (props) => {
         <React.Fragment>
             {commExists ? 
                 <div id='communityPageProps'>
-                    {props.match.params.comm}
+                    {posts.length ? 
+                        <div id='communityPagePostsContainer'>
+                            {posts.map((post)=>{
+                                console.log(post);
+                                return <PostCard post={post} key={uuidv4()}/>
+                            })}
+                        </div>
+                    : 
+                        <div id='communityPageEmptyContainer'>
+                            No posts. Be the first to post here!
+                        </div>
+                    }
                 </div>
             :
                 <NotFound/>

@@ -1,6 +1,6 @@
 header: 
-- fix bug with header null display name
 - retrieve username and profile pic to display
+- show action on hover (https://material-ui.com/components/tooltips/)
 
 createcommunity:
 -prevent non-letters/number input (https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string)
