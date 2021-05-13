@@ -62,11 +62,6 @@ const CreatePost = (props) => {
                 userCreatorUid: auth().currentUser.uid,
                 createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
-            // .then((data)=>{
-            //     console.log(data.id);
-            //     setPostId(data.id);
-            // })
-        
     }
 
     const handleSubmit = (e) => {
@@ -83,23 +78,6 @@ const CreatePost = (props) => {
             .catch((error)=>{
                 console.log('Error with creating post:', error);
             });
-
-            // checkAvailableTitle().then((result)=>{
-            //     console.log(result);
-            //     if (result){
-            //         addCommunityToFs()
-            //         .then(()=>{
-            //             setIsRedirect(true);
-            //         })
-            //         .catch ((error)=>{
-            //                 console.log('Error with sign up:',error);
-            //                 console.log(error.message);
-            //                 setErrorMsg(error.message);
-            //         });
-            //     } else {
-            //         setErrorMsg('That title is not available, please choose another one.');
-            //     }
-            // });
         } else {
             setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
         }

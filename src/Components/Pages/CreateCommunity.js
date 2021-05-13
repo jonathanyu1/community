@@ -9,7 +9,7 @@ const CreateCommunity = () => {
     const [isRedirect, setIsRedirect] = useState('');
 
     const addCommunityToFs = () => {
-        return fs.collection('communities').doc(title).set({
+        return fs.collection('communities').doc(title.toLowerCase()).set({
             description: description || 'Set a description!',
             userCreator: auth().currentUser.displayName,
             userCreatorUid: auth().currentUser.uid,
@@ -75,7 +75,7 @@ const CreateCommunity = () => {
     return (
         <React.Fragment>
             {/* {isRedirect ? <Redirect to='/'/> :  */}
-            {isRedirect ? <Redirect to={`/c/${title}`}/> : 
+            {isRedirect ? <Redirect to={`/c/${title.toLowerCase()}`}/> : 
                 <div id='createCommunityContainer'>
                     <form
                         autoComplete="off"
