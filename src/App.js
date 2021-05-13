@@ -10,6 +10,7 @@ import UserPage from './Components/Pages/UserPage';
 import CreatePost from './Components/Pages/CreatePost';
 import CreateCommunity from './Components/Pages/CreateCommunity';
 import CommunityPage from './Components/Pages/CommunityPage';
+import PostPage from './Components/Pages/PostPage';
 // import firebase, {fs, auth} from './Firebase/firebase.js';
 import {auth, fs} from './Firebase/firebase.js';
 
@@ -127,7 +128,16 @@ const App = () => {
                         )} 
                     />
                     <Route
-                        path='/c/:id'
+                        path='/c/:comm/:id'
+                        render={routeProps=>(
+                            <PostPage
+                                {...routeProps}
+                                isSignedIn={isSignedIn}
+                            />
+                        )} 
+                    />
+                    <Route
+                        path='/c/:comm'
                         render={routeProps=>(
                             <CommunityPage 
                                 {...routeProps}

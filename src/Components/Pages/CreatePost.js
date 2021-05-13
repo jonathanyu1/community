@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
-import { fs } from '../../Firebase/firebase';
+import firebase, { auth, fs } from '../../Firebase/firebase';
 
 const CreatePost = (props) => {
     const [isRedirect, setIsRedirect] = useState(false);
@@ -8,6 +8,7 @@ const CreatePost = (props) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [communitySelect, setCommunitySelect] = useState('');
+    const [postId, setPostId] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
@@ -44,11 +45,45 @@ const CreatePost = (props) => {
         return tempCommunityNames;
     }
 
+    const addPostToFs = () => {
+        // return fs.collection('communities').doc(title).set({
+        //     description: description || 'Set a description!',
+        //     userCreator: auth().currentUser.displayName,
+        //     userCreatorUid: auth().currentUser.uid,
+        //     createdTimestamp: firebase.firestore.FieldValue.serverTimestamp()
+        // });
+        console.log(communitySelect);
+        return fs.collection('communities').doc(communitySelect)
+            .collection('posts').add({
+                title: title,
+                description: description,
+                community: communitySelect,
+                userCreator: auth().currentUser.displayName,
+                userCreatorUid: auth().currentUser.uid,
+                createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+            // .then((data)=>{
+            //     console.log(data.id);
+            //     setPostId(data.id);
+            // })
+        
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
-        if (title.length>2){
+        if (title.length>1){
             console.log('hi');
+            addPostToFs()
+            .then((data)=>{
+                console.log(data.id);
+                setPostId(data.id);
+                setIsRedirect(true);
+            })
+            .catch((error)=>{
+                console.log('Error with creating post:', error);
+            });
+
             // checkAvailableTitle().then((result)=>{
             //     console.log(result);
             //     if (result){
@@ -66,7 +101,7 @@ const CreatePost = (props) => {
             //     }
             // });
         } else {
-            setErrorMsg('That title is too short, please enter a title with atleast 1 character.');
+            setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
         }
     }
 
@@ -88,7 +123,7 @@ const CreatePost = (props) => {
 
     return (
         <React.Fragment>
-            {isRedirect ? <Redirect to='/'/> : 
+            {isRedirect && postId ? <Redirect to={`/c/${communitySelect}/${postId}`}/> : 
                 <div id='createPostContainer'>
                     <form
                         autoComplete="off"
@@ -131,12 +166,14 @@ const CreatePost = (props) => {
                                     id='selectCommunityNames'
                                     value={communitySelect}
                                     onChange={handleChange}
+                                    required
                                 >
+                                    <option value="" defaultValue disabled hidden>Choose here</option>
                                     {communityNames.map((commName)=>{
                                         return (
                                             (commName === 'all' ? 
                                                 null 
-                                            : 
+                                            :
                                                 <option value={`${commName}`}>
                                                     {commName}
                                                 </option>
