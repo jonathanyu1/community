@@ -7,6 +7,7 @@ const CreatePost = (props) => {
     const [communityNames, setCommunityNames] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [communitySelect, setCommunitySelect] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
@@ -70,12 +71,17 @@ const CreatePost = (props) => {
     }
 
     const handleChange = (e) => {
+        console.log(e.target.name);
         switch (e.target.name){
             case 'title':
                 setTitle(e.target.value);
                 break;
             case 'description':
                 setDescription(e.target.value);
+                break;
+            case 'communityNames':
+                console.log(e.target.value);
+                setCommunitySelect(e.target.value);
                 break;
         }
     }
@@ -120,8 +126,23 @@ const CreatePost = (props) => {
                             {isLoading ? 
                                 loadingIcon
                             : 
-                                <select name='communityNames' id='selectCommunityNames'>
-                                        {/* {communityNames.} */}
+                                <select 
+                                    name='communityNames' 
+                                    id='selectCommunityNames'
+                                    value={communitySelect}
+                                    onChange={handleChange}
+                                >
+                                    {communityNames.map((commName)=>{
+                                        return (
+                                            (commName === 'all' ? 
+                                                null 
+                                            : 
+                                                <option value={`${commName}`}>
+                                                    {commName}
+                                                </option>
+                                            )
+                                        )
+                                    })} 
                                 </select>
                             }
                         <div>
