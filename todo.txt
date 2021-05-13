@@ -5,3 +5,7 @@ header:
 Pages: 
 -setup user page (profile pic, username, bio posts)
 -setup user settings page (set profile pic, set bio)
+-setup home page (if signed in: display followed communities, if no followed then display /c/all. if not signed in, display /c/all)
+
+communities:
+-allow users to follow a community

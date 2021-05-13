@@ -9,6 +9,7 @@ import Settings from './Components/Pages/Settings';
 import UserPage from './Components/Pages/UserPage';
 import CreatePost from './Components/Pages/CreatePost';
 import CreateCommunity from './Components/Pages/CreateCommunity';
+import CommunityPage from './Components/Pages/CommunityPage';
 // import firebase, {fs, auth} from './Firebase/firebase.js';
 import {auth, fs} from './Firebase/firebase.js';
 
@@ -104,16 +105,6 @@ const App = () => {
                     <Route exact path='/signup'>
                         {isSignedIn ? <Redirect to='/'/> : <SignUp/> }
                     </Route>
-                    {/* <Route 
-                        exact path='/signup' 
-                        render={routeProps=>(
-                            <Signup
-                                {...routeProps}
-                                isSignedIn={isSignedIn}
-                            />
-                        )}
-                    /> */}
-                    {/* <Route exact path='/signin' component={SignIn}/> */}
                     <Route exact path='/signin'>
                         {isSignedIn ? <Redirect to='/'/> : <SignIn/>}
                     </Route>
@@ -133,8 +124,17 @@ const App = () => {
                                 {...routeProps}
                                 user={(getUserById(routeProps.match.params.id))}
                             />
-                    )}
-                />
+                        )} 
+                    />
+                    <Route
+                        path='/c/:id'
+                        render={routeProps=>(
+                            <CommunityPage 
+                                {...routeProps}
+                                isSignedIn={isSignedIn}
+                            />
+                        )} 
+                    />
                 </Switch>
             </div>
       </BrowserRouter>

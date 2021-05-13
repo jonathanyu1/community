@@ -74,7 +74,8 @@ const CreateCommunity = () => {
 
     return (
         <React.Fragment>
-            {isRedirect ? <Redirect to='/'/> : 
+            {/* {isRedirect ? <Redirect to='/'/> :  */}
+            {isRedirect ? <Redirect to={`/c/${title}`}/> : 
                 <div id='createCommunityContainer'>
                     <form
                         autoComplete="off"
@@ -95,7 +96,7 @@ const CreateCommunity = () => {
                             />
                         </div>
                         <div>
-                            <input
+                            <textarea
                                 placeholder="Description"
                                 name="description"
                                 onChange={handleChange}
