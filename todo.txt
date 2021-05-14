@@ -7,6 +7,8 @@ createcommunity:
 
 createpost:
 -allow images to be submitted
+-add post document id to corresponding user's field: postsMade (or query the posts on userPage usin this https://firebase.googleblog.com/2019/06/understanding-collection-group-queries.html)
+
 
 postcard:
 -count comments (including nested comments)

@@ -5,15 +5,16 @@ import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import {Link} from 'react-router-dom';
 
-const CommunityPage = (props) => {
+const CommunityAllPage = (props) => {
     const [commExists, setCommExists] = useState(true);
     const [posts, setPosts] = useState([]);
     const [commDescription, setCommDescription] = useState('');
     const [commCreator, setCommCreator] = useState('');
 
-    const handleLoadCommunityPage = async () => {
+    const handleLoadAllPage = async () => {
         try{
-            let result = await loadCommunityPagePosts();
+            await loadAllPageInfo();
+            let result = await loadAllPagePosts();
             console.log(result);
             if (result && result.length) {
                 console.log('posts exist');
@@ -24,51 +25,83 @@ const CommunityPage = (props) => {
         }
     }
 
-    const loadCommunityPagePosts = () => {
-        let tempArray = [];
-        let docRef = fs.collection('communities').doc(props.match.params.comm);
-        let result = docRef.get().then(doc=>{
+    const loadAllPageInfo = () => {
+        let result = fs.collection('communities').doc('all').get().then(doc=>{
             if (doc.exists){
                 console.log(doc.id);
                 console.log(doc.data());
                 console.log(doc.data().description);
                 setCommDescription(doc.data().description);
                 setCommCreator(doc.data().userCreator);
-                let tempResult=docRef.collection('posts').get()
-                .then(sub=>{
-                    if (sub.docs.length>0){
-                        console.log('subcollection posts exists');
-                        sub.docs.forEach((doc, index)=>{
-                            console.log(doc.data());
-                            console.log(doc.id);
-                            tempArray.push(doc.data());
-                            tempArray[index].postId=doc.id;
-                            console.log(tempArray);
-                        });
-                    } else {
-                        console.log('subcollection posts does not exist');
-                    }
-                    return tempArray;
-                });
-                return tempResult;
             } else {
                 console.log('community does not exist');
                 setCommExists(false);
                 return null;
             }
         });
+                // let tempArray = [];
+        // let docRef = fs.collection('communities').doc(props.match.params.comm);
+        // let result = docRef.get().then(doc=>{
+        //     if (doc.exists){
+        //         console.log(doc.id);
+        //         console.log(doc.data());
+        //         console.log(doc.data().description);
+        //         setCommDescription(doc.data().description);
+        //         setCommCreator(doc.data().userCreator);
+        //         let tempResult=docRef.collection('posts').get()
+        //         .then(sub=>{
+        //             if (sub.docs.length>0){
+        //                 console.log('subcollection posts exists');
+        //                 sub.docs.forEach((doc, index)=>{
+        //                     console.log(doc.data());
+        //                     console.log(doc.id);
+        //                     tempArray.push(doc.data());
+        //                     tempArray[index].postId=doc.id;
+        //                     console.log(tempArray);
+        //                 });
+        //             } else {
+        //                 console.log('subcollection posts does not exist');
+        //             }
+        //             return tempArray;
+        //         });
+        //         return tempResult;
+        //     } else {
+        //         console.log('community does not exist');
+        //         setCommExists(false);
+        //         return null;
+        //     }
+        // });
+        // return result;
+    }
+
+    const loadAllPagePosts = () => {
+        let tempArray = [];
+        let tempPosts = fs.collectionGroup('posts').orderBy('createdTimestamp', 'desc').limit(15);
+        let result = tempPosts.get().then((querySnapshot)=>{
+            let index=0;
+            querySnapshot.forEach((doc)=>{
+                console.log(doc.id, ' => ', doc.data());
+                tempArray.push(doc.data());
+                console.log(index);
+                console.log(tempArray[index]);
+                tempArray[index].postId=doc.id; 
+                index++;
+            });
+            console.log(tempArray);
+            return tempArray;
+        });
         return result;
     }
 
     useEffect(()=>{
-        handleLoadCommunityPage();
+        console.log(props);
+        handleLoadAllPage();
     },[]);
 
-    // return 404 component if not found
     return (
         <React.Fragment>
             {commExists ? 
-                <div className='pageContainer'>
+                <div className='pageContainer' id='pageAllContainer'>
                     <div className='pageContentContainer'>
                         {posts.length ? 
                             <div className='pagePostsContainer'>
@@ -84,7 +117,7 @@ const CommunityPage = (props) => {
                         }
                         <div className='sidebarContainer'>
                             <div className='sidebarTitle'>
-                                {`/c/${props.match.params.comm}`}
+                                {`/c/all`}
                             </div>
                             <div className='sidebarContent'>
                                 <div>
@@ -107,8 +140,7 @@ const CommunityPage = (props) => {
             }
             
         </React.Fragment>
-        
     )
 }
 
-export default CommunityPage;
+export default CommunityAllPage;
