@@ -10,6 +10,7 @@ const CommunityAllPage = (props) => {
     const [posts, setPosts] = useState([]);
     const [commDescription, setCommDescription] = useState('');
     const [commCreator, setCommCreator] = useState('');
+    const [postLimit, setPostLimit] = useState(10);
 
     const handleLoadAllPage = async () => {
         try{
@@ -39,44 +40,11 @@ const CommunityAllPage = (props) => {
                 return null;
             }
         });
-                // let tempArray = [];
-        // let docRef = fs.collection('communities').doc(props.match.params.comm);
-        // let result = docRef.get().then(doc=>{
-        //     if (doc.exists){
-        //         console.log(doc.id);
-        //         console.log(doc.data());
-        //         console.log(doc.data().description);
-        //         setCommDescription(doc.data().description);
-        //         setCommCreator(doc.data().userCreator);
-        //         let tempResult=docRef.collection('posts').get()
-        //         .then(sub=>{
-        //             if (sub.docs.length>0){
-        //                 console.log('subcollection posts exists');
-        //                 sub.docs.forEach((doc, index)=>{
-        //                     console.log(doc.data());
-        //                     console.log(doc.id);
-        //                     tempArray.push(doc.data());
-        //                     tempArray[index].postId=doc.id;
-        //                     console.log(tempArray);
-        //                 });
-        //             } else {
-        //                 console.log('subcollection posts does not exist');
-        //             }
-        //             return tempArray;
-        //         });
-        //         return tempResult;
-        //     } else {
-        //         console.log('community does not exist');
-        //         setCommExists(false);
-        //         return null;
-        //     }
-        // });
-        // return result;
     }
 
     const loadAllPagePosts = () => {
         let tempArray = [];
-        let tempPosts = fs.collectionGroup('posts').orderBy('createdTimestamp', 'desc').limit(15);
+        let tempPosts = fs.collectionGroup('posts').orderBy('createdTimestamp', 'desc').limit(postLimit);
         let result = tempPosts.get().then((querySnapshot)=>{
             let index=0;
             querySnapshot.forEach((doc)=>{

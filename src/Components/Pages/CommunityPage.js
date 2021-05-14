@@ -10,6 +10,7 @@ const CommunityPage = (props) => {
     const [posts, setPosts] = useState([]);
     const [commDescription, setCommDescription] = useState('');
     const [commCreator, setCommCreator] = useState('');
+    const [postLimit, setPostLimit] = useState(10);
 
     const handleLoadCommunityPage = async () => {
         try{
@@ -34,7 +35,7 @@ const CommunityPage = (props) => {
                 console.log(doc.data().description);
                 setCommDescription(doc.data().description);
                 setCommCreator(doc.data().userCreator);
-                let tempResult=docRef.collection('posts').get()
+                let tempResult=docRef.collection('posts').orderBy('createdTimestamp', 'desc').limit(postLimit).get()
                 .then(sub=>{
                     if (sub.docs.length>0){
                         console.log('subcollection posts exists');

@@ -2,9 +2,6 @@ import {fs} from '../../Firebase/firebase';
 
 export function calcTimeSincePosted(timeInSecs) {
     let currTime = Math.floor(Date.now()/1000);
-    console.log('TimeInSecs:',timeInSecs);
-    console.log('CurrTime:',currTime);
-    console.log(currTime-timeInSecs);
     let diff = currTime-timeInSecs;
     if (diff>31536000){
         // post in years
