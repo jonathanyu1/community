@@ -4,16 +4,18 @@
 
 :root{
     --navUnderlineColor: rgba(19, 19, 19, 0.1);
+    --backgroundColorLight: rgb(241, 240, 240);
+    --mainFont: 'Montserrat', sans-serif;
 }
 
-html, body, #root{
+html, body, #root, #appContainer{
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
     border: 0;
     /* background-color: var(--main-background-color); */
-    /* font-family: var(--font); */
+    font-family: var(--mainFont);
 }
 
 /* Nav */ 
@@ -67,4 +69,98 @@ nav{
     .navTabs{
         width: 100%;
     }
+}
+
+/* Community Page */ 
+
+.pageContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+}
+
+.pageContentContainer{
+    margin: 0 7%;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    column-gap: 40px;
+    /* width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 30px;
+    gap: 30px;
+    padding: 20px 0; */
+}
+
+.pagePostsContainer, .pageEmptyContainer{
+}
+
+.sidebarContainer{
+    background-color: white;
+    text-align: center;
+}
+
+@media (max-width: 800px){
+    .sidebarContainer{
+        display: none;
+    }
+}
+
+.sidebarTitle{
+    font-size: 25px;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.sidebarContent{
+
+}
+
+
+/* Post Card */
+
+.postCardContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    padding: 20px 0 20px 30px;
+    margin-bottom: 20px;
+}
+
+.postCardContainer a{
+    text-decoration: none;
+}
+
+.postCardContainer a:hover{
+    text-decoration: underline;
+}
+
+.postCardTitle{
+    font-size: 30px;
+    font-weight: 700;
+    padding-bottom: 5px;
+}
+
+.postCardTitle a{
+    color: blue;
+}
+
+.postCardSubmission{
+    color: rgb(66, 65, 65);
+}
+
+.postCardSubmission a{
+    color: #369;
+}
+
+.postCardLinks{
+    
+}
+
+.postCardLinks a{
+    font-weight: 700;
+    color: rgb(77, 76, 76);
 }

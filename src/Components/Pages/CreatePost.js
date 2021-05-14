@@ -61,7 +61,9 @@ const CreatePost = (props) => {
                 userCreator: auth().currentUser.displayName,
                 userCreatorUid: auth().currentUser.uid,
                 createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            })
+                scoreUp: [],
+                scoreDown: []
+            });
     }
 
     const handleSubmit = (e) => {

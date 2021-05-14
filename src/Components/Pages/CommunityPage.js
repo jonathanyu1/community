@@ -3,10 +3,13 @@ import NotFound from './NotFound';
 import PostCard from '../PostCard';
 import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
+import {Link} from 'react-router-dom';
 
 const CommunityPage = (props) => {
     const [commExists, setCommExists] = useState(true);
     const [posts, setPosts] = useState([]);
+    const [commDescription, setCommDescription] = useState('');
+    const [commCreator, setCommCreator] = useState('');
 
     const handleLoadCommunityPage = async () => {
         try{
@@ -27,13 +30,20 @@ const CommunityPage = (props) => {
         let result = docRef.get().then(doc=>{
             if (doc.exists){
                 console.log(doc.id);
+                console.log(doc.data());
+                console.log(doc.data().description);
+                setCommDescription(doc.data().description);
+                setCommCreator(doc.data().userCreator);
                 let tempResult=docRef.collection('posts').get()
                 .then(sub=>{
                     if (sub.docs.length>0){
                         console.log('subcollection posts exists');
-                        sub.docs.forEach((doc)=>{
+                        sub.docs.forEach((doc, index)=>{
                             console.log(doc.data());
+                            console.log(doc.id);
                             tempArray.push(doc.data());
+                            tempArray[index].postId=doc.id;
+                            console.log(tempArray);
                         });
                     } else {
                         console.log('subcollection posts does not exist');
@@ -58,20 +68,39 @@ const CommunityPage = (props) => {
     return (
         <React.Fragment>
             {commExists ? 
-                <div id='communityPageProps'>
-                    {posts.length ? 
-                        <div id='communityPagePostsContainer'>
-                            {posts.map((post)=>{
-                                console.log(post);
-                                return <PostCard post={post} key={uuidv4()}/>
-                            })}
+                <div className='pageContainer'>
+                    <div className='pageContentContainer'>
+                        {posts.length ? 
+                            <div className='pagePostsContainer'>
+                                {posts.map((post)=>{
+                                    console.log(post);
+                                    return <PostCard post={post} key={uuidv4()}/>
+                                })}
+                            </div>
+                        : 
+                            <div className='pageEmptyContainer'>
+                                No posts. Be the first to post here!
+                            </div>
+                        }
+                        <div className='sidebarContainer'>
+                            <div className='sidebarTitle'>
+                                {props.match.params.comm}
+                            </div>
+                            <div className='sidebarContent'>
+                                <div>
+                                    {commDescription}
+                                </div>
+                                <div>
+                                    Created by: 
+                                    <Link to={`/user/${commCreator}`}>
+                                        {commCreator}
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
-                    : 
-                        <div id='communityPageEmptyContainer'>
-                            No posts. Be the first to post here!
-                        </div>
-                    }
+                    </div>
                 </div>
+                
             :
                 <NotFound/>
             }
