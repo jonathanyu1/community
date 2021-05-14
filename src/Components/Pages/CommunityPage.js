@@ -87,6 +87,7 @@ const CommunityPage = (props) => {
                             <div className='sidebarTitle'>
                                 {`/c/${props.match.params.comm}`}
                             </div>
+                            <br></br>
                             <div className='sidebarContent'>
                                 <div>
                                     {commDescription}

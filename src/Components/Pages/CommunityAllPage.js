@@ -4,6 +4,7 @@ import PostCard from '../PostCard';
 import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import {Link} from 'react-router-dom';
+import HomeSidebar from '../HomeSidebar';
 
 const CommunityAllPage = (props) => {
     const [commExists, setCommExists] = useState(true);
@@ -62,7 +63,6 @@ const CommunityAllPage = (props) => {
     }
 
     useEffect(()=>{
-        console.log(props);
         handleLoadAllPage();
     },[]);
 
@@ -83,23 +83,29 @@ const CommunityAllPage = (props) => {
                                 No posts. Be the first to post here!
                             </div>
                         }
-                        <div className='sidebarContainer'>
-                            <div className='sidebarTitle'>
-                                {`/c/all`}
-                            </div>
-                            <div className='sidebarContent'>
-                                <div>
-                                    {commDescription}
+                        {props.isHome ? 
+                            <HomeSidebar />
+                        : 
+                            <div className='sidebarContainer'>
+                                <div className='sidebarTitle'>
+                                    {`/c/all`}
                                 </div>
-                                <div>
-                                    <br></br>
-                                    {`Created by: `}
-                                    <Link to={`/user/${commCreator}`}>
-                                        {commCreator}
-                                    </Link>
+                                <br></br>
+                                <div className='sidebarContent'>
+                                    <div>
+                                        {commDescription}
+                                    </div>
+                                    <div>
+                                        <br></br>
+                                        {`Created by: `}
+                                        <Link to={`/user/${commCreator}`}>
+                                            {commCreator}
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                        
                     </div>
                 </div>
                 
