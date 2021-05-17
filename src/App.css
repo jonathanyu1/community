@@ -81,7 +81,7 @@ nav{
 }
 
 .pageContentContainer{
-    margin: 0 7%;
+    margin: 0 5%;
     display: grid;
     grid-template-columns: 4fr 1fr;
     column-gap: 40px;
