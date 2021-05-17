@@ -6,7 +6,9 @@ const CommunitySidebar = (props) => {
     return (
         <div className='sidebarContainer'>
             <div className='sidebarTitle'>
-                {`/c/${props.title}`}
+                <Link to={`/c/${props.title}`}>
+                    {`/c/${props.title}`}
+                </Link>
             </div>
             <br></br>
             <div className='sidebarContent'>

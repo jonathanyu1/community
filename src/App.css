@@ -97,6 +97,8 @@ nav{
 .pagePostsContainer, .pageEmptyContainer{
 }
 
+/* Sidebar */
+
 .sidebarContainer{
     background-color: white;
     text-align: center;
@@ -114,6 +116,11 @@ nav{
     font-size: 25px;
     font-weight: 700;
     /* text-decoration: underline; */
+}
+
+.sidebarTitle a{
+    text-decoration: none;
+    color: black;
 }
 
 .sidebarContent{

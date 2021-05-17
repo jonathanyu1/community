@@ -5,6 +5,7 @@ import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import {Link} from 'react-router-dom';
 import HomeSidebar from '../HomeSidebar';
+import CommunitySidebar from '../CommunitySidebar';
 
 const CommunityAllPage = (props) => {
     const [commExists, setCommExists] = useState(true);
@@ -86,24 +87,29 @@ const CommunityAllPage = (props) => {
                         {props.isHome ? 
                             <HomeSidebar />
                         : 
-                            <div className='sidebarContainer'>
-                                <div className='sidebarTitle'>
-                                    {`/c/all`}
-                                </div>
-                                <br></br>
-                                <div className='sidebarContent'>
-                                    <div>
-                                        {commDescription}
-                                    </div>
-                                    <div>
-                                        <br></br>
-                                        {`Created by: `}
-                                        <Link to={`/user/${commCreator}`}>
-                                            {commCreator}
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
+                            // <div className='sidebarContainer'>
+                            //     <div className='sidebarTitle'>
+                            //         {`/c/all`}
+                            //     </div>
+                            //     <br></br>
+                            //     <div className='sidebarContent'>
+                            //         <div>
+                            //             {commDescription}
+                            //         </div>
+                            //         <div>
+                            //             <br></br>
+                            //             {`Created by: `}
+                            //             <Link to={`/user/${commCreator}`}>
+                            //                 {commCreator}
+                            //             </Link>
+                            //         </div>
+                            //     </div>
+                            // </div>
+                            <CommunitySidebar
+                                title='all'
+                                description={commDescription}
+                                creator={commCreator}
+                            />
                         }
                         
                     </div>
