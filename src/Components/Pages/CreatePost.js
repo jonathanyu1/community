@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
 import firebase, { auth, fs } from '../../Firebase/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 const CreatePost = (props) => {
     const [isRedirect, setIsRedirect] = useState(false);
@@ -64,6 +65,38 @@ const CreatePost = (props) => {
             });
     }
 
+    const addImgPostToFs = () => {
+        console.log(communitySelect);
+        return fs.collection('communities').doc(communitySelect)
+        .collection('posts').add({
+            title: title,
+            imgUrl: loadingImgUrl,
+            description: description,
+            community: communitySelect,
+            userCreator: auth().currentUser.displayName,
+            userCreatorUid: auth().currentUser.uid,
+            createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            scoreUp: [],
+            scoreDown: []
+        }).then(function(postRef){
+            console.log(postRef.id);
+            setPostId(postRef.id);
+            let filePath = auth().currentUser.uid + '/' + postRef.id + '/' + imgFile.name;
+            return firebase.storage().ref(filePath).put(imgFile).then(function(fileSnapshot) {
+                // Generate a public URL for the file.
+                return fileSnapshot.ref.getDownloadURL().then((url) => {
+                  // Update the chat message placeholder with the image's URL.
+                  return postRef.update({
+                    imgUrl: url,
+                    storageUri: fileSnapshot.metadata.fullPath
+                  });
+                });
+              });
+        }).catch((error)=>{
+            console.log('Error uploading post with image:',error);
+        });
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
@@ -72,21 +105,6 @@ const CreatePost = (props) => {
         } else {
             handleTextSubmit();
         }
-        // if (title.length>1){
-        //     console.log('hi');
-        //     addPostToFs()
-        //     .then((data)=>{
-        //         // URL.revokeObjectURL(imgFileSrc);
-        //         console.log(data.id);
-        //         setPostId(data.id);
-        //         setIsRedirect(true);
-        //     })
-        //     .catch((error)=>{
-        //         console.log('Error with creating post:', error);
-        //     });
-        // } else {
-        //     setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
-        // }
     }
 
     const handleTextSubmit = () => {
@@ -124,57 +142,24 @@ const CreatePost = (props) => {
         }
     }
 
-    const addImgPostToFs = () => {
-        console.log(communitySelect);
-        return fs.collection('communities').doc(communitySelect)
-        .collection('posts').add({
-            title: title,
-            imgUrl: loadingImgUrl,
-            description: description,
-            community: communitySelect,
-            userCreator: auth().currentUser.displayName,
-            userCreatorUid: auth().currentUser.uid,
-            createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            scoreUp: [],
-            scoreDown: []
-        }).then(function(postRef){
-            console.log(postRef.id);
-            setPostId(postRef.id);
-            let filePath = auth().currentUser.uid + '/' + postRef.id + '/' + imgFile.name;
-            return firebase.storage().ref(filePath).put(imgFile).then(function(fileSnapshot) {
-                // 3 - Generate a public URL for the file.
-                return fileSnapshot.ref.getDownloadURL().then((url) => {
-                  // 4 - Update the chat message placeholder with the image's URL.
-                  return postRef.update({
-                    imgUrl: url,
-                    storageUri: fileSnapshot.metadata.fullPath
-                  });
-                });
-              });
-        }).catch((error)=>{
-            console.log('Error uploading post with image:',error);
-        });
-    }
-    
-
     // const handleSubmit = (e) => {
     //     e.preventDefault();
     //     setErrorMsg('');
-    //     if ((imgFile && !imgFile.type.match('image.*')) || !imgFile ){
-    //         console.log('hi');
-    //         addPostToFs()
-    //         .then((data)=>{
-    //             URL.revokeObjectURL(imgFileSrc);
-    //             console.log(data.id);
-    //             setPostId(data.id);
-    //             setIsRedirect(true);
-    //         })
-    //         .catch((error)=>{
-    //             console.log('Error with creating post:', error);
-    //         });
-    //     } else {
-    //         setErrorMsg('Invalid file upload, please upload a valid image.');
-    //     }
+        // if (title.length>1){
+        //     console.log('hi');
+        //     addPostToFs()
+        //     .then((data)=>{
+        //         // URL.revokeObjectURL(imgFileSrc);
+        //         console.log(data.id);
+        //         setPostId(data.id);
+        //         setIsRedirect(true);
+        //     })
+        //     .catch((error)=>{
+        //         console.log('Error with creating post:', error);
+        //     });
+        // } else {
+        //     setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
+        // }
     // }
 
     const handleChangeImage = (e) => {
@@ -267,7 +252,7 @@ const CreatePost = (props) => {
                                             (commName === 'all' ? 
                                                 null 
                                             :
-                                                <option value={`${commName}`}>
+                                                <option value={`${commName}`} key={uuidv4()}>
                                                     {commName}
                                                 </option>
                                             )
