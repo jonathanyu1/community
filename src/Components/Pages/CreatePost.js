@@ -15,6 +15,7 @@ const CreatePost = (props) => {
     const [errorMsg, setErrorMsg] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
+    const loadingImgUrl = 'https://www.google.com/images/spin-32.gif?a';
 
     useEffect(()=>{
         // setCommunityNames(loadCommunityNames());
@@ -49,12 +50,6 @@ const CreatePost = (props) => {
     }
 
     const addPostToFs = () => {
-        // return fs.collection('communities').doc(title).set({
-        //     description: description || 'Set a description!',
-        //     userCreator: auth().currentUser.displayName,
-        //     userCreatorUid: auth().currentUser.uid,
-        //     createdTimestamp: firebase.firestore.FieldValue.serverTimestamp()
-        // });
         console.log(communitySelect);
         return fs.collection('communities').doc(communitySelect)
             .collection('posts').add({
@@ -72,11 +67,34 @@ const CreatePost = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
+        if (imgFile) {
+            handleImgSubmit();
+        } else {
+            handleTextSubmit();
+        }
+        // if (title.length>1){
+        //     console.log('hi');
+        //     addPostToFs()
+        //     .then((data)=>{
+        //         // URL.revokeObjectURL(imgFileSrc);
+        //         console.log(data.id);
+        //         setPostId(data.id);
+        //         setIsRedirect(true);
+        //     })
+        //     .catch((error)=>{
+        //         console.log('Error with creating post:', error);
+        //     });
+        // } else {
+        //     setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
+        // }
+    }
+
+    const handleTextSubmit = () => {
         if (title.length>1){
-            console.log('hi');
+            console.log('text submit');
             addPostToFs()
             .then((data)=>{
-                URL.revokeObjectURL(imgFileSrc);
+                // URL.revokeObjectURL(imgFileSrc);
                 console.log(data.id);
                 setPostId(data.id);
                 setIsRedirect(true);
@@ -86,6 +104,85 @@ const CreatePost = (props) => {
             });
         } else {
             setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
+        }
+    }
+
+    const handleImgSubmit = () => {
+        if (imgFile && imgFile.type.match('image.*')){
+            console.log('img submit');
+            addImgPostToFs()
+            .then((data)=>{
+                URL.revokeObjectURL(imgFileSrc);
+                // setPostId(data.id);
+                setIsRedirect(true);
+            })
+            .catch((error)=>{
+                console.log('Error with creating post:', error);
+            });
+        } else {
+            setErrorMsg('Invalid file upload, please upload a valid image.');
+        }
+    }
+
+    const addImgPostToFs = () => {
+        console.log(communitySelect);
+        return fs.collection('communities').doc(communitySelect)
+        .collection('posts').add({
+            title: title,
+            imgUrl: loadingImgUrl,
+            description: description,
+            community: communitySelect,
+            userCreator: auth().currentUser.displayName,
+            userCreatorUid: auth().currentUser.uid,
+            createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            scoreUp: [],
+            scoreDown: []
+        }).then(function(postRef){
+            console.log(postRef.id);
+            setPostId(postRef.id);
+            let filePath = auth().currentUser.uid + '/' + postRef.id + '/' + imgFile.name;
+            return firebase.storage().ref(filePath).put(imgFile).then(function(fileSnapshot) {
+                // 3 - Generate a public URL for the file.
+                return fileSnapshot.ref.getDownloadURL().then((url) => {
+                  // 4 - Update the chat message placeholder with the image's URL.
+                  return postRef.update({
+                    imgUrl: url,
+                    storageUri: fileSnapshot.metadata.fullPath
+                  });
+                });
+              });
+        }).catch((error)=>{
+            console.log('Error uploading post with image:',error);
+        });
+    }
+    
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setErrorMsg('');
+    //     if ((imgFile && !imgFile.type.match('image.*')) || !imgFile ){
+    //         console.log('hi');
+    //         addPostToFs()
+    //         .then((data)=>{
+    //             URL.revokeObjectURL(imgFileSrc);
+    //             console.log(data.id);
+    //             setPostId(data.id);
+    //             setIsRedirect(true);
+    //         })
+    //         .catch((error)=>{
+    //             console.log('Error with creating post:', error);
+    //         });
+    //     } else {
+    //         setErrorMsg('Invalid file upload, please upload a valid image.');
+    //     }
+    // }
+
+    const handleChangeImage = (e) => {
+        if (e.target.files && e.target.files[0]){
+            console.log(e.target.files[0].type.match('image.*'));
+            setImgFile(e.target.files[0]);
+            setImgFileSrc(URL.createObjectURL(e.target.files[0]));
+            // setImgFileName(e.target.files[0].name);
         }
     }
 
@@ -102,20 +199,6 @@ const CreatePost = (props) => {
                 console.log(e.target.value);
                 setCommunitySelect(e.target.value);
                 break;
-        }
-    }
-
-    const handleChangeImage = (e) => {
-        if (e.target.files && e.target.files[0]){
-            console.log(e);
-            console.log(e.target.name);
-            console.log(e.target.value);
-            console.log(e.target.files);
-            console.log(e.target.files[0]);
-            console.log(e.target.files[0].name);
-            setImgFile(e.target.files[0]);
-            setImgFileSrc(URL.createObjectURL(e.target.files[0]));
-            // setImgFileName(e.target.files[0].name);
         }
     }
 
@@ -140,7 +223,7 @@ const CreatePost = (props) => {
                                 type="text"
                                 onChange={handleChange}
                                 value={title}
-                                minLength='0'
+                                minLength='2'
                                 required
                             />
                         </div>

@@ -176,3 +176,10 @@ nav{
     font-weight: 700;
     color: rgb(77, 76, 76);
 }
+
+/* create post page */ 
+
+.imgUploadPreview{
+    height: 200px;
+    width: 200px;
+}
