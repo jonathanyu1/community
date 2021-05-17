@@ -183,3 +183,12 @@ nav{
     height: 200px;
     width: 200px;
 }
+
+/* post page */ 
+
+.postPageContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+}

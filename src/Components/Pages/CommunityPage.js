@@ -3,7 +3,8 @@ import NotFound from './NotFound';
 import PostCard from '../PostCard';
 import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
+import CommunitySidebar from '../CommunitySidebar';
 
 const CommunityPage = (props) => {
     const [commExists, setCommExists] = useState(true);
@@ -83,7 +84,7 @@ const CommunityPage = (props) => {
                                 No posts. Be the first to post here!
                             </div>
                         }
-                        <div className='sidebarContainer'>
+                        {/* <div className='sidebarContainer'>
                             <div className='sidebarTitle'>
                                 {`/c/${props.match.params.comm}`}
                             </div>
@@ -100,7 +101,12 @@ const CommunityPage = (props) => {
                                     </Link>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+                        <CommunitySidebar 
+                            title={props.match.params.comm}
+                            description={commDescription}
+                            creator={commCreator}
+                        />
                     </div>
                 </div>
                 
