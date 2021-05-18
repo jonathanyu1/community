@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react';
 import CommunitySidebar from '../CommunitySidebar';
 import NotFound from './NotFound';
 import {calcTimeSincePosted} from '../Helpers/helperFunctions';
-import {fs} from '../../Firebase/firebase';
+import firebase, {fs, auth} from '../../Firebase/firebase';
 import {Link} from 'react-router-dom';
 
 
@@ -21,7 +21,48 @@ const PostPage = (props) => {
     const [sidebarDescription, setSidebarDescription] = useState('');
     const [sidebarCreator, setSidebarCreator] = useState('');
     const [showImage, setShowImage] = useState(true);
+    const [commentInput, setCommentInput] = useState('');
+    const [commentError, setCommentError] = useState('');
     const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
+
+    const handleCommentInput = (e) => {
+        setCommentInput(e.target.value);
+    }
+
+    const handleSubmitComment = () => {
+        if (auth().currentUser){
+            console.log(auth().currentUser);
+            setCommentError('');
+            submitComment()
+            .then((data)=>{
+                console.log(data.id);
+                // setCommentInput('');
+                updatePostCommentList(data.id);
+                setCommentInput('');
+            });
+        } else {
+            setCommentError('Please sign in to comment.');
+        }
+    }
+
+    const submitComment = () => {
+        return fs.collection('communities').doc(props.match.params.comm)
+        .collection('posts').doc(props.match.params.id)
+        .collection('comments').add({
+            userCreator: auth().currentUser.displayName,
+            userCreatorUid: auth().currentUser.uid,
+            createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            postParent:'',
+            description: commentInput
+        });
+    }
+
+    const updatePostCommentList = (id) => {
+        return fs.collection('communities').doc(props.match.params.comm)
+        .collection('posts').doc(props.match.params.id).update({
+            commentList: firebase.firestore.FieldValue.arrayUnion(id)
+        });
+    }
 
     const loadSidebarContent = () => {
         let docRef =fs.collection('communities').doc(props.match.params.comm);
@@ -97,42 +138,78 @@ const PostPage = (props) => {
                 <div className='postPageContainer'>
                     <div className='pageContentContainer'>
                         {Object.keys(postDetails).length ? 
-                            <div className='postPageContent'>
-                                <div className='postPageTitle'>
-                                    {postDetails.title}
-                                </div>
-                                <div className='postCardSubmission'>
-                                    {postDetails.imgUrl && 
-                                    <React.Fragment>
-                                        <i className={`fa fa-times ${showImage ? 'show' : 'hide' }`} aria-hidden="true" onClick={()=>{setShowImage(false)}}></i>
-                                        <i className={`fa fa-file-image-o ${showImage ? 'hide' : 'show' }`} aria-hidden="true" onClick={()=>{setShowImage(true)}}></i>
-                                    </React.Fragment>
+                            <div classNAme='postPageLeftContainer'>
+                                <div className='postPageContent'>
+                                    <div className='postPageTitle'>
+                                        {postDetails.title}
+                                    </div>
+                                    <div className='postCardSubmission'>
+                                        {postDetails.imgUrl && 
+                                        <React.Fragment>
+                                            <i className={`fa fa-times ${showImage ? 'show' : 'hide' }`} aria-hidden="true" onClick={()=>{setShowImage(false)}}></i>
+                                            <i className={`fa fa-file-image-o ${showImage ? 'hide' : 'show' }`} aria-hidden="true" onClick={()=>{setShowImage(true)}}></i>
+                                        </React.Fragment>
+                                        }
+                                        {`Submitted ${calcTimeSincePosted(postDetails.timestamp)} ago by `}
+                                        {
+                                            <Link to={`/user/${postDetails.postCreator}`}>
+                                                {postDetails.postCreator}
+                                            </Link>
+                                        }
+                                        {` to `}
+                                        {
+                                            <Link to={`/c/${props.match.params.comm}`}>
+                                                /c/{props.match.params.comm}
+                                            </Link>
+                                        }
+                                    </div>
+                                    {postDetails.imgUrl &&                                         
+                                            <img 
+                                                className={`postPageImg ${showImage ? 'show' : 'hide' }`} 
+                                                src={postDetails.imgUrl} alt={postDetails.title} 
+                                                onClick={()=>{window.open(postDetails.imgUrl)}}
+                                            />
                                     }
-                                    {`Submitted ${calcTimeSincePosted(postDetails.timestamp)} ago by `}
-                                    {
-                                        <Link to={`/user/${postDetails.postCreator}`}>
-                                            {postDetails.postCreator}
+                                    {postDetails.description &&
+                                    <div className='postPageDescription'>
+                                        {postDetails.description}
+                                    </div>
+                                    }
+                                    {auth().currentUser ? 
+                                    <div className='postAddCommentContainer'>
+                                        <textarea
+                                            value={commentInput}
+                                            onChange={handleCommentInput}
+                                            placeholder='Comment here!'
+                                            className='postAddCommentInput'
+                                            required
+                                        >
+                                        </textarea>
+                                        <div className='postCommentErrorMsg'>
+                                            {commentError}
+                                        </div>
+                                        <button
+                                            className='btnSubmitComment'
+                                            onClick={handleSubmitComment}
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                    :
+                                    <div className='postSignInContainer'>
+                                        <span className='postSignInPrompt'>
+                                            Sign in or Sign up to comment
+                                        </span>
+                                        <Link to={`/signin`}>
+                                            Sign In
                                         </Link>
-                                    }
-                                    {` to `}
-                                    {
-                                        <Link to={`/c/${props.match.params.comm}`}>
-                                            /c/{props.match.params.comm}
+                                        <Link to={`/signup`}>
+                                            Sign Up
                                         </Link>
+                                    </div>
                                     }
                                 </div>
-                                {postDetails.imgUrl &&                                         
-                                        <img 
-                                            className={`postPageImg ${showImage ? 'show' : 'hide' }`} 
-                                            src={postDetails.imgUrl} alt={postDetails.title} 
-                                            onClick={()=>{window.open(postDetails.imgUrl)}}
-                                        />
-                                }
-                                {postDetails.description &&
-                                <div className='postPageDescription'>
-                                    {postDetails.description}
-                                </div>
-                                }
+                                
                             </div>
                         :
                             loadingIcon

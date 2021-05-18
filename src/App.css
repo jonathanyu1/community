@@ -6,6 +6,9 @@
     --navUnderlineColor: rgba(19, 19, 19, 0.1);
     --backgroundColorLight: rgb(241, 240, 240);
     --iconExpandBgColor: rgb(247, 247, 247);
+    --iconHover: rgb(233, 233, 233);
+    --submitBtnColor: rgb(0, 0, 255);
+    --submitBtnHoverColor: rgb(50, 50, 252);
     --mainFont: 'Montserrat', sans-serif;
 }
 
@@ -34,6 +37,10 @@ html, body, #root, #appContainer{
     padding: 7px;
     margin: 0 5px 5px 0;
     border-radius: 5px;
+}
+
+.fa-times:hover, .fa-file-image-o:hover, .fa-list:hover{
+    background-color: var(--iconHover);
 }
 
 
@@ -257,4 +264,50 @@ nav{
 
 .postPageDescription{
     font-size: 20px;
+}
+
+.postAddCommentContainer{
+    margin: 3% 0 1%;
+}
+
+.postAddCommentInput{
+    width: 50%;
+    height: 100px;
+    resize: none;
+}
+
+.btnSubmitComment{
+    display: block;
+    width: auto;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--submitBtnColor);
+    color: white;
+}
+
+.btnSubmitComment:hover{
+    cursor: pointer;
+    background-color: var(--submitBtnHoverColor);
+}
+
+.postSignInContainer{
+    margin: 3% 0 1%;
+    padding: 20px;
+    border: 1px solid var(--backgroundColorLight);
+}
+
+.postSignInContainer span{
+    font-size: 20px;
+    margin-right: 5%;
+}
+
+.postSignInContainer a{
+    margin-right: 2%;
+    background-color: var(--submitBtnColor);
+    color: white;
+    border: 1px solid blue;
+    border-radius: 10px;
+    padding: 10px;
 }

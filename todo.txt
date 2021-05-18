@@ -6,14 +6,11 @@ createcommunity:
 -prevent non-letters/number input (https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string)
 
 createpost:
--allow images to be submitted
 -add post document id to corresponding user's field: postsMade (or query the posts on userPage usin this https://firebase.googleblog.com/2019/06/understanding-collection-group-queries.html)
-
 
 postcard:
 -count comments (including nested comments)
 -setup score (display score, upvote downvote)
--display image preview
 
 postpage:
 -nested comments: (https://stackoverflow.com/questions/47997748/is-possible-to-check-if-a-collection-or-sub-collection-exists)
@@ -21,7 +18,6 @@ postpage:
 Pages: 
 -setup user page (profile pic, username, bio posts)
 -setup user settings page (set profile pic, set bio)
--setup home page (if signed in: display followed communities, if no followed then display /c/all. if not signed in, display /c/all)
 
 communities:
 -allow users to follow a community
