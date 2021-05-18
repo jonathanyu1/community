@@ -5,6 +5,7 @@
 :root{
     --navUnderlineColor: rgba(19, 19, 19, 0.1);
     --backgroundColorLight: rgb(241, 240, 240);
+    --iconExpandBgColor: rgb(247, 247, 247);
     --mainFont: 'Montserrat', sans-serif;
 }
 
@@ -26,10 +27,10 @@ html, body, #root, #appContainer{
     display: inline-block;
 }
 
-.fa-times, .fa-file-image-o{
+.fa-times, .fa-file-image-o, .fa-list{
     font-size: 25px;
     cursor: pointer;
-    background-color: var(--backgroundColorLight);
+    background-color: var(--iconExpandBgColor);
     padding: 7px;
     margin: 0 5px 5px 0;
     border-radius: 5px;
@@ -159,8 +160,8 @@ nav{
 /* Post Card */
 
 .postCardContainer{
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     width: 100%;
     background-color: white;
     padding: 20px 30px;
@@ -185,6 +186,11 @@ nav{
     color: blue;
 }
 
+.postCardDetails{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .postCardSubmission{
     color: rgb(66, 65, 65);
 }
@@ -200,6 +206,13 @@ nav{
 .postCardLinks a{
     font-weight: 700;
     color: rgb(77, 76, 76);
+}
+
+.postCardDescription{
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 10px;
+    width: 100%;
 }
 
 /* create post page */ 
