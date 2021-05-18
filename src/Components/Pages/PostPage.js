@@ -138,7 +138,7 @@ const PostPage = (props) => {
                 <div className='postPageContainer'>
                     <div className='pageContentContainer'>
                         {Object.keys(postDetails).length ? 
-                            <div classNAme='postPageLeftContainer'>
+                            <div className='postPageLeftContainer'>
                                 <div className='postPageContent'>
                                     <div className='postPageTitle'>
                                         {postDetails.title}

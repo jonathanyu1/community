@@ -54,7 +54,12 @@ const PostCard = (props) => {
                     <div className='postCardLinks'>
                         <Link to={`/c/${props.post.community}/${props.post.postId}`}>
                             {/* Need to figure out counting nesting comments here later */}
-                            {`Comments`}
+                            {props.post.commentList && props.post.commentList.length ? 
+                                `${props.post.commentList.length} comment${props.post.commentList.length>1 ? 's':''}`
+                            :
+                                `0 comments`
+                            }
+                            
                         </Link>
                         {/* <div onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}>
                             Share
