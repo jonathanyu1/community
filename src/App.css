@@ -18,6 +18,24 @@ html, body, #root, #appContainer{
     font-family: var(--mainFont);
 }
 
+.hide{
+    display: none;
+}
+
+.show{
+    display: inline-block;
+}
+
+.fa-times, .fa-file-image-o{
+    font-size: 25px;
+    cursor: pointer;
+    background-color: var(--backgroundColorLight);
+    padding: 7px;
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+}
+
+
 /* Nav */ 
 
 #navContainer{
@@ -81,7 +99,7 @@ nav{
 }
 
 .pageContentContainer{
-    margin: 0 5%;
+    margin: 0 3%;
     display: grid;
     grid-template-columns: 4fr 1fr;
     column-gap: 40px;
@@ -145,7 +163,7 @@ nav{
     flex-direction: column;
     width: 100%;
     background-color: white;
-    padding: 20px 0 20px 30px;
+    padding: 20px 30px;
     margin-bottom: 20px;
 }
 
@@ -198,4 +216,32 @@ nav{
     min-height: 90vh;
     padding-top: 2vh;
     background-color: var(--backgroundColorLight);
+}
+
+.postPageContent{
+    background-color: white;
+    width: 100%;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+}
+
+.postPageContent a{
+    text-decoration: none;
+}
+
+.postPageTitle{
+    font-size: 30px;
+    font-weight: 700;
+    padding-bottom: 5px;
+}
+
+.postPageImg{
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.postPageDescription{
+    font-size: 20px;
 }

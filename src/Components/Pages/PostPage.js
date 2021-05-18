@@ -1,7 +1,10 @@
 import React, {useState,useEffect} from 'react';
 import CommunitySidebar from '../CommunitySidebar';
-import {fs} from '../../Firebase/firebase';
 import NotFound from './NotFound';
+import {calcTimeSincePosted} from '../Helpers/helperFunctions';
+import {fs} from '../../Firebase/firebase';
+import {Link} from 'react-router-dom';
+
 
 const PostPage = (props) => {
     const [postExists, setPostExists] = useState(true);
@@ -17,6 +20,8 @@ const PostPage = (props) => {
     const [postDetails, setPostDetails] = useState({});
     const [sidebarDescription, setSidebarDescription] = useState('');
     const [sidebarCreator, setSidebarCreator] = useState('');
+    const [showImage, setShowImage] = useState(true);
+    const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
 
     const loadSidebarContent = () => {
         let docRef =fs.collection('communities').doc(props.match.params.comm);
@@ -90,16 +95,48 @@ const PostPage = (props) => {
         <React.Fragment>
             {postExists ?
                 <div className='postPageContainer'>
-                    {/* <div id='postPageCommunity'>
-                        {props.match.params.comm}
-                    </div>
-                    <div id='postPageId'>
-                        {props.match.params.id}
-                    </div> */}
                     <div className='pageContentContainer'>
-                        <div className='pagePostContainer'>
-
-                        </div>
+                        {Object.keys(postDetails).length ? 
+                            <div className='postPageContent'>
+                                <div className='postPageTitle'>
+                                    {postDetails.title}
+                                </div>
+                                <div className='postCardSubmission'>
+                                    {postDetails.imgUrl && 
+                                    <React.Fragment>
+                                        <i className={`fa fa-times ${showImage ? 'show' : 'hide' }`} aria-hidden="true" onClick={()=>{setShowImage(false)}}></i>
+                                        <i className={`fa fa-file-image-o ${showImage ? 'hide' : 'show' }`} aria-hidden="true" onClick={()=>{setShowImage(true)}}></i>
+                                    </React.Fragment>
+                                    }
+                                    {`Submitted ${calcTimeSincePosted(postDetails.timestamp)} ago by `}
+                                    {
+                                        <Link to={`/user/${postDetails.postCreator}`}>
+                                            {postDetails.postCreator}
+                                        </Link>
+                                    }
+                                    {` to `}
+                                    {
+                                        <Link to={`/c/${props.match.params.comm}`}>
+                                            /c/{props.match.params.comm}
+                                        </Link>
+                                    }
+                                </div>
+                                {postDetails.imgUrl &&                                         
+                                        <img 
+                                            className={`postPageImg ${showImage ? 'show' : 'hide' }`} 
+                                            src={postDetails.imgUrl} alt={postDetails.title} 
+                                            onClick={()=>{window.open(postDetails.imgUrl)}}
+                                        />
+                                }
+                                {postDetails.description &&
+                                <div className='postPageDescription'>
+                                    {postDetails.description}
+                                </div>
+                                }
+                            </div>
+                        :
+                            loadingIcon
+                        }
                         <CommunitySidebar
                             title={props.match.params.comm}
                             description={sidebarDescription}

@@ -33,7 +33,7 @@ const PostCard = (props) => {
                 {` to `}
                 {
                     <Link to={`/c/${props.post.community}`}>
-                        {props.post.community}
+                        /c/{props.post.community}
                     </Link>
                 }
             </div>
