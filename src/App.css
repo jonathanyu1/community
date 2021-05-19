@@ -10,6 +10,8 @@
     --submitBtnColor: rgb(0, 0, 255);
     --submitBtnHoverColor: rgb(50, 50, 252);
     --mainFont: 'Montserrat', sans-serif;
+    --upvote: red;
+    --downvote: blue;
 }
 
 html, body, #root, #appContainer{
@@ -166,13 +168,44 @@ nav{
 
 /* Post Card */
 
+#thumbUp, #thumbDown{
+    /* font-weight: 900;
+    color: red; */
+    cursor: pointer;
+}
+
+.activeUpvote{
+    color: var(--upvote);
+    font-weight: 900;
+}
+
+.activeDownvote{
+    color: var(--downvote);
+    font-weight: 900;
+}
+
+
+/* #thumbDown{
+    font-weight: 100;
+    color: blue;
+    cursor: pointer;
+} */
+
 .postCardContainer{
-    /* display: flex;
-    flex-direction: column; */
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
     width: 100%;
     background-color: white;
     padding: 20px 30px;
     margin-bottom: 20px;
+}
+
+.postCardLeftContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
 }
 
 .postCardContainer a{
@@ -311,3 +344,4 @@ nav{
     border-radius: 10px;
     padding: 10px;
 }
+

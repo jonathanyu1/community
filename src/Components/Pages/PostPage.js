@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react';
+import CommentSection from '../CommentSection';
 import CommunitySidebar from '../CommunitySidebar';
 import NotFound from './NotFound';
 import {calcTimeSincePosted} from '../Helpers/helperFunctions';
@@ -129,6 +130,7 @@ const PostPage = (props) => {
     },[postDetails]);
 
     useEffect(()=>{
+        console.log(props);
         handleLoadPostPage();
     },[]);
 
@@ -175,7 +177,7 @@ const PostPage = (props) => {
                                         {postDetails.description}
                                     </div>
                                     }
-                                    {auth().currentUser ? 
+                                    {props.isSignedIn ? 
                                     <div className='postAddCommentContainer'>
                                         <textarea
                                             value={commentInput}
@@ -209,7 +211,12 @@ const PostPage = (props) => {
                                     </div>
                                     }
                                 </div>
-                                
+                                <CommentSection 
+                                    isSignedIn={props.isSignedIn} 
+                                    match={props.match}
+                                    history={props.history}
+                                    location={props.location}
+                                />
                             </div>
                         :
                             loadingIcon

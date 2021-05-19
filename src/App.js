@@ -129,6 +129,15 @@ const App = () => {
                         )} 
                     />
                     <Route
+                        path='/c/:comm/:id/:parentCommentId'
+                        render={routeProps=>(
+                            <PostPage
+                                {...routeProps}
+                                isSignedIn={isSignedIn}
+                            />
+                        )} 
+                    />
+                    <Route
                         path='/c/:comm/:id'
                         render={routeProps=>(
                             <PostPage
