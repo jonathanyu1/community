@@ -166,7 +166,7 @@ nav{
 }
 
 
-/* Post Card */
+/* Post Score */
 
 #thumbUp, #thumbDown{
     /* font-weight: 900;
@@ -184,12 +184,11 @@ nav{
     font-weight: 900;
 }
 
+.postCardScore{
+    font-size: 25px;
+}
 
-/* #thumbDown{
-    font-weight: 100;
-    color: blue;
-    cursor: pointer;
-} */
+/* Post Card */
 
 .postCardContainer{
     display: flex;
@@ -272,6 +271,8 @@ nav{
 }
 
 .postPageContent{
+    /* display: flex;
+    flex-direction: column; */
     background-color: white;
     width: 100%;
     padding: 20px 30px;
@@ -280,6 +281,19 @@ nav{
 
 .postPageContent a{
     text-decoration: none;
+}
+
+.postPageLeft{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+}
+
+.postPageContentDetails{
+    display: flex;
+
 }
 
 .postPageTitle{

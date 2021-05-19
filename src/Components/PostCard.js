@@ -83,19 +83,19 @@ const PostCard = (props) => {
                         </div>
                     </div>
                 </div>
+                {props.post.imgUrl && 
+                <img 
+                    className={`postPageImg ${showInfo ? 'show' : 'hide' }`} 
+                    src={props.post.imgUrl} 
+                    alt={props.post.title}
+                />
+                }
+                {props.post.description &&
+                <div className={`postCardDescription ${showInfo ? 'show' : 'hide' }`} >
+                    {props.post.description}
+                </div>
+                }
             </div>
-            {props.post.imgUrl && 
-            <img 
-                className={`postPageImg ${showInfo ? 'show' : 'hide' }`} 
-                src={props.post.imgUrl} 
-                alt={props.post.title}
-            />
-            }
-            {props.post.description &&
-            <div className={`postCardDescription ${showInfo ? 'show' : 'hide' }`} >
-                {props.post.description}
-            </div>
-            }
         </div>
     )
 }
