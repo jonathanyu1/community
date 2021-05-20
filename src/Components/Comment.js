@@ -39,7 +39,7 @@ const Comment = (props) => {
                 setReplyError('');
                 submitReply()
                 .then((data)=>{
-                    console.log(data.id);
+                    // console.log(data.id);
                     // setCommentReplyInput('');
                     updatePostCommentList(data.id);
                     data.update({
@@ -80,7 +80,7 @@ const Comment = (props) => {
     }
 
     useEffect(()=>{
-        console.log(props);
+        // console.log(props);
         // console.log(props.comment.createdTimestamp.seconds);
         getTime();
     },[]);
@@ -88,7 +88,11 @@ const Comment = (props) => {
     return (
         <div className='commentContainer'>
             <div className='commentTop'>
-                <CommentScore />
+                <CommentScore 
+                    community={props.match.params.comm}
+                    postId={props.match.params.id}
+                    commentId={props.comment.postId}
+                />
                 <div className='commentInfo'>
                     <div className='commentSubmission'>
                         {`By: `}
@@ -111,7 +115,7 @@ const Comment = (props) => {
                         value={commentReplyInput}
                         onChange={handleReplyInput}
                         placeholder='Reply here!'
-                        className='postAddCommentInput'
+                        className='postAddReplyInput'
                         required
                     >
                     </textarea>

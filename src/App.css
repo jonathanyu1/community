@@ -379,3 +379,9 @@ nav{
 .replyContainer{
     margin-left: 1%;
 }
+
+.postAddReplyInput{
+    width: 50%;
+    height: 100px;
+    resize: none;
+}
