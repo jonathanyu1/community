@@ -6,7 +6,7 @@ import NotFound from './NotFound';
 import {calcTimeSincePosted} from '../Helpers/helperFunctions';
 import firebase, {fs, auth} from '../../Firebase/firebase';
 import {Link} from 'react-router-dom';
-
+import { v4 as uuidv4 } from 'uuid';
 
 const PostPage = (props) => {
     const [postExists, setPostExists] = useState(true);
@@ -33,15 +33,24 @@ const PostPage = (props) => {
 
     const handleSubmitComment = () => {
         if (auth().currentUser){
-            console.log(auth().currentUser);
-            setCommentError('');
-            submitComment()
-            .then((data)=>{
-                console.log(data.id);
-                // setCommentInput('');
-                updatePostCommentList(data.id);
-                setCommentInput('');
-            });
+            if (commentInput.length>0){
+                setCommentError('');
+                submitComment()
+                .then((data)=>{
+                    console.log(data.id);
+                    data.update({
+                        postId: data.id
+                    }).catch((error)=>{
+                        console.log('Error updating document with doc id:',error);
+                    });
+                    // setCommentInput('');
+                    updatePostCommentList(data.id);
+                    setCommentInput('');
+                });
+            } else {
+                setCommentError('Comments cannot be empty, please try again.');
+            }
+            
         } else {
             setCommentError('Please sign in to comment.');
         }
@@ -54,8 +63,11 @@ const PostPage = (props) => {
             userCreator: auth().currentUser.displayName,
             userCreatorUid: auth().currentUser.uid,
             createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            postParent:'',
-            description: commentInput
+            postParent: props.match.params.id,
+            description: commentInput,
+            uuid: uuidv4(),
+            scoreUp: [],
+            scoreDown: []
         });
     }
 

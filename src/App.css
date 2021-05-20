@@ -359,3 +359,23 @@ nav{
     padding: 10px;
 }
 
+/* comment section */ 
+
+.commentSection{
+    background-color: white;
+    width: 100%;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+}
+
+.commentLinks{
+    cursor: pointer;
+}
+
+.commentLinks:hover{
+    text-decoration: underline;
+}
+
+.replyContainer{
+    margin-left: 1%;
+}

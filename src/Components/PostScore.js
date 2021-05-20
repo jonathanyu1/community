@@ -77,7 +77,6 @@ const PostScore = (props) => {
             }
             let tempScore=Number(doc.data().scoreUp.length) - Number(doc.data().scoreDown.length);
             setScore(tempScore);
-
         });
     }
 
