@@ -211,10 +211,14 @@ const PostPage = (props) => {
                                             required
                                         >
                                         </textarea> */}
-                                        <TextArea handleSubmitComment={handleSubmitComment} btnClassName={'btnSubmitComment'}/>
-                                        <div className='postCommentErrorMsg'>
+                                        <TextArea handleSubmitComment={handleSubmitComment} textAreaClassName={`postAddCommentInput`} btnClassName={'btnSubmitComment'}>
+                                            <div className='postCommentErrorMsg'>
+                                                {commentError}
+                                            </div>
+                                        </TextArea>
+                                        {/* <div className='postCommentErrorMsg'>
                                             {commentError}
-                                        </div>
+                                        </div> */}
                                         {/* <button
                                             className='btnSubmitComment'
                                             onClick={handleSubmitComment}

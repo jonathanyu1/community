@@ -16,10 +16,11 @@ const TextArea = (props) => {
                 value={commentInput}
                 onChange={handleCommentInput}
                 placeholder='Comment here!'
-                className='postAddCommentInput'
+                className={`${props.textAreaClassName}`}
                 required
             >
             </textarea>
+            {props.children}
             <button
                 className={`${props.btnClassName}`}
                 onClick={()=>{props.handleSubmitComment(commentInput)}}

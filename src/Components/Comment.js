@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import CommentScore from './CommentScore';
+import TextArea from './TextArea';
 import firebase, {auth, fs} from '../Firebase/firebase';
 import {calcTimeSincePosted} from './Helpers/helperFunctions';
 import {Link} from 'react-router-dom';
@@ -8,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Comment = (props) => {
     const [showReply, setShowReply] = useState(false);
     const [timeSincePosted, setTimeSincePosted] = useState('0 seconds');
-    const [commentReplyInput, setCommentReplyInput] = useState('');
+    // const [commentReplyInput, setCommentReplyInput] = useState('');
     const [replyError, setReplyError] = useState('');
 
     const updatePostCommentList = (id) => {
@@ -18,7 +19,7 @@ const Comment = (props) => {
         });
     }
 
-    const submitReply = () => {
+    const submitReply = (commentReplyInput) => {
         return fs.collection('communities').doc(props.match.params.comm)
         .collection('posts').doc(props.match.params.id)
         .collection('comments').add({
@@ -33,11 +34,11 @@ const Comment = (props) => {
         });
     }
 
-    const handleSubmitReply = () => {
+    const handleSubmitReply = (commentReplyInput) => {
         if (auth().currentUser){
             if (commentReplyInput.length>0){
                 setReplyError('');
-                submitReply()
+                submitReply(commentReplyInput)
                 .then((data)=>{
                     // console.log(data.id);
                     // setCommentReplyInput('');
@@ -61,9 +62,9 @@ const Comment = (props) => {
     //     // handleHideReply();
     // }
 
-    const handleReplyInput = (e) => {
-        setCommentReplyInput(e.target.value);
-    }
+    // const handleReplyInput = (e) => {
+    //     setCommentReplyInput(e.target.value);
+    // }
 
     const handleShowReply = () => {
         setShowReply(true);
@@ -71,7 +72,7 @@ const Comment = (props) => {
 
     const handleHideReply = () => {
         setShowReply(false);
-        setCommentReplyInput('');
+        // setCommentReplyInput('');
     }
 
     const getTime = () => {
@@ -111,7 +112,12 @@ const Comment = (props) => {
             </div>
             {showReply && 
                 <div className='commentReplyContainer'>
-                    <textarea
+                    <TextArea handleSubmitComment={handleSubmitReply} textAreaClassName={'postAddReplyInput'} btnClassName={'btnReply'} btnId={'btnSubmitReply'}>
+                        <div className='postReplyErrorMsg'>
+                            {replyError}
+                        </div>
+                    </TextArea>
+                    {/* <textarea
                         value={commentReplyInput}
                         onChange={handleReplyInput}
                         placeholder='Reply here!'
@@ -128,7 +134,7 @@ const Comment = (props) => {
                         onClick={handleSubmitReply}
                     >
                         Submit
-                    </button>
+                    </button> */}
                     <button
                         className='btnReply'
                         id='btnCancelReply'
