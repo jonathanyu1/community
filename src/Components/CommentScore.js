@@ -5,62 +5,67 @@ const CommentScore = (props) => {
     const [isUpvote, setIsUpvote] = useState(false);
     const [isDownvote, setIsDownvote] = useState(false);
     const [score, setScore] = useState(0);
-    const [currUser, setCurrUser] = useState(auth().currentUser.uid || null);
+    // const [currUser, setCurrUser] = useState(auth().currentUser.uid || null);
+    const [currUser, setCurrUser] = useState((auth().currentUser ? auth().currentUser.uid : null));
 
     const handleUpvoteClick = () => {
-        let docRef = fs.collection('communities').doc(props.community)
-                    .collection('posts').doc(props.postId).collection('comments')
-                    .doc(props.commentId);
-        docRef.get().then((doc)=>{
-            let tempScoreUp = doc.data().scoreUp;
-            let tempScoreDown = doc.data().scoreDown;
-            if (tempScoreUp.indexOf(currUser)===-1){
-                // user hasnt upvoted previously, add to scoreUp array
-                if (tempScoreDown.indexOf(currUser)!==-1){
-                    // previously downvoted, remove from it
-                    tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
+        if (currUser){
+            let docRef = fs.collection('communities').doc(props.community)
+                        .collection('posts').doc(props.postId).collection('comments')
+                        .doc(props.commentId);
+            docRef.get().then((doc)=>{
+                let tempScoreUp = doc.data().scoreUp;
+                let tempScoreDown = doc.data().scoreDown;
+                if (tempScoreUp.indexOf(currUser)===-1){
+                    // user hasnt upvoted previously, add to scoreUp array
+                    if (tempScoreDown.indexOf(currUser)!==-1){
+                        // previously downvoted, remove from it
+                        tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
+                    }
+                    if (currUser) {tempScoreUp.push(currUser)};
+                    docRef.update({
+                        scoreUp: tempScoreUp,
+                        scoreDown: tempScoreDown
+                    });
+                } else {
+                    // user has upvoted previously, remove from scoreUp array
+                    tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
+                    docRef.update({
+                        scoreUp: tempScoreUp,
+                    });
                 }
-                if (currUser) {tempScoreUp.push(currUser)};
-                docRef.update({
-                    scoreUp: tempScoreUp,
-                    scoreDown: tempScoreDown
-                });
-            } else {
-                // user has upvoted previously, remove from scoreUp array
-                tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
-                docRef.update({
-                    scoreUp: tempScoreUp,
-                });
-            }
-        });
+            });
+        }
     }
 
     const handleDownvoteClick = () => {
-        let docRef = fs.collection('communities').doc(props.community)
-                    .collection('posts').doc(props.postId).collection('comments')
-                    .doc(props.commentId);
-        docRef.get().then((doc)=>{
-            let tempScoreUp = doc.data().scoreUp;
-            let tempScoreDown = doc.data().scoreDown;
-            if (tempScoreDown.indexOf(currUser)===-1){
-                // user hasnt upvoted previously, add to scoreUp array
-                if (tempScoreUp.indexOf(currUser)!==-1){
-                    // previously downvoted, remove from it
-                    tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
+        if (currUser){
+            let docRef = fs.collection('communities').doc(props.community)
+                        .collection('posts').doc(props.postId).collection('comments')
+                        .doc(props.commentId);
+            docRef.get().then((doc)=>{
+                let tempScoreUp = doc.data().scoreUp;
+                let tempScoreDown = doc.data().scoreDown;
+                if (tempScoreDown.indexOf(currUser)===-1){
+                    // user hasnt upvoted previously, add to scoreUp array
+                    if (tempScoreUp.indexOf(currUser)!==-1){
+                        // previously downvoted, remove from it
+                        tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
+                    }
+                    if (currUser) {tempScoreDown.push(currUser)};
+                    docRef.update({
+                        scoreUp: tempScoreUp,
+                        scoreDown: tempScoreDown
+                    });
+                } else {
+                    // user has upvoted previously, remove from scoreUp array
+                    tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
+                    docRef.update({
+                        scoreDown: tempScoreDown,
+                    });
                 }
-                if (currUser) {tempScoreDown.push(currUser)};
-                docRef.update({
-                    scoreUp: tempScoreUp,
-                    scoreDown: tempScoreDown
-                });
-            } else {
-                // user has upvoted previously, remove from scoreUp array
-                tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
-                docRef.update({
-                    scoreDown: tempScoreDown,
-                });
-            }
-        });
+            });
+        }
     }
 
     useEffect(()=>{
