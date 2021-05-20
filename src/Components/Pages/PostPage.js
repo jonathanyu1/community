@@ -3,6 +3,7 @@ import CommentSection from '../CommentSection';
 import CommunitySidebar from '../CommunitySidebar';
 import PostScore from '../PostScore';
 import NotFound from './NotFound';
+import TextArea from '../TextArea';
 import {calcTimeSincePosted} from '../Helpers/helperFunctions';
 import firebase, {fs, auth} from '../../Firebase/firebase';
 import {Link} from 'react-router-dom';
@@ -23,19 +24,19 @@ const PostPage = (props) => {
     const [sidebarDescription, setSidebarDescription] = useState('');
     const [sidebarCreator, setSidebarCreator] = useState('');
     const [showImage, setShowImage] = useState(true);
-    const [commentInput, setCommentInput] = useState('');
+    // const [commentInput, setCommentInput] = useState('');
     const [commentError, setCommentError] = useState('');
     const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
 
-    const handleCommentInput = (e) => {
-        setCommentInput(e.target.value);
-    }
+    // const handleCommentInput = (e) => {
+    //     setCommentInput(e.target.value);
+    // }
 
-    const handleSubmitComment = () => {
+    const handleSubmitComment = (commentInput) => {
         if (auth().currentUser){
             if (commentInput.length>0){
                 setCommentError('');
-                submitComment()
+                submitComment(commentInput)
                 .then((data)=>{
                     console.log(data.id);
                     data.update({
@@ -43,9 +44,8 @@ const PostPage = (props) => {
                     }).catch((error)=>{
                         console.log('Error updating document with doc id:',error);
                     });
-                    // setCommentInput('');
                     updatePostCommentList(data.id);
-                    setCommentInput('');
+                    // setCommentInput('');
                 });
             } else {
                 setCommentError('Comments cannot be empty, please try again.');
@@ -56,7 +56,7 @@ const PostPage = (props) => {
         }
     }
 
-    const submitComment = () => {
+    const submitComment = (commentInput) => {
         return fs.collection('communities').doc(props.match.params.comm)
         .collection('posts').doc(props.match.params.id)
         .collection('comments').add({
@@ -203,23 +203,24 @@ const PostPage = (props) => {
                                     </div>
                                     {props.isSignedIn ? 
                                     <div className='postAddCommentContainer'>
-                                        <textarea
+                                        {/* <textarea
                                             value={commentInput}
                                             onChange={handleCommentInput}
                                             placeholder='Comment here!'
                                             className='postAddCommentInput'
                                             required
                                         >
-                                        </textarea>
+                                        </textarea> */}
+                                        <TextArea handleSubmitComment={handleSubmitComment} btnClassName={'btnSubmitComment'}/>
                                         <div className='postCommentErrorMsg'>
                                             {commentError}
                                         </div>
-                                        <button
+                                        {/* <button
                                             className='btnSubmitComment'
                                             onClick={handleSubmitComment}
                                         >
                                             Submit
-                                        </button>
+                                        </button> */}
                                     </div>
                                     :
                                     <div className='postSignInContainer'>

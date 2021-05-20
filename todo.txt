@@ -13,7 +13,10 @@ postcard:
 -setup score (display score, upvote downvote)
 
 postpage:
--nested comments: (https://stackoverflow.com/questions/47997748/is-possible-to-check-if-a-collection-or-sub-collection-exists)
+-fix bug with textarea reply causing re-render (need to put in its own isolated component)
+
+commentsection:
+-fix bug with textarea reply causing re-render (need to put in its own isolated component)
 
 Pages: 
 -setup user page (profile pic, username, bio posts)

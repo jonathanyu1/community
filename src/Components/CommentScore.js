@@ -65,20 +65,24 @@ const CommentScore = (props) => {
 
     useEffect(()=>{
         const handleScoreChanges = (doc) => {
-            if (doc.data().scoreUp.indexOf(currUser)!==-1){
-                // user is upvoting this post
-                setIsUpvote(true);
-                setIsDownvote(false);
-            } else if (doc.data().scoreDown.indexOf(currUser)!==-1){
-                setIsUpvote(false);
-                setIsDownvote(true);
-            } else {
-                setIsUpvote(false);
-                setIsDownvote(false);
+            if (doc.data()){
+                if (doc.data().scoreUp.indexOf(currUser)!==-1){
+                    // user is upvoting this post
+                    setIsUpvote(true);
+                    setIsDownvote(false);
+                } else if (doc.data().scoreDown.indexOf(currUser)!==-1){
+                    setIsUpvote(false);
+                    setIsDownvote(true);
+                } else {
+                    setIsUpvote(false);
+                    setIsDownvote(false);
+                }
+                let tempScore=Number(doc.data().scoreUp.length) - Number(doc.data().scoreDown.length);
+                setScore(tempScore);
             }
-            let tempScore=Number(doc.data().scoreUp.length) - Number(doc.data().scoreDown.length);
-            setScore(tempScore);
         };
+
+        // console.log(props.commentId);
 
         const postQuery = fs.collection('communities').doc(props.community)
                             .collection('posts').doc(props.postId).collection('comments')

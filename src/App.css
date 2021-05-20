@@ -13,7 +13,7 @@
     --mainFont: 'Montserrat', sans-serif;
     --upvote: red;
     --downvote: blue;
-    --commentBorder: rgb(230,230,230);
+    --commentBorder: rgb(210,210,210);
 }
 
 html, body, #root, #appContainer{
