@@ -61,9 +61,33 @@ const PostScore = (props) => {
         });
     }
 
-    const enablePostQuerySnapshot = () => {
-        const postQuery = fs.collection('communities').doc(props.community).collection('posts').doc(props.postId);
-        postQuery.onSnapshot((doc)=>{
+    // const enablePostQuerySnapshot = () => {
+    //     const postQuery = fs.collection('communities').doc(props.community).collection('posts').doc(props.postId);
+    //     postQuery.onSnapshot((doc)=>{
+    //         if (doc.data().scoreUp.indexOf(currUser)!==-1){
+    //             // user is upvoting this post
+    //             setIsUpvote(true);
+    //             setIsDownvote(false);
+    //         } else if (doc.data().scoreDown.indexOf(currUser)!==-1){
+    //             setIsUpvote(false);
+    //             setIsDownvote(true);
+    //         } else {
+    //             setIsUpvote(false);
+    //             setIsDownvote(false);
+    //         }
+    //         let tempScore=Number(doc.data().scoreUp.length) - Number(doc.data().scoreDown.length);
+    //         setScore(tempScore);
+    //     });
+    // }
+
+    // useEffect(()=>{
+    //     console.log(props);
+    //     // need props.community, props.postId
+    //     enablePostQuerySnapshot();
+    // },[]);
+
+    useEffect(()=>{
+        const enablePostQuerySnapshot = (doc) => {
             if (doc.data().scoreUp.indexOf(currUser)!==-1){
                 // user is upvoting this post
                 setIsUpvote(true);
@@ -77,13 +101,14 @@ const PostScore = (props) => {
             }
             let tempScore=Number(doc.data().scoreUp.length) - Number(doc.data().scoreDown.length);
             setScore(tempScore);
-        });
-    }
+        };
 
-    useEffect(()=>{
-        console.log(props);
-        // need props.community, props.postId
-        enablePostQuerySnapshot();
+        const postQuery = fs.collection('communities').doc(props.community).collection('posts').doc(props.postId);
+
+        const unsusbcribe = postQuery.onSnapshot(enablePostQuerySnapshot, err => console.log(err));
+            return () => {
+                unsusbcribe();
+            }
     },[]);
 
     return (
