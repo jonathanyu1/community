@@ -9,6 +9,7 @@
     --iconHover: rgb(233, 233, 233);
     --submitBtnColor: rgb(0, 0, 255);
     --submitBtnHoverColor: rgb(50, 50, 252);
+    --linksColor: rgb(77, 76, 76);
     --mainFont: 'Montserrat', sans-serif;
     --upvote: red;
     --downvote: blue;
@@ -244,7 +245,7 @@ nav{
 
 .postCardLinks a{
     font-weight: 700;
-    color: rgb(77, 76, 76);
+    color: var(--linksColor);
 }
 
 .postCardDescription{
@@ -368,8 +369,53 @@ nav{
     margin-bottom: 20px;
 }
 
+.commentSectionTitle {
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+.commentContainer{
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.commentTop{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.commentScoreContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.commentSubmission {
+    font-size: 15px;
+    color: var(--linksColor);
+}
+
+.commentSubmission a{
+    text-decoration: none;
+    color: blue;
+}
+
+.commentSubmission a:hover{
+    text-decoration: underline;
+}
+
+.commentDescription{
+    font-size: 18px;
+    padding: 10px 0px;
+}
+
 .commentLinks{
     cursor: pointer;
+    font-size: 15px;
+    font-weight: 100;
+    color: var(--linksColor);
 }
 
 .commentLinks:hover{
@@ -384,4 +430,22 @@ nav{
     width: 50%;
     height: 100px;
     resize: none;
+}
+
+.btnReply{
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#btnSubmitReply{
+    background-color: var(--submitBtnColor);
+    color: white;
+    margin: 0 10px 10px 0;
+}
+
+#btnSubmitReply:hover{
+    background-color: var(--submitBtnHoverColor);
 }

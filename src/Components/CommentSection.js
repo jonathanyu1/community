@@ -4,7 +4,7 @@ import Comment from './Comment';
 import { v4 as uuidv4 } from 'uuid';
 
 const CommentSection = (props) => {
-    const [numComments, setNumComments] = useState(0);
+    // const [numComments, setNumComments] = useState(0);
     const [comments, setComments] = useState([]);
     const [topLevelComments, setTopLevelComments] = useState([]);
 
@@ -80,7 +80,7 @@ const CommentSection = (props) => {
     return (
         <div className='commentSection'>
             <div className='commentSectionTitle'>
-                {`${numComments} comments`}
+                {`All Comments`}
             </div>
             <div className='commentsContainer'>
                 {/* top level comments and their children */}

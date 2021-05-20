@@ -71,6 +71,7 @@ const Comment = (props) => {
 
     const handleHideReply = () => {
         setShowReply(false);
+        setCommentReplyInput('');
     }
 
     const getTime = () => {
@@ -95,11 +96,10 @@ const Comment = (props) => {
                 />
                 <div className='commentInfo'>
                     <div className='commentSubmission'>
-                        {`By: `}
                         <Link to={`/user/${props.comment.userCreator}`}>
                             {props.comment.userCreator}
                         </Link>
-                        {`Submitted ${timeSincePosted} ago`}
+                        {` Submitted ${timeSincePosted} ago`}
                     </div>
                     <div className='commentDescription'>
                         {props.comment.description}
