@@ -62,7 +62,8 @@ const UserPage = (props) => {
                 setPosts(result);
             }
         } catch (error){
-            console.log('Error loading community page:', error);
+            setUserExists(false);
+            console.log('Error loading user page:', error);
         }
     }
     

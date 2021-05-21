@@ -51,6 +51,7 @@ const UserSidebar = (props) => {
                 <br></br>
                 {`Community user since: `}
                 {calcTimeSincePosted(props.userSince)}
+                {` ago`}
             </div>
         </div>
     )
