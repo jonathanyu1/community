@@ -73,13 +73,6 @@ const App = () => {
         }
     }
 
-    const getUserById = (id) =>{
-        // change this to return user from fs later
-        console.log(id);
-        return id;
-    }
-
-
     useState(()=>{
         auth().onAuthStateChanged(authStateObserver);
     },[]);
@@ -124,7 +117,6 @@ const App = () => {
                         render={routeProps=>(
                             <UserPage 
                                 {...routeProps}
-                                user={(getUserById(routeProps.match.params.id))}
                             />
                         )} 
                     />

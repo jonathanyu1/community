@@ -101,6 +101,9 @@ nav{
     }
 }
 
+/* user page */
+
+
 /* Community Page */ 
 
 .pageContainer{
@@ -451,3 +454,4 @@ nav{
 #btnSubmitReply:hover{
     background-color: var(--submitBtnHoverColor);
 }
+

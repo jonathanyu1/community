@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import { fs } from '../../Firebase/firebase';
+import firebase, { fs } from '../../Firebase/firebase';
 import {signup} from '../Helpers/auth';
 
 const SignUp = () => {
@@ -40,7 +40,8 @@ const SignUp = () => {
                     return fs.collection('users').doc(`${userCredential.user.uid}`).set({
                         uid: userCredential.user.uid,
                         displayName: username,
-                        email: email
+                        email: email,
+                        createdTimestamp: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 })
                 .catch ((error)=>{

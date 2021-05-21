@@ -1,4 +1,16 @@
-header: 
+Pages: 
+-setup user page (profile pic, username, bio posts)
+-setup user settings page (set profile pic, set bio)
+
+communities:
+-allow users to follow a community, fix homepage to display subscribed communities if followed
+
+-edit/delete communities, posts, comments (delete fully if no replies, otherwise delete contents);
+
+postpage:
+-onsnapshot only query new / modified posts to prevent re-querying all posts on reply/scorechange/comment
+
+nav: 
 - retrieve username and profile pic to display
 - show action on hover (https://material-ui.com/components/tooltips/)
 
@@ -7,23 +19,6 @@ createcommunity:
 
 createpost:
 -add post document id to corresponding user's field: postsMade (or query the posts on userPage usin this https://firebase.googleblog.com/2019/06/understanding-collection-group-queries.html)
-
-postcard:
--count comments (including nested comments)
--setup score (display score, upvote downvote)
-
-postpage:
--fix bug with textarea reply causing re-render (need to put in its own isolated component)
-
-commentsection:
--fix bug with textarea reply causing re-render (need to put in its own isolated component)
-
-Pages: 
--setup user page (profile pic, username, bio posts)
--setup user settings page (set profile pic, set bio)
-
-communities:
--allow users to follow a community
 
 
 rules: 
