@@ -102,6 +102,7 @@ const CommentSection = (props) => {
                                 match={props.match}
                                 history={props.history}
                                 location={props.location}
+                                index={0}
                             />
                         )
                     })

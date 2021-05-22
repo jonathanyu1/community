@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import CommentScore from './CommentScore';
 import TextArea from './TextArea';
 import firebase, {auth, fs} from '../Firebase/firebase';
-import {calcTimeSincePosted} from './Helpers/helperFunctions';
+import {calcTimeSincePosted, colorPickerRgb} from './Helpers/helperFunctions';
 import {Link} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,6 +11,10 @@ const Comment = (props) => {
     const [timeSincePosted, setTimeSincePosted] = useState('0 seconds');
     // const [commentReplyInput, setCommentReplyInput] = useState('');
     const [replyError, setReplyError] = useState('');
+    const rgbColor = colorPickerRgb(props.index);
+    const borderStyle = {
+        borderLeft: `5px solid ${rgbColor}`
+    }
 
     const updatePostCommentList = (id) => {
         return fs.collection('communities').doc(props.match.params.comm)
@@ -88,7 +92,7 @@ const Comment = (props) => {
     },[]);
 
     return (
-        <div className='commentContainer'>
+        <div className='commentContainer' style={borderStyle}>
             <div className='commentTop'>
                 <CommentScore 
                     community={props.match.params.comm}
@@ -161,6 +165,7 @@ const Comment = (props) => {
                                 match={props.match}
                                 history={props.history}
                                 location={props.location}
+                                index={props.index+1}
                             />
                         </div>
                     )
