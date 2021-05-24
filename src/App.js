@@ -19,6 +19,7 @@ const App = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profilePicUrl, setProfilePicUrl] = useState('');
     const [displayName, setDisplayName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
 
     const signOut = () => {
         auth().signOut();   
@@ -35,22 +36,51 @@ const App = () => {
         ;
     }
 
+    const getUserDescription = () => {
+        let tempDescription = 'This user has not set a description.';
+        let result = fs.collection('users').doc(auth().currentUser.uid)
+        .get().then(doc=>{
+            if (doc.exists){
+                console.log(doc.data());
+                return doc.data().description || tempDescription;
+            } else {
+                console.log('user profile doc does not exist.');
+                return tempDescription;
+            }
+        });
+        return result;
+    }
+
     const getProfilePicUrl = () => {
-        console.log(auth().currentUser);
-        return auth().currentUser.photoURL || 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
+        let tempPic = 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
+        // return auth().currentUser.photoURL || 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
+        let result = fs.collection('users').doc(auth().currentUser.uid)
+        .get().then(doc=>{
+            if (doc.exists){
+                console.log(doc.data());
+                return doc.data().photoURL || tempPic;
+            } else {
+                console.log('user profile doc does not exist.');
+                return tempPic;
+            }
+        });
+        return result;
     }
 
     const authStateObserver = (user) => {
         if (user) { // User is signed in!
             setIsSignedIn(true);
-            console.log(user);
-            console.log(user.displayName);
-            console.log(auth().currentUser.displayName);
-            console.log(user.email);
-            console.log(user.uid);
-            let tempUrl = getProfilePicUrl();
-            setProfilePicUrl(tempUrl);
-            console.log(tempUrl);
+            // let tempUrl = getProfilePicUrl();
+            // setProfilePicUrl(tempUrl);
+            // console.log(tempUrl);
+            getProfilePicUrl().then((result)=>{
+                setProfilePicUrl(result);
+                console.log(result);
+            });
+            getUserDescription().then((result)=>{
+                setUserDescription(result);
+                console.log(result);
+            });
             if (user.displayName){
                 console.log(user.displayName);
                 setDisplayName(user.displayName);
@@ -104,7 +134,7 @@ const App = () => {
                         {isSignedIn ? <Redirect to='/'/> : <SignIn/>}
                     </Route>
                     <Route exact path='/settings'>
-                        {isSignedIn ? <Settings/> : <Redirect to='/signin'/>}
+                        {isSignedIn ? <Settings profilePicUrl={profilePicUrl} userDescription={userDescription}/> : <Redirect to='/signin'/>}
                     </Route>
                     <Route exact path='/create-post'>
                         {isSignedIn ? <CreatePost/> : <Redirect to='/signin'/>}

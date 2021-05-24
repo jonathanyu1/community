@@ -62,6 +62,8 @@ const CreatePost = (props) => {
                 createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 scoreUp: [],
                 scoreDown: []
+            }).catch((error)=>{
+                console.log('Error uploading text post:',error);
             });
     }
 

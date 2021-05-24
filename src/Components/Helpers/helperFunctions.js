@@ -64,6 +64,16 @@ let redToGreenColors = [
     [73,255,0]
 ]
 
+let custom = [
+    [255,0,0],
+    [250,128,114],
+    [255,127,0],
+    [255,170,70],
+    [255,217,0],
+    [70, 255, 168],
+    [70,255,240]
+]
+
 export function colorPickerRgb(index) {
     let colorArr = redToGreenColors;
     let color = colorArr[Math.floor(index%colorArr.length)];

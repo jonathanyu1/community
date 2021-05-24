@@ -24,9 +24,9 @@ const UserPage = (props) => {
         fs.collection('users').doc(userUid).get().then(doc=>{
             if (doc.exists){
                 console.log(doc.data());
-                setUserDescription((doc.data().description ? doc.data().description : 'This user has no description set.'));
+                setUserDescription((doc.data().description ? doc.data().description : 'This user has not set a description.'));
                 setUserSince((doc.data().createdTimestamp ? doc.data().createdTimestamp.seconds : ''));
-                setUserPhotoUrl((doc.data().photoUrl ? doc.data().photoUrl : defaultPhotoUrl));
+                setUserPhotoUrl((doc.data().photoURL ? doc.data().photoURL : defaultPhotoUrl));
             } else {
                 console.log('user does not exist');
                 setUserExists(false);

@@ -16,10 +16,11 @@ nav:
 
 createcommunity:
 -prevent non-letters/number input (https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string)
+-upload limit on img
 
 createpost:
 -add post document id to corresponding user's field: postsMade (or query the posts on userPage usin this https://firebase.googleblog.com/2019/06/understanding-collection-group-queries.html)
-
+-upload limit on img
 
 rules: 
 -allow read on all posts

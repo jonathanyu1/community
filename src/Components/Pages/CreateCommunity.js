@@ -97,6 +97,7 @@ const CreateCommunity = () => {
                         </div>
                         <div>
                             <textarea
+                                className='descriptionInput'
                                 placeholder="Description"
                                 name="description"
                                 onChange={handleChange}
