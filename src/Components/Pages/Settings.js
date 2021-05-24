@@ -3,6 +3,7 @@ import firebase, {auth, fs} from '../../Firebase/firebase';
 import {Redirect} from 'react-router-dom';
 
 const Settings = (props) => {
+    const [oldImg, setOldImg] = useState('');
     const [imgFile, setImgFile] = useState(null);
     const [imgFileSrc, setImgFileSrc] = useState(null);
     const [imgFileSizeMiB, setImgFileSizeMiB] = useState('');
@@ -11,25 +12,6 @@ const Settings = (props) => {
     const [isRedirect, setIsRedirect] = useState(false);
 
     const updateUserImg = () => {
-        // return fs.collection('users').doc(auth().currentUser.uid).update({
-        //     photoURL: loadingImgUrl,
-        //     description: description
-        // }).then(function(userRef){
-        //     console.log(userRef);
-        //     let filePath = auth().currentUser.uid + '/' + userRef.id + '/' + imgFile.name;
-        //     return firebase.storage().ref(filePath).put(imgFile).then(function(fileSnapshot) {
-        //         // Generate a public URL for the file.
-        //         return fileSnapshot.ref.getDownloadURL().then((url) => {
-        //           // Update the chat message placeholder with the image's URL.
-        //           return userRef.update({
-        //             photoURL: url,
-        //             photoStorageUri: fileSnapshot.metadata.fullPath
-        //           });
-        //         });
-        //       });
-        // }).catch((error)=>{
-        //     console.log('Error uploading user info with image:',error);
-        // });
         let filePath = auth().currentUser.uid + '/' + 'profilePic' + '/' + imgFile.name;
         return firebase.storage().ref(filePath).put(imgFile).then(function(fileSnapshot) {
             // Generate a public URL for the file.
@@ -77,6 +59,8 @@ const Settings = (props) => {
             .then(()=>{
                 URL.revokeObjectURL(imgFileSrc);
                 // setPostId(data.id);
+                console.log(props.profilePicUrl);
+                props.deleteOldPic(props.profilePicUrl);
                 setIsRedirect(true);
             })
             .catch((error)=>{

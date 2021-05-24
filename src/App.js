@@ -13,16 +13,29 @@ import CommunityPage from './Components/Pages/CommunityPage';
 import CommunityAllPage from './Components/Pages/CommunityAllPage';
 import PostPage from './Components/Pages/PostPage';
 // import firebase, {fs, auth} from './Firebase/firebase.js';
-import {auth, fs} from './Firebase/firebase.js';
+import firebase, {auth, fs} from './Firebase/firebase.js';
 
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profilePicUrl, setProfilePicUrl] = useState('');
     const [displayName, setDisplayName] = useState('');
     const [userDescription, setUserDescription] = useState('');
+    const defaultPicUrl = 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
+    const storage = firebase.storage();
 
     const signOut = () => {
         auth().signOut();   
+    }
+
+    const deleteOldPic = (url) => {
+        console.log(url);
+        if (url!==defaultPicUrl){
+            let picRef = storage.refFromURL(url);
+            picRef.delete()
+            .catch((error)=>{
+                console.log('Error deleting old img:',error);
+            })
+        }
     }
 
     const getDisplayName = () => {
@@ -134,7 +147,8 @@ const App = () => {
                         {isSignedIn ? <Redirect to='/'/> : <SignIn/>}
                     </Route>
                     <Route exact path='/settings'>
-                        {isSignedIn ? <Settings profilePicUrl={profilePicUrl} userDescription={userDescription}/> : <Redirect to='/signin'/>}
+                        {isSignedIn ? <Settings profilePicUrl={profilePicUrl} userDescription={userDescription}  deleteOldPic={deleteOldPic}/> 
+                        : <Redirect to='/signin'/>}
                     </Route>
                     <Route exact path='/create-post'>
                         {isSignedIn ? <CreatePost/> : <Redirect to='/signin'/>}
