@@ -114,6 +114,9 @@ const Settings = (props) => {
                         autoComplete="off"
                         onSubmit={handleSubmit}
                     >
+                        <div className='settingsHeader'>
+                            Change Settings
+                        </div>
                         <div className='userImgForm'>
                             {(imgFile && imgFileSrc) ?
                                 <img src={`${imgFileSrc}`} alt={`${imgFile.name}`} className='userImgUploadPreview'/>

@@ -1,7 +1,3 @@
-Pages: 
--setup user page (profile pic, username, bio posts)
--setup user settings page (set profile pic, set bio)
-
 communities:
 -allow users to follow a community, fix homepage to display subscribed communities if followed
 
@@ -11,7 +7,6 @@ postpage:
 -onsnapshot only query new / modified posts to prevent re-querying all posts on reply/scorechange/comment
 
 nav: 
-- retrieve username and profile pic to display
 - show action on hover (https://material-ui.com/components/tooltips/)
 
 createcommunity:
