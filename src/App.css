@@ -9,7 +9,9 @@
     --iconHover: rgb(233, 233, 233);
     --submitBtnColor: rgb(0, 0, 255);
     --submitBtnHoverColor: rgb(50, 50, 252);
-    --linksColor: rgb(77, 76, 76);
+    --unSubBtnColor: rgb(168, 168, 168);
+    --unSubHoverColor: rgb(199, 198, 198);
+    --linksColor: rgb(180, 180, 180);
     --mainFont: 'Montserrat', sans-serif;
     --upvote: red;
     --downvote: blue;
@@ -252,6 +254,37 @@ nav{
     margin-bottom: 10px;
 }
 
+.btnSubscribeComm, .btnUnsubscribeComm{
+    margin: 15px 0;
+}
+
+.btnSubscribeComm{
+    width: auto;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--submitBtnColor);
+    color: white;
+}
+
+.btnUnsubscribeComm{
+    width: auto;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--unSubBtnColor);
+    color: white;
+}
+
+.btnSubscribeComm:hover{
+    background-color: var(--submitBtnHoverColor);
+}
+
+.btnUnsubscribeComm:hover{
+    background-color: var(--unSubHoverColor);
+}
 
 /* Post Score */
 

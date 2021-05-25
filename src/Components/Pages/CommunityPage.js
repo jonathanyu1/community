@@ -106,6 +106,7 @@ const CommunityPage = (props) => {
                             title={props.match.params.comm}
                             description={commDescription}
                             creator={commCreator}
+                            isSignedIn={props.isSignedIn}
                         />
                     </div>
                 </div>
