@@ -1,4 +1,49 @@
-import {fs} from '../../Firebase/firebase';
+import firebase, {fs, auth} from '../../Firebase/firebase';
+const defaultPicUrl = 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
+const storage = firebase.storage();
+
+const deleteOldPic = (url) => {
+    console.log(url);
+    if (url!==defaultPicUrl){
+        let picRef = storage.refFromURL(url);
+        picRef.delete()
+        .catch((error)=>{
+            console.log('Error deleting old img:',error);
+        })
+    }
+}
+
+export function handleDeletePost(id,community){
+    console.log(id);
+    console.log(community);
+    console.log(auth().currentUser.uid);
+    let canDelete = false;
+    let tempImgUrl = '';
+    let docQuery = fs.collection('communities').doc(community).collection('posts').doc(id);
+    // get img url if exists, check if user is allowed to delete post
+    docQuery.get().then((doc)=>{
+        console.log(doc.data());
+        if (auth().currentUser && auth().currentUser.uid === doc.data().userCreatorUid){
+            console.log('can delete post');
+            tempImgUrl = doc.data().imgUrl;
+            canDelete = true;
+        }
+    }).then(()=>{
+        // delete post here
+        console.log(canDelete);
+        console.log(tempImgUrl);
+        docQuery.delete().then(()=>{
+            console.log('deleted document successfully');
+            if (tempImgUrl){
+                deleteOldPic(tempImgUrl);
+            }
+        }).catch((error)=>{
+            console.log('Error deleting post:', error);
+        })
+    }).catch((error)=>{
+        console.log('Error fetching post:', error);
+    });
+}
 
 export function calcTimeSincePosted(timeInSecs) {
     let currTime = Math.floor(Date.now()/1000);

@@ -19,7 +19,9 @@ const DeletePrompt = (props) => {
                     <div className='deleteWarningText'>
                         Are you sure?
                     </div>
-                    <div className='deleteWarningYes' onClick={()=>props.deleteFunction(props.id)}>
+                    <div className='deleteWarningYes' 
+                        onClick={(props.community ? ()=>props.deleteFunction(props.id, props.community): ()=>props.deleteFunction(props.id))}
+                    >
                         Yes
                     </div>
                     {` / `}

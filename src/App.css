@@ -52,7 +52,8 @@ html, body, #root, #appContainer{
 /* reusable components */ 
 
 .deletePrompt{
-
+    color: var(--linksColor);
+    cursor: pointer
 }
 
 .deleteWarning, .deleteWarningYes{
@@ -65,6 +66,7 @@ html, body, #root, #appContainer{
 
 .deleteWarningYes, .deleteWarningNo{
     margin: 0 5px;
+    cursor: pointer;
 }
 
 .deleteWarningNo{
@@ -399,12 +401,13 @@ nav{
 }
 
 .postCardLinks{
-    
+    display: flex;
 }
 
 .postCardLinks a{
     font-weight: 700;
     color: var(--linksColor);
+    margin-right: 10px;
 }
 
 .postCardDescription{

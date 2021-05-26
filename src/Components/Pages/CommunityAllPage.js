@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {Link} from 'react-router-dom';
 import HomeSidebar from '../HomeSidebar';
 import CommunitySidebar from '../CommunitySidebar';
+import {handleDeletePost} from '../Helpers/helperFunctions';
 
 const CommunityAllPage = (props) => {
     const [commExists, setCommExists] = useState(true);
@@ -83,7 +84,7 @@ const CommunityAllPage = (props) => {
                             <div className='pagePostsContainer'>
                                 {posts.map((post)=>{
                                     console.log(post);
-                                    return <PostCard post={post} key={uuidv4()}/>
+                                    return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                                 })}
                             </div>
                         : 

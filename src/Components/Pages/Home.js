@@ -4,6 +4,8 @@ import HomeSidebar from '../HomeSidebar';
 import PostCard from '../PostCard';
 import { v4 as uuidv4 } from 'uuid';
 import {fs, auth} from '../../Firebase/firebase';
+import {handleDeletePost} from '../Helpers/helperFunctions';
+
 
 const Home = (props) => {
     const [userSubs, setUserSubs] = useState([]);
@@ -97,7 +99,7 @@ const Home = (props) => {
                             })} */}
                             {posts.slice(0,postLimit).map((post)=>{
                                 console.log(post);
-                                return <PostCard post={post} key={uuidv4()}/>
+                                return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                             })}
                         </div>
                         {props.isSignedIn && userSubs.length>0 && <HomeSidebar userSubs={userSubs}/>}

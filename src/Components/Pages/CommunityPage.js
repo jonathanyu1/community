@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import NotFound from './NotFound';
 import PostCard from '../PostCard';
+import CommunitySidebar from '../CommunitySidebar';
+import {handleDeletePost} from '../Helpers/helperFunctions';
 import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 // import {Link} from 'react-router-dom';
-import CommunitySidebar from '../CommunitySidebar';
+
 
 const CommunityPage = (props) => {
     const [commExists, setCommExists] = useState(true);
@@ -76,7 +78,7 @@ const CommunityPage = (props) => {
                             <div className='pagePostsContainer'>
                                 {posts.map((post)=>{
                                     console.log(post);
-                                    return <PostCard post={post} key={uuidv4()}/>
+                                    return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                                 })}
                             </div>
                         : 

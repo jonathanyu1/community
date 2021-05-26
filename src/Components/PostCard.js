@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import PostScore from './PostScore';
+import DeletePrompt from './DeletePrompt';
 import {calcTimeSincePosted} from './Helpers/helperFunctions';
-import {fs} from '../Firebase/firebase';
+import {auth, fs} from '../Firebase/firebase';
 
 const PostCard = (props) => {
+
+    //required props: object with post info, postDelete function
+
     const [timeSincePost, setTimeSincePost] = useState('');
     const [showInfo, setShowInfo] = useState(false);
 
@@ -75,8 +79,10 @@ const PostCard = (props) => {
                                 :
                                     `0 comments`
                                 }
-                                
                             </Link>
+                            {auth().currentUser && auth().currentUser.uid === props.post.userCreatorUid && 
+                            <DeletePrompt deleteFunction={props.handleDeletePost} id={props.post.postId} community={props.post.community}/>
+                            }
                             {/* <div onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}>
                                 Share
                             </div> */}

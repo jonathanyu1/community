@@ -4,6 +4,7 @@ import PostCard from '../PostCard';
 import NotFound from './NotFound';
 import { v4 as uuidv4 } from 'uuid';
 import UserSidebar from '../UserSidebar';
+import {handleDeletePost} from '../Helpers/helperFunctions';
 
 const UserPage = (props) => {
     const [userExists, setUserExists] = useState(true);
@@ -92,7 +93,7 @@ const UserPage = (props) => {
                         <div className='pagePostsContainer'>
                             {posts.map((post)=>{
                                 console.log(post);
-                                return <PostCard post={post} key={uuidv4()}/>
+                                return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                             })}
                         </div>
                     : 
