@@ -16,7 +16,7 @@ import PostPage from './Components/Pages/PostPage';
 import firebase, {auth, fs} from './Firebase/firebase.js';
 
 const App = () => {
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSignedIn, setIsSignedIn] = useState(null);
     const [profilePicUrl, setProfilePicUrl] = useState('');
     const [displayName, setDisplayName] = useState('');
     const [userDescription, setUserDescription] = useState('');

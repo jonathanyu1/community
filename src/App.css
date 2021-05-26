@@ -181,6 +181,15 @@ nav{
     background-color: var(--submitBtnHoverColor);
 }
 
+/* home */ 
+
+.homeContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+}
+
 /* user page */
 
 .sidebarPic{

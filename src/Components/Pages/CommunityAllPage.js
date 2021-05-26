@@ -63,7 +63,14 @@ const CommunityAllPage = (props) => {
         return result;
     }
 
+    // useEffect(()=>{
+    //     console.log(props.userHasSubs);
+    //     if (!props.userHasSubs){
+    //         handleLoadAllPage();
+    //     }
+    // },[props.userHasSubs]);
     useEffect(()=>{
+        console.log(props.userHasSubs);
         handleLoadAllPage();
     },[]);
 
@@ -84,27 +91,9 @@ const CommunityAllPage = (props) => {
                                 No posts. Be the first to post here!
                             </div>
                         }
-                        {props.isHome ? 
+                        {props.isHome && !props.userHasSubs ? 
                             <HomeSidebar />
                         : 
-                            // <div className='sidebarContainer'>
-                            //     <div className='sidebarTitle'>
-                            //         {`/c/all`}
-                            //     </div>
-                            //     <br></br>
-                            //     <div className='sidebarContent'>
-                            //         <div>
-                            //             {commDescription}
-                            //         </div>
-                            //         <div>
-                            //             <br></br>
-                            //             {`Created by: `}
-                            //             <Link to={`/user/${commCreator}`}>
-                            //                 {commCreator}
-                            //             </Link>
-                            //         </div>
-                            //     </div>
-                            // </div>
                             <CommunitySidebar
                                 title='all'
                                 description={commDescription}
