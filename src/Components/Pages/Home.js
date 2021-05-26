@@ -18,7 +18,7 @@ const Home = (props) => {
         for (i=0, j=subs.length; i<j; i+=10){
             tempSubs = subs.slice(i, i+increment);
             await fs.collectionGroup('posts').where('community', 'in', tempSubs)
-                .orderBy('createdTimestamp', 'desc').limit(postLimit)
+                .orderBy('createdTimestamp', 'desc')
                 .get().then((querySnapshot)=>{
                     let index=0;
                     querySnapshot.forEach((doc)=>{
@@ -96,7 +96,11 @@ const Home = (props) => {
                 <div className='homeContainer'>
                     <div className='pageContentContainer'>
                         <div className='pagePostsContainer'>
-                            {posts.map((post)=>{
+                            {/* {posts.map((post)=>{
+                                console.log(post);
+                                return <PostCard post={post} key={uuidv4()}/>
+                            })} */}
+                            {posts.slice(0,postLimit).map((post)=>{
                                 console.log(post);
                                 return <PostCard post={post} key={uuidv4()}/>
                             })}
