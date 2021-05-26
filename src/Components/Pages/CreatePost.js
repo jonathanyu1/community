@@ -10,6 +10,7 @@ const CreatePost = (props) => {
     const [description, setDescription] = useState('');
     const [imgFile, setImgFile] = useState(null);
     const [imgFileSrc, setImgFileSrc] = useState(null);
+    const [imgFileSizeMiB, setImgFileSizeMiB] = useState('');
     // const [imgFileName, setImgFileName] = useState('');
     const [communitySelect, setCommunitySelect] = useState('');
     const [postId, setPostId] = useState('');
@@ -128,7 +129,7 @@ const CreatePost = (props) => {
     }
 
     const handleImgSubmit = () => {
-        if (imgFile && imgFile.type.match('image.*')){
+        if (imgFile && imgFile.type.match('image.*') && imgFileSizeMiB<1){
             console.log('img submit');
             addImgPostToFs()
             .then((data)=>{
@@ -140,7 +141,7 @@ const CreatePost = (props) => {
                 console.log('Error with creating post:', error);
             });
         } else {
-            setErrorMsg('Invalid file upload, please upload a valid image.');
+            setErrorMsg('Invalid file upload, please upload a valid image under 1MiB.');
         }
     }
 
@@ -169,6 +170,7 @@ const CreatePost = (props) => {
             console.log(e.target.files[0].type.match('image.*'));
             setImgFile(e.target.files[0]);
             setImgFileSrc(URL.createObjectURL(e.target.files[0]));
+            setImgFileSizeMiB(e.target.files[0].size/1024/1024);
             // setImgFileName(e.target.files[0].name);
         }
     }
@@ -233,7 +235,12 @@ const CreatePost = (props) => {
                                 onChange={handleChangeImage}
                             />
                             {imgFile && imgFileSrc &&
-                                <img src={`${imgFileSrc}`} alt={`${imgFile.name}`} className='imgUploadPreview'/>
+                                <React.Fragment>
+                                    <img src={`${imgFileSrc}`} alt={`${imgFile.name}`} className='imgUploadPreview'/>
+                                    {imgFileSizeMiB && 
+                                    <p>File size: {`${imgFileSizeMiB.toFixed(2)} MiB`}</p>
+                                    }
+                                </React.Fragment>
                             }
                         </div>
                         </div>
