@@ -10,6 +10,12 @@ const TextArea = (props) => {
         setCommentInput(e.target.value);
     }
 
+    useEffect(()=>{
+        if (props.defaultText){
+            setCommentInput(props.defaultText);
+        }
+    },[]);
+
     return (
         <React.Fragment>
             <textarea

@@ -7,13 +7,52 @@ import {Link} from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 const Comment = (props) => {
+    const [showEdit, setShowEdit] = useState(false);
+    const [editError, setEditError] = useState('');
     const [showReply, setShowReply] = useState(false);
+    const [editTime, setEditTime] = useState('0 seconds');
     const [timeSincePosted, setTimeSincePosted] = useState('0 seconds');
     // const [commentReplyInput, setCommentReplyInput] = useState('');
     const [replyError, setReplyError] = useState('');
     const rgbColor = colorPickerRgb(props.index);
     const borderStyle = {
         borderLeft: `5px solid ${rgbColor}`
+    }
+
+    const submitEdit = (newDescription) => {
+        return fs.collection('communities').doc(props.match.params.comm)
+        .collection('posts').doc(props.match.params.id)
+        .collection('comments').doc(props.comment.postId)
+        .update({
+            description: newDescription,
+            lastEdit: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }
+
+    const handleSubmitEdit = (description) => {
+        console.log(props.comment);
+        console.log(description);
+        if (description === props.comment.description){
+            console.log('edit invalid same contents');
+            setEditError('Comment has not changed, please try again.')
+        } else if (auth().currentUser && auth().currentUser.uid===props.comment.userCreatorUid){
+            if (description.length>0){
+                setEditError('');
+                submitEdit(description);
+            } else {
+                setEditError('Edits cannot be empty, please try again.');
+            }   
+        } else {
+            setEditError('Please sign in to edit comments.');
+        }
+    }
+
+    const handleShowEdit = () => {
+        setShowEdit(true);
+    }
+
+    const handleHideEdit = () => {
+        setShowEdit(false);
     }
 
     const updatePostCommentList = (id) => {
@@ -83,6 +122,9 @@ const Comment = (props) => {
         if (props.comment.createdTimestamp){
             setTimeSincePosted(calcTimeSincePosted(props.comment.createdTimestamp.seconds));
         }
+        if (props.comment.lastEdit){
+            setEditTime(calcTimeSincePosted(props.comment.lastEdit.seconds))
+        }
     }
 
     useEffect(()=>{
@@ -101,19 +143,52 @@ const Comment = (props) => {
                 />
                 <div className='commentInfo'>
                     <div className='commentSubmission'>
+                        {props.comment.userCreator==='[deleted]' ? 
+                        props.comment.userCreator
+                        :
                         <Link to={`/user/${props.comment.userCreator}`}>
                             {props.comment.userCreator}
                         </Link>
+                        }
                         {` Submitted ${timeSincePosted} ago`}
+                        {props.comment.lastEdit && 
+                        `* (last edited: ${editTime} ago)`
+                        }
                     </div>
                     <div className='commentDescription'>
                         {props.comment.description}
                     </div>
-                    <div className='commentLinks' onClick={handleShowReply}>
+                    {/* <div className='commentLinks' onClick={handleShowReply}>
                         Reply
+                    </div> */}
+                    <div className='commentLinks'>
+                        <div className='commentReply' onClick={handleShowReply}>
+                            Reply
+                        </div>
+                        {auth().currentUser && auth().currentUser.uid === props.comment.userCreatorUid && 
+                        <div className='commentEdit' onClick={handleShowEdit}>
+                            Edit
+                        </div>
+                        }
                     </div>
                 </div>
             </div>
+            {showEdit && 
+                <div className='commentEditContainer'>
+                    <TextArea handleSubmitComment={handleSubmitEdit} defaultText={props.comment.description} textAreaClassName={'postAddReplyInput'} btnClassName={'btnReply'} btnId={'btnSubmitReply'}>
+                        <div className='postEditErrorMsg'>
+                            {editError}
+                        </div>
+                    </TextArea>
+                    <button
+                        className='btnReply'
+                        id='btnCancelEdit'
+                        onClick={handleHideEdit}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            }
             {showReply && 
                 <div className='commentReplyContainer'>
                     <TextArea handleSubmitComment={handleSubmitReply} textAreaClassName={'postAddReplyInput'} btnClassName={'btnReply'} btnId={'btnSubmitReply'}>

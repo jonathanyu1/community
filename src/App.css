@@ -559,10 +559,18 @@ nav{
     font-size: 15px;
     font-weight: 100;
     color: var(--linksColor);
+    display: flex;
 }
 
-.commentLinks:hover{
+/* .commentLinks:hover{
     text-decoration: underline;
+} */
+.commentReply:hover, .commentEdit:hover{
+    text-decoration: underline;
+}
+
+.commentReply{
+    margin-right: 10px;
 }
 
 .replyContainer{
