@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import CommentScore from './CommentScore';
 import TextArea from './TextArea';
+import DeletePrompt from './DeletePrompt';
 import firebase, {auth, fs} from '../Firebase/firebase';
 import {calcTimeSincePosted, colorPickerRgb} from './Helpers/helperFunctions';
 import {Link} from 'react-router-dom';
@@ -166,9 +167,12 @@ const Comment = (props) => {
                             Reply
                         </div>
                         {auth().currentUser && auth().currentUser.uid === props.comment.userCreatorUid && 
+                        <React.Fragment>
                         <div className='commentEdit' onClick={handleShowEdit}>
                             Edit
                         </div>
+                        <DeletePrompt deleteFunction={props.handleDeleteComment} id={props.comment.postId}/>
+                        </React.Fragment>
                         }
                     </div>
                 </div>
@@ -241,6 +245,7 @@ const Comment = (props) => {
                                 history={props.history}
                                 location={props.location}
                                 index={props.index+1}
+                                handleDeleteComment={props.handleDeleteComment}
                             />
                         </div>
                     )

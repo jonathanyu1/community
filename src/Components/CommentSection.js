@@ -8,27 +8,17 @@ const CommentSection = (props) => {
     const [comments, setComments] = useState([]);
     const [topLevelComments, setTopLevelComments] = useState([]);
 
-    // const enableCommentQuerySnapshot = () => {
-    //     const commentQuery = fs.collection('communities').doc(props.match.params.comm)
-    //                         .collection('posts').doc(props.match.params.id).collection('comments');
-    //     commentQuery.onSnapshot((snapshot)=>{
-    //         snapshot.docChanges().forEach((change)=>{
-    //             let commentArray = [];
-    //             if (change.type === "added") {
-    //                 console.log("New comment: ", change.doc.data());
-    //                 commentArray.push(change.doc.data());
-    //             }
-    //             if (change.type === "modified") {
-    //                 console.log("Modified comment: ", change.doc.data());
-    //                 console.log(change.doc.data().uuid);
-    //                 // let index = commentArray.map(function(e) {return e.key}).indexOf(value);
-    //             }
-    //             if (change.type === "removed") {
-    //                 console.log("Removed comment: ", change.doc.data());
-    //             }
-    //         });
-    //     });
-    // }
+    const handleDeleteComment = (docId) => {
+        console.log(docId);
+        console.log(props);
+        return fs.collection('communities').doc(props.match.params.comm)
+                .collection('posts').doc(props.match.params.id)
+                .collection('comments').doc(docId).update({
+                    userCreator: '[deleted]',
+                    userCreatorUid: '[deleted]',
+                    description: '[deleted]'
+                });
+    }
 
     useEffect(()=>{
         console.log(props);
@@ -103,6 +93,7 @@ const CommentSection = (props) => {
                                 history={props.history}
                                 location={props.location}
                                 index={0}
+                                handleDeleteComment={handleDeleteComment}
                             />
                         )
                     })

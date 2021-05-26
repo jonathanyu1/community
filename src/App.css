@@ -49,6 +49,27 @@ html, body, #root, #appContainer{
     background-color: var(--iconHover);
 }
 
+/* reusable components */ 
+
+.deletePrompt{
+
+}
+
+.deleteWarning, .deleteWarningYes{
+    color: red;
+}
+
+.deleteWarning{
+    display: flex;
+}
+
+.deleteWarningYes, .deleteWarningNo{
+    margin: 0 5px;
+}
+
+.deleteWarningNo{
+    color: var(--linksColor);
+}
 
 /* Nav */ 
 
@@ -569,7 +590,7 @@ nav{
     text-decoration: underline;
 }
 
-.commentReply{
+.commentReply, .commentEdit{
     margin-right: 10px;
 }
 
@@ -600,4 +621,3 @@ nav{
 #btnSubmitReply:hover{
     background-color: var(--submitBtnHoverColor);
 }
-
