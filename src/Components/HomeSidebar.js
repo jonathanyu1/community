@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import SidebarSub from './SidebarSub';
 import {fs} from '../Firebase/firebase';
 import {Link} from 'react-router-dom';
 
-const HomeSidebar = () => {
+const HomeSidebar = (props) => {
     const [commList, setCommList] = useState([]);
 
     const loadHomeSidebar = () => {
@@ -51,6 +52,23 @@ const HomeSidebar = () => {
                     )
                 })}
             </div>
+            {props.userSubs && 
+            <div className='sidebarSubsContainer'>
+                <br></br>
+                <div className='sidebarTitle' id='sidebarSubsTitle'>
+                    Your Subscriptions:
+                </div>
+                <br></br>
+                {props.userSubs.map((sub)=>{
+                    console.log(sub);
+                    return (
+                    <Link to={`/c/${sub}`}>
+                        <SidebarSub sub={sub}/>
+                    </Link>
+                    )
+                })}
+            </div>
+            }
         </div>
     )
 }

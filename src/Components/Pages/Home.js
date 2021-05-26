@@ -84,11 +84,10 @@ const Home = (props) => {
             setUserHasSubs(false);
         }
     },[props.isSignedIn]);
-    // useEffect(()=>{
-    //     if (props.isSignedIn){
-    //         handleLoadHomePage();
-    //     }
-    // },[props.isSignedIn]);
+
+    useEffect(()=>{
+        console.log(userSubs);
+    },[userSubs]);
 
     return (
         <React.Fragment>
@@ -105,7 +104,7 @@ const Home = (props) => {
                                 return <PostCard post={post} key={uuidv4()}/>
                             })}
                         </div>
-                        <HomeSidebar />
+                        <HomeSidebar userSubs={userSubs}/>
                     </div>
                 </div>
             :

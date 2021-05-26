@@ -295,6 +295,16 @@ nav{
     background-color: var(--unSubHoverColor);
 }
 
+.sidebarSubsContainer a{
+    text-decoration: none;
+    color: blue;
+    font-size: 20px;
+}
+
+.sidebarSubContainer{
+    margin-bottom: 10px;
+}
+
 /* Post Score */
 
 #thumbUp, #thumbDown{
