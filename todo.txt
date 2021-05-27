@@ -1,22 +1,23 @@
-communities:
--allow users to follow a community, fix homepage to display subscribed communities if followed
-
--edit/delete communities, posts, comments (delete fully if no replies, otherwise delete contents);
-
-postpage:
--onsnapshot only query new / modified posts to prevent re-querying all posts on reply/scorechange/comment
 
 nav: 
 - show action on hover (https://material-ui.com/components/tooltips/)
 
 createcommunity:
 -prevent non-letters/number input (https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string)
--upload limit on img
-
-createpost:
--add post document id to corresponding user's field: postsMade (or query the posts on userPage usin this https://firebase.googleblog.com/2019/06/understanding-collection-group-queries.html)
--upload limit on img
+https://stackoverflow.com/a/49214173
 
 rules: 
 -allow read on all posts
 -allow edit, delete if user uid and name matches post/community user creator uid and name
+
+css: 
+-mobile responsive
+
+cleanup:
+-delete the random communities and logins i made to test
+
+deploy:
+-check if browser router works properly
+
+postpage:
+-onsnapshot only query new / modified posts to prevent re-querying all posts on reply/scorechange/comment

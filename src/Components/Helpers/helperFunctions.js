@@ -99,6 +99,23 @@ let redColors = [
     [255,255,0],
 ]
 
+let redColorsRepeat = [
+    [255,0,0],
+    [255,37,0],
+    [255,74,0],
+    [255,111,0],
+    [255,148,0],
+    [255,185,0],
+    [255,222,0],
+    [255,255,0],
+    [255,222,0],
+    [255,185,0],
+    [255,148,0],
+    [255,111,0],
+    [255,74,0],
+    [255,37,0],
+]
+
 let redToGreenColors = [
     [255,0,0],
     [255,73,0],
@@ -119,12 +136,44 @@ let custom = [
     [70,255,240]
 ]
 
+let redToPinkRepeat=[
+    [255,0,0],
+    [255,63,0],
+    [255,127,0],
+    [255,122,45],
+    [255,117,90],
+    [255,112,135],
+    [255,105,180],
+    [255,112,135],
+    [255,117,90],
+    [255,122,45],
+    [255,127,0],
+    [255,63,0],
+    [255,0,0],
+]
+
 export function colorPickerRgb(index) {
-    let colorArr = redToGreenColors;
+    let colorArr = redToPinkRepeat;
     let color = colorArr[Math.floor(index%colorArr.length)];
+    // let color = '';
+    // if (index>=colorArr.length){
+    //     color = colorArr[colorArr.length-1];
+    // } else {
+    //     color = colorArr[Math.floor(index%colorArr.length)];
+    // }
     let rgbValue = 'rgb(' + color.join(', ') + ')';
     return rgbValue;
 }
+
+// export function colorPickerRgb(index){
+//     let colorArr = [255,0,0,1];
+//     if (index>0){
+//         colorArr = [255,0,0,1*(Math.pow(0.8, (index+1)))]
+//     }
+//     // let colorArr=[255,0,0,1*(Math.pow(0.95, (index+1)))];
+//     let rgbaValue = 'rgba(' + colorArr.join(', ') + ')';
+//     return rgbaValue;
+// }
 
 
 
