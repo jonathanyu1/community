@@ -62,7 +62,8 @@ const CreatePost = (props) => {
                 userCreatorUid: auth().currentUser.uid,
                 createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 scoreUp: [],
-                scoreDown: []
+                scoreDown: [],
+                commentList: []
             }).catch((error)=>{
                 console.log('Error uploading text post:',error);
             });
@@ -80,7 +81,8 @@ const CreatePost = (props) => {
             userCreatorUid: auth().currentUser.uid,
             createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
             scoreUp: [],
-            scoreDown: []
+            scoreDown: [],
+            commentList: []
         }).then(function(postRef){
             console.log(postRef.id);
             setPostId(postRef.id);

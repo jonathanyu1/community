@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {fs, auth} from '../Firebase/firebase';
+import firebase, {fs, auth} from '../Firebase/firebase';
 
 const CommentScore = (props) => {
     const [isUpvote, setIsUpvote] = useState(false);
@@ -24,14 +24,14 @@ const CommentScore = (props) => {
                     }
                     if (currUser) {tempScoreUp.push(currUser)};
                     docRef.update({
-                        scoreUp: tempScoreUp,
-                        scoreDown: tempScoreDown
+                        scoreUp: firebase.firestore.FieldValue.arrayUnion(currUser),
+                        scoreDown: firebase.firestore.FieldValue.arrayRemove(currUser)
                     });
                 } else {
                     // user has upvoted previously, remove from scoreUp array
                     tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
                     docRef.update({
-                        scoreUp: tempScoreUp,
+                        scoreUp: firebase.firestore.FieldValue.arrayRemove(currUser)
                     });
                 }
             });
@@ -54,19 +54,79 @@ const CommentScore = (props) => {
                     }
                     if (currUser) {tempScoreDown.push(currUser)};
                     docRef.update({
-                        scoreUp: tempScoreUp,
-                        scoreDown: tempScoreDown
+                        scoreUp: firebase.firestore.FieldValue.arrayRemove(currUser),
+                        scoreDown: firebase.firestore.FieldValue.arrayUnion(currUser)
                     });
                 } else {
                     // user has upvoted previously, remove from scoreUp array
                     tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
                     docRef.update({
-                        scoreDown: tempScoreDown,
+                        scoreDown: firebase.firestore.FieldValue.arrayRemove(currUser),
                     });
                 }
             });
         }
     }
+
+    // const handleUpvoteClick = () => {
+    //     if (currUser){
+    //         let docRef = fs.collection('communities').doc(props.community)
+    //                     .collection('posts').doc(props.postId).collection('comments')
+    //                     .doc(props.commentId);
+    //         docRef.get().then((doc)=>{
+    //             let tempScoreUp = doc.data().scoreUp;
+    //             let tempScoreDown = doc.data().scoreDown;
+    //             if (tempScoreUp.indexOf(currUser)===-1){
+    //                 // user hasnt upvoted previously, add to scoreUp array
+    //                 if (tempScoreDown.indexOf(currUser)!==-1){
+    //                     // previously downvoted, remove from it
+    //                     tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
+    //                 }
+    //                 if (currUser) {tempScoreUp.push(currUser)};
+    //                 docRef.update({
+    //                     scoreUp: tempScoreUp,
+    //                     scoreDown: tempScoreDown
+    //                 });
+    //             } else {
+    //                 // user has upvoted previously, remove from scoreUp array
+    //                 tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
+    //                 docRef.update({
+    //                     scoreUp: tempScoreUp,
+    //                 });
+    //             }
+    //         });
+    //     }
+    // }
+
+    // const handleDownvoteClick = () => {
+    //     if (currUser){
+    //         let docRef = fs.collection('communities').doc(props.community)
+    //                     .collection('posts').doc(props.postId).collection('comments')
+    //                     .doc(props.commentId);
+    //         docRef.get().then((doc)=>{
+    //             let tempScoreUp = doc.data().scoreUp;
+    //             let tempScoreDown = doc.data().scoreDown;
+    //             if (tempScoreDown.indexOf(currUser)===-1){
+    //                 // user hasnt upvoted previously, add to scoreUp array
+    //                 if (tempScoreUp.indexOf(currUser)!==-1){
+    //                     // previously downvoted, remove from it
+    //                     tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
+    //                 }
+    //                 if (currUser) {tempScoreDown.push(currUser)};
+    //                 docRef.update({
+    //                     scoreUp: tempScoreUp,
+    //                     scoreDown: tempScoreDown
+    //                 });
+    //             } else {
+    //                 // user has upvoted previously, remove from scoreUp array
+    //                 tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
+    //                 docRef.update({
+    //                     scoreDown: tempScoreDown,
+    //                 });
+    //             }
+    //         });
+    //     }
+    // }
 
     useEffect(()=>{
         const handleScoreChanges = (doc) => {

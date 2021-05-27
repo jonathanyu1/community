@@ -19,6 +19,7 @@
 }
 
 html, body, #root, #appContainer{
+    /* remove width: 100% to make mobile responsive and display: grid on body content*/
     height: 100%;
     width: 100%;
     margin: 0;
