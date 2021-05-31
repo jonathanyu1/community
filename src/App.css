@@ -199,7 +199,11 @@ nav{
 
 .userDescriptionInput{
     resize: none;
+    border-radius: 5px;
+    border: 2px solid #888;
     width: 50%;
+    font-size: 17px;
+    margin-bottom: 20px;
 }
 
 .userDescription{
@@ -222,6 +226,10 @@ nav{
     background-color: var(--submitBtnHoverColor);
 }
 
+.labelUserDescription{
+    margin: 5px 0;
+}
+
 @media (max-width: 900px){
     .settingsContainer{
         padding-top: 15vh;
@@ -230,9 +238,6 @@ nav{
     .settingsForm{
         max-width: 90%;
         width: 90%;
-    }
-    .labelUserDescription{
-        margin: 5px 0;
     }
     .userDescriptionInput{
         resize: none;
@@ -480,16 +485,145 @@ nav{
     }
 }
 
+/* create community page */ 
+ #createCommunityContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+ }
+
+ .createCommunityForm{
+    background-color: white;
+    max-width: 80%;
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px;
+ }
+
+ .createCommunityTitleInput{
+    border-radius: 5px;
+    border: 2px solid #888;
+    height: 30px;
+    width: 50%;
+    font-size: 20px;
+    margin-bottom: 20px;
+ }
+
+ .createCommunityTextArea{
+    border-radius: 5px;
+    border: 2px solid #888;
+    width: 50%;
+    font-size: 20px;
+    margin-bottom: 20px;
+ }
+
+ .btnSubmit{
+    display: block;
+    width: auto;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--submitBtnColor);
+    color: white;
+ }
+
+@media (max-width: 900px){
+    #createCommunityContainer{
+        min-height: 100vh;
+        padding-top: 15vh;
+     }
+    
+     .createCommunityForm{
+        width: 100%;
+        margin: 0 auto;
+        padding: 30px;
+     }
+    
+     .createCommunityTitleInput{
+        width: 100%;
+        font-size: 20px;
+     }
+    
+     .createCommunityTextArea{
+        width: 100%;
+        font-size: 20px;
+     }
+}
 
 /* create post page */ 
+
+#createPostContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+ }
+
+ .createPostForm{
+    background-color: white;
+    max-width: 80%;
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px;
+ }
+
+ .createPostSection{
+     display: flex;
+     flex-direction: column;
+     font-size: 20px;
+ }
+
+ .titleInput{
+    border-radius: 5px;
+    border: 2px solid #888;
+    height: 30px;
+    width: 50%;
+    font-size: 20px;
+    margin-bottom: 20px;
+ }
+
+ .descriptionInput{
+    resize: none;
+    border-radius: 5px;
+    border: 2px solid #888;
+    width: 50%;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
 
 .imgUploadPreview{
     height: 200px;
     width: 200px;
 }
 
-.descriptionInput{
-    resize: none;
+.labelPostCommunityNames{
+    margin-top: 20px; 
+    margin-bottom: 10px;
+}
+
+.selectCommunityNames{
+    width: 50%;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+@media (max-width: 900px){
+    #createPostContainer{
+        min-height: 100vh;
+        padding-top: 15vh;
+    }
+    
+    .createPostForm{
+        width: 100%;
+        margin: 0 auto;
+        padding: 30px;
+    }
+    
+     .titleInput, .descriptionInput, .selectCommunityNames{
+        width: 100%;
+     }
 }
 
 /* post page */ 

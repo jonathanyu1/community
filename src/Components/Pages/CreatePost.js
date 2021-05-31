@@ -200,11 +200,12 @@ const CreatePost = (props) => {
                     <form
                         autoComplete="off"
                         onSubmit={handleSubmit}
+                        className='createPostForm'
                     >
                         <h1>
                             Create a New Post
                         </h1>
-                        <div>
+                        <div className='createPostSection'>
                             <label htmlFor='titleInput' className='labelPostTitle'>Add a title: </label>
                             <input
                                 id='titleInput'
@@ -218,7 +219,7 @@ const CreatePost = (props) => {
                                 required
                             />
                         </div>
-                        <div>
+                        <div className='createPostSection'>
                             <label htmlFor='descriptionInput' className='labelPostDescription'>Add a description: </label>
                             <textarea
                                 id='descriptionInput'
@@ -228,6 +229,7 @@ const CreatePost = (props) => {
                                 onChange={handleChange}
                                 value={description}
                             />
+                        </div>
                         <div>
                             {/* <label htmlFor='createPostImgUpload' className='labelUploadImg'>Upload an image: </label> */}
                             <input 
@@ -245,12 +247,13 @@ const CreatePost = (props) => {
                                 </React.Fragment>
                             }
                         </div>
-                        </div>
+                        <div className='createPostSection'>
                             <label htmlFor='selectCommunityNames' className='labelPostCommunityNames'>Select a community for your post: </label>
                             {isLoading ? 
                                 loadingIcon
                             : 
                                 <select 
+                                    className='selectCommunityNames'
                                     name='communityNames' 
                                     id='selectCommunityNames'
                                     value={communitySelect}
@@ -271,11 +274,12 @@ const CreatePost = (props) => {
                                     })} 
                                 </select>
                             }
+                        </div>
                         <div>
                             {errorMsg ? (
                                 <p>{errorMsg}</p>
                             ) : null}
-                            <button type="submit">Submit Post</button>
+                            <button type="submit" className='btnSubmit'>Submit Post</button>
                         </div>
                     </form>
                 </div>

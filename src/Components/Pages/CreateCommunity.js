@@ -80,6 +80,7 @@ const CreateCommunity = () => {
                     <form
                         autoComplete="off"
                         onSubmit={handleSubmit}
+                        className='createCommunityForm'
                     >
                         <h1>
                             Create a New Community
@@ -87,6 +88,7 @@ const CreateCommunity = () => {
                         <div>
                             <input
                                 placeholder="Title"
+                                className='createCommunityTitleInput'
                                 name="title"
                                 type="text"
                                 onChange={handleChange}
@@ -97,7 +99,7 @@ const CreateCommunity = () => {
                         </div>
                         <div>
                             <textarea
-                                className='descriptionInput'
+                                className='descriptionInput createCommunityTextArea'
                                 placeholder="Description"
                                 name="description"
                                 onChange={handleChange}
@@ -108,7 +110,7 @@ const CreateCommunity = () => {
                             {errorMsg ? (
                                 <p>{errorMsg}</p>
                             ) : null}
-                            <button type="submit">Submit Community</button>
+                            <button className='btnSubmit'type="submit">Submit Community</button>
                         </div>
                     </form>
                 </div>
