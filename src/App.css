@@ -21,7 +21,7 @@
 html, body, #root, #appContainer{
     /* remove width: 100% to make mobile responsive and display: grid on body content*/
     height: 100%;
-    /* width: 100%; */
+    width: 100%;
     margin: 0;
     padding: 0;
     border: 0;
@@ -95,7 +95,7 @@ nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    min-height: 10vh;
+    max-height: 10vh;
     /* color: var(--navColor); */
 }
 
@@ -136,6 +136,12 @@ nav{
 }
 
 @media (max-width: 900px){
+    #navContainer{
+        position: fixed;
+        top: 0;
+        background-color: white;
+        overflow: hidden;
+    }
     .navText{
         display: none;
     }
@@ -171,13 +177,6 @@ nav{
     width: 50%;
     margin: 0 auto;
     padding: 30px;
-}
-
-@media (max-width: 900px){
-    .settingsForm{
-        max-width: 90%;
-        width: 90%;
-    }
 }
 
 .userImgForm{
@@ -223,6 +222,24 @@ nav{
     background-color: var(--submitBtnHoverColor);
 }
 
+@media (max-width: 900px){
+    .settingsContainer{
+        padding-top: 15vh;
+        min-height: 100vh;
+    }
+    .settingsForm{
+        max-width: 90%;
+        width: 90%;
+    }
+    .labelUserDescription{
+        margin: 5px 0;
+    }
+    .userDescriptionInput{
+        resize: none;
+        width: 100%;
+    }
+}
+
 /* home */ 
 
 .homeContainer{
@@ -230,6 +247,12 @@ nav{
     min-height: 90vh;
     padding-top: 2vh;
     background-color: var(--backgroundColorLight);
+}
+
+@media (max-width: 900px){
+    .homeContainer{
+        padding-top: 12vh;
+    }
 }
 
 /* user page */
@@ -265,6 +288,15 @@ nav{
 .pagePostsContainer, .pageEmptyContainer{
 }
 
+@media (max-width: 900px){
+    .pageContainer{
+        padding-top: 12vh;
+    }
+    .pageContentContainer{
+        grid-template-columns: auto;
+    }
+}
+
 /* Sidebar */
 
 .sidebarContainer{
@@ -274,11 +306,11 @@ nav{
     padding: 20px 0;
 }
 
-@media (max-width: 800px){
+/* @media (max-width: 900px){
     .sidebarContainer{
         display: none;
     }
-}
+} */
 
 .sidebarTitle{
     font-size: 25px;
@@ -373,7 +405,6 @@ nav{
 
 .postCardContainer{
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
     width: 100%;
     background-color: white;
@@ -435,6 +466,20 @@ nav{
     padding: 10px;
     width: 100%;
 }
+
+@media (max-width: 900px){
+    .postCardContainer{
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+    .postCardLeftContainer{
+        margin-right: 15px;
+    }
+    .postCardTitle{
+        font-size: 25px;
+    }
+}
+
 
 /* create post page */ 
 
@@ -545,6 +590,23 @@ nav{
     padding: 10px;
 }
 
+@media (max-width: 900px){
+    .postPageContainer{
+        padding-top: 12vh;
+    }
+    .postPageContent{
+        padding: 10px 15px;
+    }
+    .postPageLeft{
+        margin-right: 15px;
+    }
+    .postAddCommentInput{
+        width: 100%;
+        height: 100px;
+        resize: none;
+    }
+}
+
 /* comment section */ 
 
 .commentSection{
@@ -642,4 +704,24 @@ nav{
 
 #btnSubmitReply:hover{
     background-color: var(--submitBtnHoverColor);
+}
+
+@media (max-width: 900px){
+    .commentSection{
+        padding: 0;
+    } 
+    .commentTop{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .commentsContainer{
+        max-width: 100%;
+    }
+    .commentContainer{
+        padding: 3px;
+    }
+    .replyContainer{
+        margin-left: 0%;
+    }
 }
