@@ -21,7 +21,7 @@
 html, body, #root, #appContainer{
     /* remove width: 100% to make mobile responsive and display: grid on body content*/
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
     margin: 0;
     padding: 0;
     border: 0;
@@ -76,6 +76,10 @@ html, body, #root, #appContainer{
 
 /* Nav */ 
 
+.navIconMobile{
+    display: none;
+}
+
 #navContainer{
     border-bottom: 2px solid var( --navUnderlineColor);    
     padding: 0 5%;
@@ -93,6 +97,10 @@ nav{
     align-items: center;
     min-height: 10vh;
     /* color: var(--navColor); */
+}
+
+#navHeaderContainer{
+    display: flex;
 }
 
 #navHeader{
@@ -128,10 +136,20 @@ nav{
 }
 
 @media (max-width: 900px){
-    .navTabs{
-        width: 100%;
+    .navText{
+        display: none;
+    }
+    .navIconMobile{
+        display: inline;
+    }
+    .nav ul{
+        padding-left: 0;
+    }
+    .navTabs a{
+        padding-left: 15px;
     }
 }
+
 
 /* Settings */
 
