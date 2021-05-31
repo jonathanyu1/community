@@ -35,9 +35,10 @@ const SignIn = () => {
             <form
                 autoComplete="off"
                 onSubmit={handleSubmit}
+                className='signInForm'
             >
                 <h1>
-                    Sign in to
+                    {`Sign in to `}
                     <Link to="/">
                         Community
                     </Link>
@@ -47,27 +48,29 @@ const SignIn = () => {
                 </p>
                 <div>
                     <input
-                    placeholder="Email"
-                    name="email"
-                    type="email"
-                    onChange={handleChange}
-                    value={email}
+                        className='signInEmailInput'
+                        placeholder="Email"
+                        name="email"
+                        type="email"
+                        onChange={handleChange}
+                        value={email}
                     />
                 </div>
                 <div>
                     <input
-                    placeholder="Password"
-                    name="password"
-                    onChange={handleChange}
-                    value={password}
-                    type="password"
+                        className='signInPasswordInput'
+                        placeholder="Password"
+                        name="password"
+                        onChange={handleChange}
+                        value={password}
+                        type="password"
                     />
                 </div>
                 <div>
                     {errorMsg ? (
                         <p>{errorMsg}</p>
                     ) : null}
-                    <button type="submit">Login</button>
+                    <button type="submit" className='btnSubmit'>Login</button>
                 </div>
                 <hr />
                 <p>

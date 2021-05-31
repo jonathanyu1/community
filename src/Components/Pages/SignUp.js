@@ -73,30 +73,49 @@ const SignUp = () => {
 
     return (
         <div id='signUpContainer'>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <h1>
-                        Sign Up to
-                    <Link to="/">Community</Link>
-                    </h1>
-                    <p>Fill in the form below to create an account.</p>
-                    <div>
-                        <input placeholder='Username' name='username' onChange={handleChange} value={username} minLength='3'></input>
-                    </div>
-                    <div>
-                        <input placeholder="Email" name="email" type="email" onChange={handleChange} value={email}></input>
-                    </div>
-                    <div>
-                        <input placeholder="Password" name="password" onChange={handleChange} value={password} type="password"></input>
-                    </div>
-                    <div>
-                        {errorMsg ? <p>{errorMsg}</p> : null}
-                        <button type="submit">Sign up</button>
-                    </div>
-                    <hr></hr>
-                    <p>Already have an account? <Link to="/signin">Sign In</Link></p>
-                </form>
-            </div>
+            <form onSubmit={handleSubmit} className='signUpForm' autoComplete="off">
+                <h1>
+                    {`Sign Up to `}
+                <Link to="/">Community</Link>
+                </h1>
+                <p>Fill in the form below to create an account.</p>
+                <div>
+                    <input 
+                        className='signUpUsernameInput'
+                        placeholder='Username' 
+                        name='username' 
+                        onChange={handleChange} 
+                        value={username} 
+                        minLength='3'
+                    ></input>
+                </div>
+                <div>
+                    <input 
+                        className='signUpEmailInput'
+                        placeholder="Email" 
+                        name="email" 
+                        type="email" 
+                        onChange={handleChange} 
+                        value={email}
+                    ></input>
+                </div>
+                <div>
+                    <input 
+                        className='signUpPasswordInput'
+                        placeholder="Password" 
+                        name="password" 
+                        onChange={handleChange}
+                        value={password} 
+                        type="password"
+                    ></input>
+                </div>
+                <div>
+                    {errorMsg ? <p>{errorMsg}</p> : null}
+                    <button type="submit" className='btnSubmit'>Sign up</button>
+                </div>
+                <hr></hr>
+                <p>Already have an account? <Link to="/signin">Sign In</Link></p>
+            </form>
         </div>
     )
 }

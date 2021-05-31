@@ -174,7 +174,7 @@ nav{
 .settingsForm{
     background-color: white;
     max-width: 80%;
-    width: 50%;
+    width: 40%;
     margin: 0 auto;
     padding: 30px;
 }
@@ -296,6 +296,7 @@ nav{
 @media (max-width: 900px){
     .pageContainer{
         padding-top: 12vh;
+        min-height: 100vh;
     }
     .pageContentContainer{
         grid-template-columns: auto;
@@ -485,6 +486,93 @@ nav{
     }
 }
 
+/* sign up */
+
+#signUpContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+}
+
+.signUpForm{
+    background-color: white;
+    max-width: 80%;
+    width: 40%;
+    margin: 0 auto;
+    padding: 30px;
+ }
+
+ .signUpUsernameInput, .signUpEmailInput, .signUpPasswordInput{
+    border-radius: 5px;
+    border: 2px solid #888;
+    height: 30px;
+    width: 50%;
+    font-size: 20px;
+    margin-bottom: 20px;
+ }
+
+ @media (max-width: 900px){
+    #signUpContainer{
+        min-height: 100vh;
+        padding-top: 15vh;
+     }
+    
+     .signUpForm{
+        width: 100%;
+        margin: 0 auto;
+        padding: 30px;
+     }
+    
+     .signUpUsernameInput, .signUpEmailInput, .signUpPasswordInput{
+        width: 100%;
+        font-size: 20px;
+     }
+}
+/* sign in */
+
+#signInContainer{
+    width: 100%;
+    min-height: 90vh;
+    padding-top: 2vh;
+    background-color: var(--backgroundColorLight);
+}
+
+.signInForm{
+    background-color: white;
+    max-width: 80%;
+    width: 40%;
+    margin: 0 auto;
+    padding: 30px;
+ }
+
+.signInEmailInput, .signInPasswordInput{
+    border-radius: 5px;
+    border: 2px solid #888;
+    height: 30px;
+    width: 50%;
+    font-size: 20px;
+    margin-bottom: 20px;
+ }
+
+@media (max-width: 900px){
+    #signInContainer{
+        min-height: 100vh;
+        padding-top: 15vh;
+    }
+
+    .signInForm{
+        width: 100%;
+        margin: 0 auto;
+        padding: 30px;
+        }
+
+    .signInEmailInput, .signInPasswordInput{
+        width: 100%;
+        font-size: 20px;
+    }
+}
+
 /* create community page */ 
  #createCommunityContainer{
     width: 100%;
@@ -496,7 +584,7 @@ nav{
  .createCommunityForm{
     background-color: white;
     max-width: 80%;
-    width: 50%;
+    width: 40%;
     margin: 0 auto;
     padding: 30px;
  }
@@ -564,7 +652,7 @@ nav{
  .createPostForm{
     background-color: white;
     max-width: 80%;
-    width: 50%;
+    width: 40%;
     margin: 0 auto;
     padding: 30px;
  }
@@ -727,6 +815,7 @@ nav{
 @media (max-width: 900px){
     .postPageContainer{
         padding-top: 12vh;
+        min-height: 100vh;
     }
     .postPageContent{
         padding: 10px 15px;
