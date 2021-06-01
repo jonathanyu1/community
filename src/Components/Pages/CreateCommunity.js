@@ -32,7 +32,6 @@ const CreateCommunity = () => {
             return false;
         });
         return avail;
-        // return true;
     }
 
     const handleSubmit = (e) => {
@@ -40,7 +39,6 @@ const CreateCommunity = () => {
         setErrorMsg('');
         if (title.length>2){
             checkAvailableTitle().then((result)=>{
-                console.log(result);
                 if (result){
                     addCommunityToFs()
                     .then(()=>{
@@ -48,7 +46,6 @@ const CreateCommunity = () => {
                     })
                     .catch ((error)=>{
                             console.log('Error with sign up:',error);
-                            console.log(error.message);
                             setErrorMsg(error.message);
                     });
                 } else {
@@ -75,7 +72,6 @@ const CreateCommunity = () => {
 
     return (
         <React.Fragment>
-            {/* {isRedirect ? <Redirect to='/'/> :  */}
             {isRedirect ? <Redirect to={`/c/${title.toLowerCase()}`}/> : 
                 <div id='createCommunityContainer'>
                     <form

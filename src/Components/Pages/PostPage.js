@@ -11,26 +11,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 const PostPage = (props) => {
     const [postExists, setPostExists] = useState(true);
-    // const [title, setTitle] = useState('');
-    // const [description, setDescription] = useState('');
-    // const [timestamp, setTimestamp] = useState('');
-    // const [imgUrl, setImgUrl] = useState('');
-    // // const [scoreUp, setScoreUp] = useState('');
-    // // const [scoreDown, setScoreDown] = useState('');
-    // // const [imgStorageUri, setImgStorageUri] = ('');
-    // const [postCreator, setPostCreator] = useState('');
-    // // const [postCreatorUid, setPostCreatorUid] = useState('');
     const [postDetails, setPostDetails] = useState({});
     const [sidebarDescription, setSidebarDescription] = useState('');
     const [sidebarCreator, setSidebarCreator] = useState('');
     const [showImage, setShowImage] = useState(true);
-    // const [commentInput, setCommentInput] = useState('');
     const [commentError, setCommentError] = useState('');
     const loadingIcon = <i className="fa fa-spinner" aria-hidden="true"></i>;
-
-    // const handleCommentInput = (e) => {
-    //     setCommentInput(e.target.value);
-    // }
 
     const handleSubmitComment = (commentInput) => {
         if (auth().currentUser){
@@ -38,14 +24,12 @@ const PostPage = (props) => {
                 setCommentError('');
                 submitComment(commentInput)
                 .then((data)=>{
-                    console.log(data.id);
                     data.update({
                         postId: data.id
                     }).catch((error)=>{
                         console.log('Error updating document with doc id:',error);
                     });
                     updatePostCommentList(data.id);
-                    // setCommentInput('');
                 });
             } else {
                 setCommentError('Comments cannot be empty, please try again.');
@@ -82,7 +66,6 @@ const PostPage = (props) => {
         let docRef =fs.collection('communities').doc(props.match.params.comm);
         docRef.get().then(doc=>{
             if (doc.exists){
-                console.log(doc.data());
                 setSidebarDescription(doc.data().description);
                 setSidebarCreator(doc.data().userCreator);
             } else {
@@ -98,12 +81,6 @@ const PostPage = (props) => {
         let docRef = fs.collection('communities').doc(props.match.params.comm).collection('posts').doc(props.match.params.id);
         let result = docRef.get().then(doc=>{
             if (doc.exists){
-                console.log(doc.data());
-                // setTitle(doc.data().title);
-                // setDescription(doc.data().description);
-                // setTimestamp(doc.data().createdTimestamp.seconds);
-                // setImgUrl(doc.data().imgUrl);
-                // setPostCreator(doc.data().userCreator);
                 tempObj = {
                     [`title`] : doc.data().title,
                     [`description`] : doc.data().description,
@@ -127,7 +104,6 @@ const PostPage = (props) => {
             loadSidebarContent();
             let result = await loadPostContent();
             if (result && Object.keys(result).length) {
-                console.log('post exist');
                 setPostDetails(result);
             }
         } catch (error){
@@ -135,15 +111,7 @@ const PostPage = (props) => {
         }
     }
 
-
     useEffect(()=>{
-        if (Object.keys(postDetails).length){
-            console.log(postDetails);
-        }
-    },[postDetails]);
-
-    useEffect(()=>{
-        console.log(props);
         handleLoadPostPage();
     },[]);
 
@@ -203,28 +171,11 @@ const PostPage = (props) => {
                                     </div>
                                     {props.isSignedIn ? 
                                     <div className='postAddCommentContainer'>
-                                        {/* <textarea
-                                            value={commentInput}
-                                            onChange={handleCommentInput}
-                                            placeholder='Comment here!'
-                                            className='postAddCommentInput'
-                                            required
-                                        >
-                                        </textarea> */}
                                         <TextArea handleSubmitComment={handleSubmitComment} textAreaClassName={`postAddCommentInput`} btnClassName={'btnSubmitComment'}>
                                             <div className='postCommentErrorMsg'>
                                                 {commentError}
                                             </div>
                                         </TextArea>
-                                        {/* <div className='postCommentErrorMsg'>
-                                            {commentError}
-                                        </div> */}
-                                        {/* <button
-                                            className='btnSubmitComment'
-                                            onClick={handleSubmitComment}
-                                        >
-                                            Submit
-                                        </button> */}
                                     </div>
                                     :
                                     <div className='postSignInContainer'>

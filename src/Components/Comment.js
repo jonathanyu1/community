@@ -13,7 +13,6 @@ const Comment = (props) => {
     const [showReply, setShowReply] = useState(false);
     const [editTime, setEditTime] = useState('0 seconds');
     const [timeSincePosted, setTimeSincePosted] = useState('0 seconds');
-    // const [commentReplyInput, setCommentReplyInput] = useState('');
     const [replyError, setReplyError] = useState('');
     const rgbColor = colorPickerRgb(props.index);
     const borderStyle = {
@@ -31,8 +30,6 @@ const Comment = (props) => {
     }
 
     const handleSubmitEdit = (description) => {
-        console.log(props.comment);
-        console.log(description);
         if (description === props.comment.description){
             console.log('edit invalid same contents');
             setEditError('Comment has not changed, please try again.')
@@ -84,8 +81,6 @@ const Comment = (props) => {
                 setReplyError('');
                 submitReply(commentReplyInput)
                 .then((data)=>{
-                    // console.log(data.id);
-                    // setCommentReplyInput('');
                     updatePostCommentList(data.id);
                     data.update({
                         postId: data.id
@@ -102,21 +97,12 @@ const Comment = (props) => {
         }
     }
 
-    // const handleSubmitReply = () => {
-    //     // handleHideReply();
-    // }
-
-    // const handleReplyInput = (e) => {
-    //     setCommentReplyInput(e.target.value);
-    // }
-
     const handleShowReply = () => {
         setShowReply(true);
     }
 
     const handleHideReply = () => {
         setShowReply(false);
-        // setCommentReplyInput('');
     }
 
     const getTime = () => {
@@ -129,8 +115,6 @@ const Comment = (props) => {
     }
 
     useEffect(()=>{
-        // console.log(props);
-        // console.log(props.comment.createdTimestamp.seconds);
         getTime();
     },[]);
 
@@ -159,9 +143,6 @@ const Comment = (props) => {
                     <div className='commentDescription'>
                         {props.comment.description}
                     </div>
-                    {/* <div className='commentLinks' onClick={handleShowReply}>
-                        Reply
-                    </div> */}
                     <div className='commentLinks'>
                         <div className='commentReply' onClick={handleShowReply}>
                             Reply
@@ -200,24 +181,6 @@ const Comment = (props) => {
                             {replyError}
                         </div>
                     </TextArea>
-                    {/* <textarea
-                        value={commentReplyInput}
-                        onChange={handleReplyInput}
-                        placeholder='Reply here!'
-                        className='postAddReplyInput'
-                        required
-                    >
-                    </textarea>
-                    <div className='postReplyErrorMsg'>
-                        {replyError}
-                    </div>
-                    <button
-                        className='btnReply'
-                        id='btnSubmitReply'
-                        onClick={handleSubmitReply}
-                    >
-                        Submit
-                    </button> */}
                     <button
                         className='btnReply'
                         id='btnCancelReply'
@@ -227,8 +190,7 @@ const Comment = (props) => {
                     </button>
                 </div>
             }
-            {props.childComments && props.childComments.length>0 && 
-                
+            {props.childComments && props.childComments.length>0 &&   
                 props.childComments.map((comment)=>{
                     let childComments=null;
                     if (comment.uuid){

@@ -5,7 +5,6 @@ const CommentScore = (props) => {
     const [isUpvote, setIsUpvote] = useState(false);
     const [isDownvote, setIsDownvote] = useState(false);
     const [score, setScore] = useState(0);
-    // const [currUser, setCurrUser] = useState(auth().currentUser.uid || null);
     const [currUser, setCurrUser] = useState((auth().currentUser ? auth().currentUser.uid : null));
 
     const handleUpvoteClick = () => {
@@ -68,71 +67,10 @@ const CommentScore = (props) => {
         }
     }
 
-    // const handleUpvoteClick = () => {
-    //     if (currUser){
-    //         let docRef = fs.collection('communities').doc(props.community)
-    //                     .collection('posts').doc(props.postId).collection('comments')
-    //                     .doc(props.commentId);
-    //         docRef.get().then((doc)=>{
-    //             let tempScoreUp = doc.data().scoreUp;
-    //             let tempScoreDown = doc.data().scoreDown;
-    //             if (tempScoreUp.indexOf(currUser)===-1){
-    //                 // user hasnt upvoted previously, add to scoreUp array
-    //                 if (tempScoreDown.indexOf(currUser)!==-1){
-    //                     // previously downvoted, remove from it
-    //                     tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
-    //                 }
-    //                 if (currUser) {tempScoreUp.push(currUser)};
-    //                 docRef.update({
-    //                     scoreUp: tempScoreUp,
-    //                     scoreDown: tempScoreDown
-    //                 });
-    //             } else {
-    //                 // user has upvoted previously, remove from scoreUp array
-    //                 tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
-    //                 docRef.update({
-    //                     scoreUp: tempScoreUp,
-    //                 });
-    //             }
-    //         });
-    //     }
-    // }
-
-    // const handleDownvoteClick = () => {
-    //     if (currUser){
-    //         let docRef = fs.collection('communities').doc(props.community)
-    //                     .collection('posts').doc(props.postId).collection('comments')
-    //                     .doc(props.commentId);
-    //         docRef.get().then((doc)=>{
-    //             let tempScoreUp = doc.data().scoreUp;
-    //             let tempScoreDown = doc.data().scoreDown;
-    //             if (tempScoreDown.indexOf(currUser)===-1){
-    //                 // user hasnt upvoted previously, add to scoreUp array
-    //                 if (tempScoreUp.indexOf(currUser)!==-1){
-    //                     // previously downvoted, remove from it
-    //                     tempScoreUp.splice(tempScoreUp.indexOf(currUser), 1);
-    //                 }
-    //                 if (currUser) {tempScoreDown.push(currUser)};
-    //                 docRef.update({
-    //                     scoreUp: tempScoreUp,
-    //                     scoreDown: tempScoreDown
-    //                 });
-    //             } else {
-    //                 // user has upvoted previously, remove from scoreUp array
-    //                 tempScoreDown.splice(tempScoreDown.indexOf(currUser), 1);
-    //                 docRef.update({
-    //                     scoreDown: tempScoreDown,
-    //                 });
-    //             }
-    //         });
-    //     }
-    // }
-
     useEffect(()=>{
         const handleScoreChanges = (doc) => {
             if (doc.data()){
                 if (doc.data().scoreUp.indexOf(currUser)!==-1){
-                    // user is upvoting this post
                     setIsUpvote(true);
                     setIsDownvote(false);
                 } else if (doc.data().scoreDown.indexOf(currUser)!==-1){
@@ -146,8 +84,6 @@ const CommentScore = (props) => {
                 setScore(tempScore);
             }
         };
-
-        // console.log(props.commentId);
 
         const postQuery = fs.collection('communities').doc(props.community)
                             .collection('posts').doc(props.postId).collection('comments')

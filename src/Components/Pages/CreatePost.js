@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom';
 import firebase, { auth, fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
-const CreatePost = (props) => {
+const CreatePost = () => {
     const [isRedirect, setIsRedirect] = useState(false);
     const [communityNames, setCommunityNames] = useState([]);
     const [title, setTitle] = useState('');
@@ -20,14 +20,12 @@ const CreatePost = (props) => {
     const loadingImgUrl = 'https://www.google.com/images/spin-32.gif?a';
 
     useEffect(()=>{
-        // setCommunityNames(loadCommunityNames());
         handleLoadCommunityNames();
     },[]);
 
     const handleLoadCommunityNames = async () => {
         try {
             let tempCommunityNames = await loadCommunityNames();
-            console.log(tempCommunityNames);
             setCommunityNames(tempCommunityNames);
             setIsLoading(false);
         }catch (error){
@@ -40,19 +38,16 @@ const CreatePost = (props) => {
         let docRef = fs.collection('communities');
         let tempCommunityNames = docRef.get().then((ref)=>{
             ref.forEach((doc)=>{
-                console.log(doc.id);
                 tempArray.push(doc.id);
             });
             return tempArray;
         }).catch((error)=>{
             console.log('Error getting community names:',error);
         });
-        // setIsLoading(false);
         return tempCommunityNames;
     }
 
     const addPostToFs = () => {
-        console.log(communitySelect);
         return fs.collection('communities').doc(communitySelect)
             .collection('posts').add({
                 title: title,
@@ -70,7 +65,6 @@ const CreatePost = (props) => {
     }
 
     const addImgPostToFs = () => {
-        console.log(communitySelect);
         return fs.collection('communities').doc(communitySelect)
         .collection('posts').add({
             title: title,
@@ -84,7 +78,6 @@ const CreatePost = (props) => {
             scoreDown: [],
             commentList: []
         }).then(function(postRef){
-            console.log(postRef.id);
             setPostId(postRef.id);
             let filePath = auth().currentUser.uid + '/' + postRef.id + '/' + imgFile.name;
             return firebase.storage().ref(filePath).put(imgFile).then(function(fileSnapshot) {
@@ -114,11 +107,8 @@ const CreatePost = (props) => {
 
     const handleTextSubmit = () => {
         if (title.length>1){
-            console.log('text submit');
             addPostToFs()
             .then((data)=>{
-                // URL.revokeObjectURL(imgFileSrc);
-                console.log(data.id);
                 setPostId(data.id);
                 setIsRedirect(true);
             })
@@ -132,11 +122,9 @@ const CreatePost = (props) => {
 
     const handleImgSubmit = () => {
         if (imgFile && imgFile.type.match('image.*') && imgFileSizeMiB<1){
-            console.log('img submit');
             addImgPostToFs()
-            .then((data)=>{
+            .then(()=>{
                 URL.revokeObjectURL(imgFileSrc);
-                // setPostId(data.id);
                 setIsRedirect(true);
             })
             .catch((error)=>{
@@ -147,38 +135,15 @@ const CreatePost = (props) => {
         }
     }
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     setErrorMsg('');
-        // if (title.length>1){
-        //     console.log('hi');
-        //     addPostToFs()
-        //     .then((data)=>{
-        //         // URL.revokeObjectURL(imgFileSrc);
-        //         console.log(data.id);
-        //         setPostId(data.id);
-        //         setIsRedirect(true);
-        //     })
-        //     .catch((error)=>{
-        //         console.log('Error with creating post:', error);
-        //     });
-        // } else {
-        //     setErrorMsg('That title is too short, please enter a title with atleast 2 characters.');
-        // }
-    // }
-
     const handleChangeImage = (e) => {
         if (e.target.files && e.target.files[0]){
-            console.log(e.target.files[0].type.match('image.*'));
             setImgFile(e.target.files[0]);
             setImgFileSrc(URL.createObjectURL(e.target.files[0]));
             setImgFileSizeMiB(e.target.files[0].size/1024/1024);
-            // setImgFileName(e.target.files[0].name);
         }
     }
 
     const handleChange = (e) => {
-        console.log(e.target.name);
         switch (e.target.name){
             case 'title':
                 setTitle(e.target.value);
@@ -187,7 +152,6 @@ const CreatePost = (props) => {
                 setDescription(e.target.value);
                 break;
             case 'communityNames':
-                console.log(e.target.value);
                 setCommunitySelect(e.target.value);
                 break;
         }

@@ -1,10 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 const SidebarSub = (props) => {
-
-    useEffect(()=>{
-        console.log(props);
-    },[]);
 
     return (
         <div className='sidebarSubContainer'>

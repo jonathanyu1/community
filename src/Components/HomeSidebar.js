@@ -11,7 +11,6 @@ const HomeSidebar = (props) => {
         let tempArray = [];
         let result = fs.collection('communities').get().then(ref=>{
             ref.forEach((doc)=>{
-                console.log(doc.id);
                 tempArray.push(doc.id);
             });
             return tempArray;
@@ -22,9 +21,7 @@ const HomeSidebar = (props) => {
     const handleLoadHomeSidebar = async () => {
         try{
             let result = await loadHomeSidebar();
-            console.log(result);
             if (result && result.length) {
-                console.log('communities exist');
                 setCommList(result);
             }
         } catch (error){
@@ -61,7 +58,6 @@ const HomeSidebar = (props) => {
                 </div>
                 <br></br>
                 {props.userSubs.map((sub)=>{
-                    console.log(sub);
                     return (
                     <Link to={`/c/${sub}`} key={uuidv4()}>
                         <SidebarSub sub={sub}/>

@@ -3,10 +3,9 @@ import {Link} from 'react-router-dom';
 import PostScore from './PostScore';
 import DeletePrompt from './DeletePrompt';
 import {calcTimeSincePosted} from './Helpers/helperFunctions';
-import {auth, fs} from '../Firebase/firebase';
+import {auth} from '../Firebase/firebase';
 
 const PostCard = (props) => {
-
     //required props: object with post info, postDelete function
 
     const [timeSincePost, setTimeSincePost] = useState('');
@@ -14,24 +13,15 @@ const PostCard = (props) => {
 
     const calculateTime = () => {
         setTimeSincePost(calcTimeSincePosted(props.post.createdTimestamp.seconds));
-        // setTimeSincePost(`${props.post.createdTimestamp.seconds} seconds ago`);
     }
 
     useEffect(()=>{
-        console.log(props);
         calculateTime();
     },[]);
 
     return (
         <div className='postCardContainer'>
             <div className='postCardLeftContainer'>
-                {/* <span className={`material-icons-outlined ${isUpvote?'activeUpvote':''}`} id='thumbUp' onClick={handleVoteClick}>
-                    thumb_up
-                </span>
-                <span className={`postCardScore ${isUpvote?'activeUpvote':''} ${isDownvote?'activeDownvote':''}`}>{score}</span>
-                <span className={`material-icons-outlined ${isDownvote?'activeDownvote':''}`} id='thumbDown' onClick={handleVoteClick}>
-                    thumb_down
-                </span> */}
                 <PostScore
                     community={props.post.community}
                     postId={props.post.postId} 
@@ -73,7 +63,6 @@ const PostCard = (props) => {
                         </div>
                         <div className='postCardLinks'>
                             <Link to={`/c/${props.post.community}/${props.post.postId}`}>
-                                {/* Need to figure out counting nesting comments here later */}
                                 {props.post.commentList && props.post.commentList.length ? 
                                     `${props.post.commentList.length} comment${props.post.commentList.length>1 ? 's':''}`
                                 :
@@ -83,9 +72,6 @@ const PostCard = (props) => {
                             {auth().currentUser && auth().currentUser.uid === props.post.userCreatorUid && 
                             <DeletePrompt deleteFunction={props.handleDeletePost} id={props.post.postId} community={props.post.community}/>
                             }
-                            {/* <div onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}>
-                                Share
-                            </div> */}
                         </div>
                     </div>
                 </div>

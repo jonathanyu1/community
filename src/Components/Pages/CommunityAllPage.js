@@ -19,9 +19,7 @@ const CommunityAllPage = (props) => {
         try{
             await loadAllPageInfo();
             let result = await loadAllPagePosts();
-            console.log(result);
             if (result && result.length) {
-                console.log('posts exist');
                 setPosts(result);
             }
         } catch (error){
@@ -32,9 +30,6 @@ const CommunityAllPage = (props) => {
     const loadAllPageInfo = () => {
         let result = fs.collection('communities').doc('all').get().then(doc=>{
             if (doc.exists){
-                console.log(doc.id);
-                console.log(doc.data());
-                console.log(doc.data().description);
                 setCommDescription(doc.data().description);
                 setCommCreator(doc.data().userCreator);
             } else {
@@ -51,27 +46,16 @@ const CommunityAllPage = (props) => {
         let result = tempPosts.get().then((querySnapshot)=>{
             let index=0;
             querySnapshot.forEach((doc)=>{
-                console.log(doc.id, ' => ', doc.data());
                 tempArray.push(doc.data());
-                console.log(index);
-                console.log(tempArray[index]);
                 tempArray[index].postId=doc.id; 
                 index++;
             });
-            console.log(tempArray);
             return tempArray;
         });
         return result;
     }
 
-    // useEffect(()=>{
-    //     console.log(props.userHasSubs);
-    //     if (!props.userHasSubs){
-    //         handleLoadAllPage();
-    //     }
-    // },[props.userHasSubs]);
     useEffect(()=>{
-        console.log(props.userHasSubs);
         handleLoadAllPage();
     },[]);
 
@@ -83,7 +67,6 @@ const CommunityAllPage = (props) => {
                         {posts.length ? 
                             <div className='pagePostsContainer'>
                                 {posts.map((post)=>{
-                                    console.log(post);
                                     return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                                 })}
                             </div>

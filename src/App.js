@@ -12,7 +12,6 @@ import CreateCommunity from './Components/Pages/CreateCommunity';
 import CommunityPage from './Components/Pages/CommunityPage';
 import CommunityAllPage from './Components/Pages/CommunityAllPage';
 import PostPage from './Components/Pages/PostPage';
-// import firebase, {fs, auth} from './Firebase/firebase.js';
 import firebase, {auth, fs} from './Firebase/firebase.js';
 
 const App = () => {
@@ -25,10 +24,10 @@ const App = () => {
 
     const signOut = () => {
         auth().signOut();   
+        setIsSignedIn(false);
     }
 
     const deleteOldPic = (url) => {
-        console.log(url);
         if (url!==defaultPicUrl){
             let picRef = storage.refFromURL(url);
             picRef.delete()
@@ -54,7 +53,6 @@ const App = () => {
         let result = fs.collection('users').doc(auth().currentUser.uid)
         .get().then(doc=>{
             if (doc.exists){
-                console.log(doc.data());
                 return doc.data().description || tempDescription;
             } else {
                 console.log('user profile doc does not exist.');
@@ -66,11 +64,9 @@ const App = () => {
 
     const getProfilePicUrl = () => {
         let tempPic = 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
-        // return auth().currentUser.photoURL || 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
         let result = fs.collection('users').doc(auth().currentUser.uid)
         .get().then(doc=>{
             if (doc.exists){
-                console.log(doc.data());
                 return doc.data().photoURL || tempPic;
             } else {
                 console.log('user profile doc does not exist.');
@@ -83,32 +79,20 @@ const App = () => {
     const authStateObserver = (user) => {
         if (user) { // User is signed in!
             setIsSignedIn(true);
-            // let tempUrl = getProfilePicUrl();
-            // setProfilePicUrl(tempUrl);
-            // console.log(tempUrl);
             getProfilePicUrl().then((result)=>{
                 setProfilePicUrl(result);
-                console.log(result);
             });
             getUserDescription().then((result)=>{
                 setUserDescription(result);
-                console.log(result);
             });
             if (user.displayName){
-                console.log(user.displayName);
                 setDisplayName(user.displayName);
             } else {
                 getDisplayName()
                 .then((tempName)=>{
-                    console.log(tempName);
                     setDisplayName(tempName);
                 });
             }
-            
-            // Get the signed-in user's profile pic and name.
-            // Set the user's profile pic and name.
-            // Show user's profile and sign-out button.
-            // Hide sign-in button.
         } else { // User is signed out!
             setIsSignedIn(false);
             // Hide user's profile and sign-out button.
@@ -116,7 +100,10 @@ const App = () => {
         }
     }
 
-    useState(()=>{
+    // useState(()=>{
+    //     auth().onAuthStateChanged(authStateObserver);
+    // },[]);
+    useEffect(()=>{
         auth().onAuthStateChanged(authStateObserver);
     },[]);
 
@@ -164,15 +151,6 @@ const App = () => {
                             />
                         )} 
                     />
-                    {/* <Route
-                        path='/c/:comm/:id/:parentCommentId'
-                        render={routeProps=>(
-                            <PostPage
-                                {...routeProps}
-                                isSignedIn={isSignedIn}
-                            />
-                        )} 
-                    /> */}
                     <Route
                         path='/c/:comm/:id'
                         render={routeProps=>(

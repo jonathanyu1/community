@@ -9,7 +9,6 @@ const SubscribeButton = (props) => {
         let userRef = fs.collection('users').doc(auth().currentUser.uid);
         let result = userRef.get().then((doc)=>{
             if (doc.exists){
-                console.log(doc.data());
                 return doc.data().communitySubs || [];
             } else {
                 return null;
@@ -24,7 +23,6 @@ const SubscribeButton = (props) => {
     const handleFetchUserData = async () => {
         if (props.isSignedIn) {
             let tempUserSubs = await getUserSubscribeStatus();
-            console.log(tempUserSubs);
             if (tempUserSubs !== null){
                 setUserSubs(tempUserSubs);
             }
@@ -32,7 +30,6 @@ const SubscribeButton = (props) => {
     }
 
     useEffect(()=>{
-        console.log((userSubs.indexOf(props.title) ===-1 ? false : true));
         setIsSubscribed((userSubs.indexOf(props.title) ===-1 ? false : true))
     },[userSubs]);
 

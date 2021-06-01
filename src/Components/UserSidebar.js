@@ -1,33 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 import {calcTimeSincePosted} from './Helpers/helperFunctions';
 
 const UserSidebar = (props) => {
-
-    useEffect(()=>{
-        console.log(props);
-    },[]);
-
-    // <div className='sidebarContainer'>
-    //         <div className='sidebarTitle'>
-    //             <Link to={`/c/${props.title}`}>
-    //                 {`/c/${props.title}`}
-    //             </Link>
-    //         </div>
-    //         <br></br>
-    //         <div className='sidebarContent'>
-    //             <div>
-    //                 {props.description}
-    //             </div>
-    //             <div>
-    //                 <br></br>
-    //                 {`Created by: `}
-    //                 <Link to={`/user/${props.creator}`}>
-    //                     {props.creator}
-    //                 </Link>
-    //             </div>
-    //         </div>
-    //     </div>
 
     return (
         <div className='sidebarContainer'>

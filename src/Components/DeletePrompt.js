@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 
 const DeletePrompt = (props) => {
-    // need to pass function in props to handle deleting whatever it is
     const [showWarning, setShowWarning] = useState(false);
 
     const handleShowWarning = () => {

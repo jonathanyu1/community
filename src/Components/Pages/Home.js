@@ -24,7 +24,6 @@ const Home = (props) => {
                 .get().then((querySnapshot)=>{
                     let index=0;
                     querySnapshot.forEach((doc)=>{
-                        console.log(doc.id, ' => ', doc.data());
                         tempPosts.push(doc.data());
                         tempPosts[index].postId=doc.id;
                         index++;
@@ -42,10 +41,8 @@ const Home = (props) => {
     const loadUserSubs = () => {
         let tempUserSubs = fs.collection('users').doc(auth().currentUser.uid).get().then((doc)=>{
             if (doc.exists){
-                console.log(doc.data());
                 return doc.data().communitySubs || [];
             } else {
-                console.log('user does not exist');
                 return [];
             }
         }).catch((error)=>{
@@ -58,14 +55,11 @@ const Home = (props) => {
     const handleLoadHomePage = async () => {
         try{
             let tempUserSubs = await loadUserSubs();
-            console.log(tempUserSubs);
             if (tempUserSubs.length>0){
                 setUserHasSubs(true);
                 setUserSubs(tempUserSubs);
                 let result = await loadHomePagePosts(tempUserSubs);
-                console.log(result);
                 if (result && result.length) {
-                    console.log('posts exist');
                     setPosts(result);
                 }
             } else {
@@ -79,7 +73,6 @@ const Home = (props) => {
 
 
     useEffect(()=>{
-        console.log(props);
         if (props.isSignedIn){
             handleLoadHomePage();
         } else if (props.isSignedIn!==null){
@@ -93,12 +86,7 @@ const Home = (props) => {
                 <div className='homeContainer'>
                     <div className='pageContentContainer'>
                         <div className='pagePostsContainer'>
-                            {/* {posts.map((post)=>{
-                                console.log(post);
-                                return <PostCard post={post} key={uuidv4()}/>
-                            })} */}
                             {posts.slice(0,postLimit).map((post)=>{
-                                console.log(post);
                                 return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                             })}
                         </div>

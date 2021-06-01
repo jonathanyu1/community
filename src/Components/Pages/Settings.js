@@ -39,7 +39,6 @@ const Settings = (props) => {
 
     const handleTextSubmit = () => {
         if (description.length && description.length>0){
-            console.log('text submit');
             updateUserDescription()
             .then(()=>{
                 setIsRedirect(true);
@@ -54,12 +53,9 @@ const Settings = (props) => {
 
     const handleImgTextSubmit = () => {
         if (imgFile && imgFile.type.match('image.*') && imgFileSizeMiB<1){
-            console.log('img submit');
             updateUserImg()
             .then(()=>{
                 URL.revokeObjectURL(imgFileSrc);
-                // setPostId(data.id);
-                console.log(props.profilePicUrl);
                 props.deleteOldPic(props.profilePicUrl);
                 setIsRedirect(true);
             })
@@ -75,23 +71,17 @@ const Settings = (props) => {
         e.preventDefault();
         setErrorMsg('');
         if (imgFile){
-            console.log('imgFile');
             handleImgTextSubmit();
         } else {
-            console.log('text upload only');
             handleTextSubmit();
         }
     }
 
     const handleChangeImage = (e) => {
         if (e.target.files && e.target.files[0]){
-            console.log(e.target.files[0].type.match('image.*'));
-            console.log(e.target.files[0]);
-            console.log(`${e.target.files[0].size/1024/1024} MiB`);
             setImgFile(e.target.files[0]);
             setImgFileSrc(URL.createObjectURL(e.target.files[0]));
             setImgFileSizeMiB(e.target.files[0].size/1024/1024);
-            // setImgFileName(e.target.files[0].name);
         }
     }
 
@@ -101,7 +91,6 @@ const Settings = (props) => {
     
 
     useEffect(()=>{
-        console.log(props);
         setDescription(props.userDescription);
     },[]);
 

@@ -30,7 +30,6 @@ const SignUp = () => {
         e.preventDefault();
         setErrorMsg('');
         checkAvailableName().then((result)=>{
-            console.log(result);
             if (result){
                 signup(email, password)
                 .then((userCredential)=>{
@@ -46,7 +45,6 @@ const SignUp = () => {
                 })
                 .catch ((error)=>{
                         console.log('Error with sign up:',error);
-                        console.log(error.message);
                         setErrorMsg(error.message);
                 });
             } else {

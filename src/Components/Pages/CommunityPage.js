@@ -18,9 +18,7 @@ const CommunityPage = (props) => {
     const handleLoadCommunityPage = async () => {
         try{
             let result = await loadCommunityPagePosts();
-            console.log(result);
             if (result && result.length) {
-                console.log('posts exist');
                 setPosts(result);
             }
         } catch (error){
@@ -33,21 +31,14 @@ const CommunityPage = (props) => {
         let docRef = fs.collection('communities').doc(props.match.params.comm);
         let result = docRef.get().then(doc=>{
             if (doc.exists){
-                console.log(doc.id);
-                console.log(doc.data());
-                console.log(doc.data().description);
                 setCommDescription(doc.data().description);
                 setCommCreator(doc.data().userCreator);
                 let tempResult=docRef.collection('posts').orderBy('createdTimestamp', 'desc').limit(postLimit).get()
                 .then(sub=>{
                     if (sub.docs.length>0){
-                        console.log('subcollection posts exists');
                         sub.docs.forEach((doc, index)=>{
-                            console.log(doc.data());
-                            console.log(doc.id);
                             tempArray.push(doc.data());
                             tempArray[index].postId=doc.id;
-                            console.log(tempArray);
                         });
                     } else {
                         console.log('subcollection posts does not exist');
@@ -68,7 +59,6 @@ const CommunityPage = (props) => {
         handleLoadCommunityPage();
     },[]);
 
-    // return 404 component if not found
     return (
         <React.Fragment>
             {commExists ? 
@@ -77,7 +67,6 @@ const CommunityPage = (props) => {
                         {posts.length ? 
                             <div className='pagePostsContainer'>
                                 {posts.map((post)=>{
-                                    console.log(post);
                                     return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                                 })}
                             </div>

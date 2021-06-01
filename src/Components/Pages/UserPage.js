@@ -16,15 +16,12 @@ const UserPage = (props) => {
     const defaultPhotoUrl = 'https://firebasestorage.googleapis.com/v0/b/community-83f47.appspot.com/o/outline_person_black_24dp.png?alt=media&token=b5cd056b-dd16-4e76-8d0f-219039626747';
 
     useEffect(()=>{
-        console.log(props);
         handleLoadUserPage();
     },[]);
 
     const loadUserPageInfo = (userUid) => {
-        console.log(userUid);
         fs.collection('users').doc(userUid).get().then(doc=>{
             if (doc.exists){
-                console.log(doc.data());
                 setUserDescription((doc.data().description ? doc.data().description : 'This user has not set a description.'));
                 setUserSince((doc.data().createdTimestamp ? doc.data().createdTimestamp.seconds : ''));
                 setUserPhotoUrl((doc.data().photoURL ? doc.data().photoURL : defaultPhotoUrl));
@@ -41,7 +38,6 @@ const UserPage = (props) => {
             .get()
             .then((querySnapshot)=>{
                 querySnapshot.forEach((doc)=>{
-                    console.log(doc.id, " => ", doc.data());
                     tempResult = doc.data().uid;
                 });
                 return tempResult;
@@ -57,9 +53,7 @@ const UserPage = (props) => {
             let userUid = await fetchUserUid();
             await loadUserPageInfo(userUid);
             let result = await loadUserPagePosts(userUid);
-            console.log(result);
             if (result && result.length) {
-                console.log('posts exist');
                 setPosts(result);
             }
         } catch (error){
@@ -78,7 +72,6 @@ const UserPage = (props) => {
                 tempArray[index].postId=doc.id; 
                 index++;
             });
-            console.log(tempArray);
             return tempArray;
         });
         return result;
@@ -92,7 +85,6 @@ const UserPage = (props) => {
                     {posts.length ? 
                         <div className='pagePostsContainer'>
                             {posts.map((post)=>{
-                                console.log(post);
                                 return <PostCard post={post} key={uuidv4()} handleDeletePost={handleDeletePost}/>
                             })}
                         </div>
