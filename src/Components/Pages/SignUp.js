@@ -64,7 +64,7 @@ const SignUp = () => {
                 setPassword(e.target.value);
                 break;
             case 'username':
-                setUsername(e.target.value);
+                setUsername(e.target.value.replace(/[!@#$%^&*(),.?":{}[|<>/`'_\s\\]/g, ''));
                 break;
         }
     }
