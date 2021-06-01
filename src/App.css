@@ -183,7 +183,6 @@ nav{
     }
 }
 
-
 /* Settings */
 
 .settingsContainer{
@@ -308,16 +307,12 @@ nav{
     display: grid;
     grid-template-columns: 4fr 1fr;
     column-gap: 40px;
-    /* width: 80%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-gap: 30px;
-    gap: 30px;
-    padding: 20px 0; */
 }
 
-.pagePostsContainer, .pageEmptyContainer{
+.pageEmptyContainer{
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 @media (max-width: 900px){
@@ -327,6 +322,11 @@ nav{
     }
     .pageContentContainer{
         grid-template-columns: auto;
+    }
+    .pageEmptyContainer{
+        margin-bottom: 15px;
+        background-color: white;
+        padding: 10px 0;
     }
 }
 

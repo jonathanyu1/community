@@ -3,7 +3,6 @@ import NotFound from './NotFound';
 import PostCard from '../PostCard';
 import { fs } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import {Link} from 'react-router-dom';
 import HomeSidebar from '../HomeSidebar';
 import CommunitySidebar from '../CommunitySidebar';
 import {handleDeletePost} from '../Helpers/helperFunctions';

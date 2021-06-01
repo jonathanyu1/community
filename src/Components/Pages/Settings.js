@@ -3,7 +3,6 @@ import firebase, {auth, fs} from '../../Firebase/firebase';
 import {Redirect} from 'react-router-dom';
 
 const Settings = (props) => {
-    const [oldImg, setOldImg] = useState('');
     const [imgFile, setImgFile] = useState(null);
     const [imgFileSrc, setImgFileSrc] = useState(null);
     const [imgFileSizeMiB, setImgFileSizeMiB] = useState('');
