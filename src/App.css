@@ -857,6 +857,9 @@ nav{
         height: 100px;
         resize: none;
     }
+    .postSignInContainer{
+        display: flex;
+    }
 }
 
 /* comment section */ 
