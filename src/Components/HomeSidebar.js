@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import SidebarSub from './SidebarSub';
 import {fs} from '../Firebase/firebase';
 import {Link} from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const HomeSidebar = (props) => {
     const [commList, setCommList] = useState([]);
@@ -44,7 +45,7 @@ const HomeSidebar = (props) => {
             <div className='sidebarContent'>
                 {commList.map((commName)=>{
                     return (
-                        <Link to={`/c/${commName}`}>
+                        <Link to={`/c/${commName}`} key={uuidv4()}>
                             <div className='sidebarHomeCommName'>
                                 {`/c/${commName}`}
                             </div>
@@ -62,7 +63,7 @@ const HomeSidebar = (props) => {
                 {props.userSubs.map((sub)=>{
                     console.log(sub);
                     return (
-                    <Link to={`/c/${sub}`}>
+                    <Link to={`/c/${sub}`} key={uuidv4()}>
                         <SidebarSub sub={sub}/>
                     </Link>
                     )

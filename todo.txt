@@ -1,5 +1,6 @@
 cleanup:
 -delete the random communities and logins i made to test
+-clean up comments and errors
 
 deploy:
 -check if browser router works properly

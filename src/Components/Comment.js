@@ -235,9 +235,8 @@ const Comment = (props) => {
                         childComments = props.allComments.filter(comm => comment.postId === comm.postParent);
                     }
                     return (
-                        <div className='replyContainer'>
+                        <div className='replyContainer' key={uuidv4()}>
                             <Comment 
-                                key={uuidv4()}
                                 childComments={childComments}
                                 comment={comment}
                                 allComments={props.allComments}
