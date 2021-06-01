@@ -1,18 +1,3 @@
-
-nav: 
-- show action on hover (https://material-ui.com/components/tooltips/)
-
-createcommunity:
--prevent non-letters/number input (https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string)
-https://stackoverflow.com/a/49214173
-
-rules: 
--allow read on all posts
--allow edit, delete if user uid and name matches post/community user creator uid and name
-
-css: 
--mobile responsive
-
 cleanup:
 -delete the random communities and logins i made to test
 
@@ -21,3 +6,7 @@ deploy:
 
 postpage:
 -onsnapshot only query new / modified posts to prevent re-querying all posts on reply/scorechange/comment
+
+createcommunity:
+-prevent non-letters/number input (https://stackoverflow.com/questions/32311081/check-for-special-characters-in-string)
+https://stackoverflow.com/a/49214173

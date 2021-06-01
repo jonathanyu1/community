@@ -64,7 +64,8 @@ const CreateCommunity = () => {
     const handleChange = (e) => {
         switch (e.target.name){
             case 'title':
-                setTitle(e.target.value.replace(/\s/g, ''));
+                // setTitle(e.target.value.replace(/\s/g, ''));
+                setTitle(e.target.value.replace(/[!@#$%^&*(),.?":{}[|<>/`'_\s\\]/g, ''));
                 break;
             case 'description':
                 setDescription(e.target.value);
