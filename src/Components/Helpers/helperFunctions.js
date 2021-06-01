@@ -3,7 +3,6 @@ const defaultPicUrl = 'https://firebasestorage.googleapis.com/v0/b/community-83f
 const storage = firebase.storage();
 
 const deleteOldPic = (url) => {
-    console.log(url);
     if (url!==defaultPicUrl){
         let picRef = storage.refFromURL(url);
         picRef.delete()
@@ -14,26 +13,18 @@ const deleteOldPic = (url) => {
 }
 
 export function handleDeletePost(id,community){
-    console.log(id);
-    console.log(community);
-    console.log(auth().currentUser.uid);
     let canDelete = false;
     let tempImgUrl = '';
     let docQuery = fs.collection('communities').doc(community).collection('posts').doc(id);
     // get img url if exists, check if user is allowed to delete post
     docQuery.get().then((doc)=>{
-        console.log(doc.data());
         if (auth().currentUser && auth().currentUser.uid === doc.data().userCreatorUid){
-            console.log('can delete post');
             tempImgUrl = doc.data().imgUrl;
             canDelete = true;
         }
     }).then(()=>{
         // delete post here
-        console.log(canDelete);
-        console.log(tempImgUrl);
         docQuery.delete().then(()=>{
-            console.log('deleted document successfully');
             if (tempImgUrl){
                 deleteOldPic(tempImgUrl);
             }

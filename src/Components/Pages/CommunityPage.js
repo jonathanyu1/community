@@ -40,9 +40,10 @@ const CommunityPage = (props) => {
                             tempArray.push(doc.data());
                             tempArray[index].postId=doc.id;
                         });
-                    } else {
-                        console.log('subcollection posts does not exist');
-                    }
+                    } 
+                    // else {
+                    //     console.log('subcollection posts does not exist');
+                    // }
                     return tempArray;
                 });
                 return tempResult;

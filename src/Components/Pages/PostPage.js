@@ -68,9 +68,10 @@ const PostPage = (props) => {
             if (doc.exists){
                 setSidebarDescription(doc.data().description);
                 setSidebarCreator(doc.data().userCreator);
-            } else {
-                console.log('Sidebar info does not exist');
-            }
+            } 
+            // else {
+            //     console.log('Sidebar info does not exist');
+            // }
         }).catch((error)=>{
             console.log('Error fetching sidebar content:',error);
         });
@@ -89,7 +90,6 @@ const PostPage = (props) => {
                     [`postCreator`] : doc.data().userCreator
                 }
             } else {
-                console.log('Post does not exist.');
                 setPostExists(false);
             }
             return tempObj

@@ -116,7 +116,7 @@ nav{
 }
 
 .navTabs a{
-    padding-left: 20px;
+    margin-left: 20px;
 }
 
 .navTabs span{
@@ -152,7 +152,7 @@ nav{
         padding-left: 0;
     }
     .navTabs a{
-        padding-left: 15px;
+        margin-left: 15px;
     }
 }
 
@@ -283,6 +283,7 @@ nav{
 @media (max-width: 900px){
     .homeContainer{
         padding-top: 12vh;
+        min-height: 100vh;
     }
 }
 
@@ -336,7 +337,7 @@ nav{
     background-color: white;
     text-align: center;
     height: fit-content;
-    padding: 20px 0;
+    padding: 20px 5px;
 }
 
 /* @media (max-width: 900px){
@@ -791,6 +792,7 @@ nav{
 
 .postPageDescription{
     font-size: 20px;
+    margin: 10px 0px;
 }
 
 .postAddCommentContainer{
@@ -960,6 +962,9 @@ nav{
     .commentSection{
         padding: 0;
     } 
+    .commentSectionTitle{
+        padding: 10px;
+    }
     .commentTop{
         display: flex;
         align-items: center;
