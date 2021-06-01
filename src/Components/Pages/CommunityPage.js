@@ -86,24 +86,6 @@ const CommunityPage = (props) => {
                                 No posts. Be the first to post here!
                             </div>
                         }
-                        {/* <div className='sidebarContainer'>
-                            <div className='sidebarTitle'>
-                                {`/c/${props.match.params.comm}`}
-                            </div>
-                            <br></br>
-                            <div className='sidebarContent'>
-                                <div>
-                                    {commDescription}
-                                </div>
-                                <div>
-                                    <br></br>
-                                    {`Created by: `}
-                                    <Link to={`/user/${commCreator}`}>
-                                        {commCreator}
-                                    </Link>
-                                </div>
-                            </div>
-                        </div> */}
                         <CommunitySidebar 
                             title={props.match.params.comm}
                             description={commDescription}

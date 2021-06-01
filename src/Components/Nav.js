@@ -25,7 +25,7 @@ const Nav = (props) => {
                             <Link to={`/user/${props.displayName}`}>
                                 <li className='navProfileInfo'>
                                     <img src={props.profilePicUrl} alt='profilepic' className='navProfilePic'/>
-                                    <li className='navText'>{props.displayName}</li>
+                                    <div className='navText'>{props.displayName}</div>
                                 </li>
                             </Link>
                             <Link to='/settings'>
