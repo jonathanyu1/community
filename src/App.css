@@ -156,6 +156,16 @@ nav{
     }
 }
 
+@media (max-height: 600px){
+    #navContainer{
+        position: fixed;
+        top: 0;
+        background-color: white;
+        overflow: hidden;
+        padding: 10px 0;
+    }
+}
+
 /* not found */
 
 .notFoundContainer{
@@ -180,6 +190,13 @@ nav{
     .notFoundMessage{
         margin-bottom: 15px;
         background-color: white;
+    }
+}
+
+@media (max-height: 600px){
+    .notFoundContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
     }
 }
 
@@ -271,6 +288,13 @@ nav{
     }
 }
 
+@media (max-height: 600px){
+    .settingsContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
+    }
+}
+
 /* home */ 
 
 .homeContainer{
@@ -286,6 +310,15 @@ nav{
         min-height: 100vh;
     }
 }
+
+@media (max-height: 600px){
+    .homeContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
+    }
+}
+
+
 
 /* user page */
 
@@ -330,6 +363,14 @@ nav{
         padding: 10px 0;
     }
 }
+
+@media (max-height: 600px){
+    .pageContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
+    }
+}
+
 
 /* Sidebar */
 
@@ -462,7 +503,7 @@ nav{
 }
 
 .postCardTitle{
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 700;
     padding-bottom: 5px;
 }
@@ -557,6 +598,13 @@ nav{
         font-size: 20px;
      }
 }
+
+@media (max-height: 600px){
+    #signUpContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
+    }
+}
 /* sign in */
 
 #signInContainer{
@@ -598,6 +646,13 @@ nav{
     .signInEmailInput, .signInPasswordInput{
         width: 100%;
         font-size: 20px;
+    }
+}
+
+@media (max-height: 600px){
+    #signInContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
     }
 }
 
@@ -666,6 +721,13 @@ nav{
         width: 100%;
         font-size: 20px;
      }
+}
+
+@media (max-height: 600px){
+    #createCommunityContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
+    }
 }
 
 /* create post page */ 
@@ -741,6 +803,14 @@ nav{
         width: 100%;
      }
 }
+
+@media (max-height: 600px){
+    #createPostContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
+    }
+}
+
 
 /* post page */ 
 
@@ -859,6 +929,13 @@ nav{
     }
     .postSignInContainer{
         display: flex;
+    }
+}
+
+@media (max-height: 600px){
+    .postPageContainer{
+        padding-top: 18vh;
+        min-height: 100vh;
     }
 }
 
