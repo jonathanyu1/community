@@ -4,6 +4,11 @@ const TextArea = (props) => {
     // required props: handleSubmitComment that takes an input
     const [commentInput, setCommentInput] = useState('');
 
+    const handleSubmit = () => {
+        props.handleSubmitComment(commentInput);
+        setCommentInput('');
+    }
+
     const handleCommentInput = (e) => {
         setCommentInput(e.target.value);
     }
@@ -27,7 +32,8 @@ const TextArea = (props) => {
             {props.children}
             <button
                 className={`${props.btnClassName}`}
-                onClick={()=>{props.handleSubmitComment(commentInput)}}
+                // onClick={()=>{props.handleSubmitComment(commentInput)}}
+                onClick={handleSubmit}
                 id={props.btnId}
             >
                 Submit
