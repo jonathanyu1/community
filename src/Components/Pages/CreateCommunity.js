@@ -37,7 +37,7 @@ const CreateCommunity = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
-        if (title.length>2){
+        if (title.length>2 && title.length<20){
             checkAvailableTitle().then((result)=>{
                 if (result){
                     addCommunityToFs()
@@ -53,7 +53,7 @@ const CreateCommunity = () => {
                 }
             });
         } else {
-            setErrorMsg('That title is too short, please enter a title with atleast 3 characters.');
+            setErrorMsg('That title is too short, please enter a title with atleast 3 characters and less than 20 characters.');
         }
         
     }

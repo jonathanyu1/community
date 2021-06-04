@@ -29,29 +29,32 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrorMsg('');
-        checkAvailableName().then((result)=>{
-            if (result){
-                signup(email, password)
-                .then((userCredential)=>{
-                    userCredential.user.updateProfile({
-                        displayName: username
+        if (username.length && username.length>3 && username.length<16){
+            checkAvailableName().then((result)=>{
+                if (result){
+                    signup(email, password)
+                    .then((userCredential)=>{
+                        userCredential.user.updateProfile({
+                            displayName: username
+                        });
+                        return fs.collection('users').doc(`${userCredential.user.uid}`).set({
+                            uid: userCredential.user.uid,
+                            displayName: username,
+                            email: email,
+                            createdTimestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    })
+                    .catch ((error)=>{
+                            console.log('Error with sign up:',error);
+                            setErrorMsg(error.message);
                     });
-                    return fs.collection('users').doc(`${userCredential.user.uid}`).set({
-                        uid: userCredential.user.uid,
-                        displayName: username,
-                        email: email,
-                        createdTimestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                })
-                .catch ((error)=>{
-                        console.log('Error with sign up:',error);
-                        setErrorMsg(error.message);
-                });
-            } else {
-                setErrorMsg('That username is not available, please choose another one.');
-            }
-        });
-        
+                } else {
+                    setErrorMsg('That username is not available, please choose another one.');
+                }
+            });
+        } else {
+            setErrorMsg('Please enter a valid username with atleast 3 characters and less than 20 characters.');
+        }
     }
         
 
@@ -85,6 +88,7 @@ const SignUp = () => {
                         onChange={handleChange} 
                         value={username} 
                         minLength='3'
+                        maxLength='16'
                     ></input>
                 </div>
                 <div>

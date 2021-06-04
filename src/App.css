@@ -391,6 +391,7 @@ nav{
     font-size: 25px;
     font-weight: 700;
     /* text-decoration: underline; */
+    word-break: break-word;
 }
 
 .sidebarTitle a{
@@ -399,7 +400,7 @@ nav{
 }
 
 .sidebarContent{
-
+    word-break: break-word;
 }
 
 .sidebarContent a{
@@ -410,6 +411,7 @@ nav{
 
 .sidebarHomeCommName{
     margin-bottom: 10px;
+    word-break: break-word;
 }
 
 .btnSubscribeComm, .btnUnsubscribeComm{
@@ -452,6 +454,14 @@ nav{
 
 .sidebarSubContainer{
     margin-bottom: 10px;
+    word-break: break-word;
+}
+
+@media (min-width: 900px){
+    .sidebarContainer{
+        position: sticky;
+        top: 2vh;
+    }
 }
 
 /* Post Score */
@@ -496,6 +506,7 @@ nav{
 
 .postCardContainer a{
     text-decoration: none;
+    word-break: break-word;
 }
 
 .postCardContainer a:hover{
@@ -540,6 +551,7 @@ nav{
     border-radius: 7px;
     padding: 10px;
     width: 100%;
+    word-break: break-word;
 }
 
 @media (max-width: 900px){
@@ -851,6 +863,7 @@ nav{
     font-size: 30px;
     font-weight: 700;
     padding-bottom: 5px;
+    word-break: break-word;
 }
 
 .postPageImg{
@@ -863,6 +876,7 @@ nav{
 .postPageDescription{
     font-size: 20px;
     margin: 10px 0px;
+    word-break: break-word;
 }
 
 .postAddCommentContainer{
@@ -989,6 +1003,9 @@ nav{
 .commentDescription{
     font-size: 18px;
     padding: 10px 0px;
+    /* overflow-wrap: break-word;
+    display: inline-block; */
+    word-break: break-word;
 }
 
 .commentLinks{
