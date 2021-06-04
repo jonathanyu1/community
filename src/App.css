@@ -1080,4 +1080,7 @@ nav{
     .replyContainer{
         margin-left: 0%;
     }
+    .postAddReplyInput{
+        width: 100%;
+    }
 }
