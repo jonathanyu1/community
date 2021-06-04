@@ -135,6 +135,10 @@ nav{
     border-radius: 25px;
 }
 
+.navHeaderIcon{
+    vertical-align: middle;
+}
+
 @media (max-width: 900px){
     #navContainer{
         position: fixed;

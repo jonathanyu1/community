@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import communityHeader from '../Images/Header/communityHeader.png';
+import communityAdd from '../Images/Header/communityAdd.png';
 
 const Nav = (props) => {
 
@@ -10,9 +11,9 @@ const Nav = (props) => {
                 <div id='navHeaderContainer'>
                     <Link to='/'>
                         <img 
-                            className='navHeaderIcon'
+                            className='navHeaderLogo'
                             src={communityHeader}
-                            alt='community header icon'
+                            alt='community header logo'
                         />
                     </Link>
                     <Link to='/'>
@@ -37,9 +38,14 @@ const Nav = (props) => {
                             </Link>
                             <Link to='/create-community' >
                                 <li>
-                                    <span className="material-icons-outlined">
+                                    {/* <span className="material-icons-outlined">
                                         create_new_folder
-                                    </span>
+                                    </span> */}
+                                    <img 
+                                        className='navHeaderIcon'
+                                        src={communityAdd}
+                                        alt='add community'
+                                    />
                                 </li>
                             </Link>
                             <Link to='/create-post' >
