@@ -13,6 +13,7 @@ import CommunityPage from './Components/Pages/CommunityPage';
 import CommunityAllPage from './Components/Pages/CommunityAllPage';
 import PostPage from './Components/Pages/PostPage';
 import firebase, {auth, fs} from './Firebase/firebase.js';
+import NotFound from './Components/Pages/NotFound';
 
 const App = () => {
     const [isSignedIn, setIsSignedIn] = useState(null);
@@ -178,6 +179,7 @@ const App = () => {
                             />
                         )} 
                     />
+                    <Route component={NotFound}/>
                 </Switch>
             </div>
       </BrowserRouter>
