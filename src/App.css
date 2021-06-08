@@ -940,6 +940,9 @@ nav{
     .postPageLeft{
         margin-right: 15px;
     }
+    .postPageTitle{
+        font-size: 25px;
+    }
     .postAddCommentInput{
         width: 100%;
         height: 100px;
